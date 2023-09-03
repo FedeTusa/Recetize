@@ -27,7 +27,7 @@ class RecetaController extends BaseController
             ]
         );
         
-       return "se hizo el post"; 
+       return view('receta/new'); 
     }
 }
 

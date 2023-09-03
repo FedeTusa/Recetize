@@ -30,6 +30,6 @@ class PacienteController extends BaseController
             ]
         );
         
-       return "se hizo el post"; 
+       return view('paciente/new'); 
     }
 }

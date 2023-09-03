@@ -10,31 +10,54 @@
             padding: 0;
             font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
             background-color: #f0f0f0;
         }
 
         h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 28px;
-            color: #333; /* Color de texto para el encabezado */
+            text-align: left;
+            margin-top: 20px;
+            font-size: 32px;
+            color: #333;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 20px;
+        }
+
+        .button-container button {
+            background-color: #00cc66; /* Verde claro para el botón "Remedio" */
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            width: 120px;
+            margin-right: 10px;
+        }
+
+        .button-container button.selected {
+            background-color: #ccc; /* Gris claro para el botón "Paciente" seleccionado */
         }
 
         form {
-            background-color: #f0f8f0; /* Color de fondo para el formulario */
+            background-color: #f0f8f0;
             padding: 20px;
             border-radius: 10px;
-            width: 400px; /* Ancho del formulario */
+            width: 400px;
+            margin-top: 20px;
         }
 
         label {
             display: block;
             margin-bottom: 10px;
             font-weight: bold;
-            color: #555; /* Color de texto para las etiquetas */
+            color: #555;
         }
 
         input[type="number"],
@@ -46,8 +69,8 @@
             border-radius: 5px;
         }
 
-        input[type="submit"] {
-            background-color: #c0e7c8; /* Color de fondo para el botón */
+        input[type="submit"], input[type="button"] {
+            background-color: #ccc; /* Gris claro para el botón "Remedio" y "Médico" */
             color: #000;
             border: none;
             padding: 10px 20px;
@@ -55,16 +78,23 @@
             cursor: pointer;
             font-weight: bold;
             transition: background-color 0.3s ease;
+            display: inline-block;
+            width: 100%;
         }
 
-        input[type="submit"]:hover {
-            background-color: #a5d8b9; /* Cambio de color al pasar el cursor */
+        input[type="submit"]:hover, input[type="button"]:hover {
+            background-color: #a5d8b9; /* Cambio de color al pasar el mouse */
         }
     </style>
 </head>
 <body>
-    
-    <h1>cargar remedio</h1>
+    <h1>Remedio</h1>
+
+    <div class="button-container">
+        <a href="http://recetize.test/PacienteController/new"><button>Paciente</button></a>
+        <button class="selected">Remedio</button>
+        <a href="http://recetize.test/MedicoController/new"><button>Medico</button></a>
+    </div>
 
     <form action="<?= base_url()?>RemedioController" method="post">
         <label for="codigo">Código</label>
@@ -78,6 +108,7 @@
 
         <input type="submit" value="Guardar">
     </form>
-    
 </body>
 </html>
+
+

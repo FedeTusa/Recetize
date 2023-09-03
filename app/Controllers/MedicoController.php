@@ -28,6 +28,6 @@ class MedicoController extends BaseController
             ]
         );
         
-       return "se hizo el post"; 
+       return view('medico/new'); 
     }
 }
