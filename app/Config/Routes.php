@@ -9,3 +9,4 @@ $routes->get('/', 'Home::index');
 
 $routes->resource('RemedioController');
 $routes->resource('PacienteController');
+$routes->resource('MedicoController');
