@@ -26,6 +26,6 @@ class RemedioController extends BaseController
             ]
         );
         
-       return "se hizo el post"; 
+       return view('remedio/new'); 
     }
 }
