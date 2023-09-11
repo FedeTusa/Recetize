@@ -7,3 +7,5 @@
 ![JavaScrip](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 # Recetize
 Es una aplicación creada con la finalidad de poder procesar y gestionar recetas medicas que debes ser archivadas por la ley para futuras auditorias
+
+comentario de prueba
