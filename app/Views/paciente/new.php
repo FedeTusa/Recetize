@@ -90,10 +90,13 @@
 <body>
     <h1>Paciente</h1>
 
+    <h2><?= $validation->listErrors() ?></h2> <!-- no funciona -->
+    
     <div class="button-container">
         <button class="selected">Paciente</button>
         <a href="http://recetize.test/RemedioController/new"><button>Remedio</button></a>
         <a href="http://recetize.test/MedicoController/new"><button>Medico</button></a>
+        <a href="http://recetize.test/RecetaController/new"><button>Receta</button></a>
     </div>
 
     <form action="<?= base_url()?>PacienteController" method="post">
