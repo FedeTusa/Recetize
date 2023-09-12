@@ -94,6 +94,7 @@
         <a href="http://recetize.test/PacienteController/new"><button>Paciente</button></a>
         <a href="http://recetize.test/RemedioController/new"><button>Remedio</button></a>
         <button class="selected">Medico</button>
+        <a href="http://recetize.test/RecetaController/new"><button>Receta</button></a>
         
     </div>
 
