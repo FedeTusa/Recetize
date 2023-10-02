@@ -24,3 +24,19 @@ $router->post('/remedio',['uses' => 'RemedioController@store']);
 $router->post('/editarRemedio/{id}',['uses' => 'RemedioController@update']);
 
 $router->delete('/remedio/{id}',['uses' => 'RemedioController@destroy']);
+
+$router->get('/pacientes', ['uses' => 'PacienteController@showAll']); 
+$router->get('/paciente/{id}', ['uses' => 'PacienteController@show']);
+
+$router->post('/paciente',['uses' => 'PacienteController@store']);
+$router->post('/editarPaciente/{id}',['uses' => 'PacienteController@update']);
+
+$router->delete('/paciente/{id}',['uses' => 'PacienteController@destroy']);
+
+$router->get('/medicos', ['uses' => 'MedicoController@showAll']); 
+$router->get('/medico/{id}', ['uses' => 'MedicoController@show']);
+
+$router->post('/medico',['uses' => 'MedicoController@store']);
+$router->post('/editarMedico/{id}',['uses' => 'MedicoController@update']);
+
+$router->delete('/medico/{id}',['uses' => 'MedicoController@destroy']);
