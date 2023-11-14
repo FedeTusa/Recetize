@@ -100,25 +100,25 @@
     </div>
 
     <form action="<?= base_url()?>PacienteController" method="post">
-        <label for="dni">dni</label>
+        <label for="dni">DNI</label>
         <input type="number" name="dni" id="dni">
 
-        <label for="nombre">nombre</label>
+        <label for="nombre">Nombre</label>
         <input type="text" name="nombre" id="nombre">
 
-        <label for="apellido">apellido</label>
+        <label for="apellido">Apellido</label>
         <input type="text" name="apellido" id="apellido">
 
-        <label for="celular">celular</label>
+        <label for="celular">Celular</label>
         <input type="text" name="celular" id="celular">
 
-        <label for="localidad">localidad</label>
+        <label for="localidad">Localidad</label>
         <input type="text" name="localidad" id="localidad">
 
-        <label for="calle">calle</label>
+        <label for="calle">Calle</label>
         <input type="text" name="calle" id="calle">
 
-        <label for="altura">altura</label>
+        <label for="altura">Altura</label>
         <input type="text" name="altura" id="altura">
 
         <input type="submit" value="Guardar">

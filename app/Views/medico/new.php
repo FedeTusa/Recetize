@@ -99,19 +99,19 @@
     </div>
 
     <form action="<?= base_url()?>MedicoController" method="post">
-        <label for="matricula">matricula</label>
+        <label for="matricula">Matricula</label>
         <input type="number" name="matricula" id="matricula">
 
-        <label for="nombre">nombre</label>
+        <label for="nombre">Nombre</label>
         <input type="text" name="nombre" id="nombre">
 
-        <label for="apellido">apellido</label>
+        <label for="apellido">Apellido</label>
         <input type="text" name="apellido" id="apellido">
 
-        <label for="especialidad">especialidad</label>
+        <label for="especialidad">Especialidad</label>
         <input type="text" name="especialidad" id="especialidad">
 
-        <label for="localidad">localidad</label>
+        <label for="localidad">Localidad</label>
         <input type="text" name="localidad" id="localidad">
 
         <input type="submit" value="Guardar">

@@ -106,19 +106,19 @@
     <p class="message">Aclaración: el paciente y el médico deben haber sido cargados previamente</p>
 
     <form action="<?= base_url()?>RecetaController" method="post">
-        <label for="nroReceta">numero de receta</label>
+        <label for="nroReceta">Numero de receta</label>
         <input type="number" name="nroReceta" id="nroReceta">
 
         <label for="fechaEmision">Fecha de emision</label>
         <input type="text" name="fechaEmision" id="fechaEmision">
 
-        <label for="Remedio_codigo">codigo del remedio</label>
+        <label for="Remedio_codigo">Codigo del remedio</label>
         <input type="text" name="Remedio_codigo" id="Remedio_codigo">
 
-        <label for="Paciente_dni">dni del paciente</label>
+        <label for="Paciente_dni">DNI del paciente</label>
         <input type="text" name="Paciente_dni" id="Paciente_dni">
 
-        <label for="Medico_matricula">matricula del medico</label>
+        <label for="Medico_matricula">Matricula del medico</label>
         <input type="text" name="Medico_matricula" id="Medico_matricula">
 
         <input type="submit" value="Guardar">

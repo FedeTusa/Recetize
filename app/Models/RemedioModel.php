@@ -6,11 +6,43 @@ use CodeIgniter\Model;
 
 class RemedioModel extends Model
 {
-    protected $table            = 'remedio';
-    protected $primaryKey       = 'codigo';
+    protected $table = 'remedio';
+    protected $primaryKey = 'id';
     protected $allowedFields    = ['codigo', 'droga', 'medicamento'];
 
-   /*  // Dates
+    private function sendRequest($method, $url, $data = [])
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        if ($method === 'POST') {
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        }
+
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+
+        return $response;
+    }
+
+
+    public function crearRemedio($data)
+    {
+        /*        $data = [
+            'codigo' => $data['codigo'],
+            'droga' => $data['droga'],
+            'medicamento' => $data['medicamento'],
+        ];*/
+
+        return $this->sendRequest('POST', 'http://localhost:8000/remedio', $data);
+    }
+
+
+
+    /*  // Dates 
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
