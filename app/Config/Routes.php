@@ -11,3 +11,5 @@ $routes->resource('RemedioController');
 $routes->resource('PacienteController');
 $routes->resource('MedicoController');
 $routes->resource('RecetaController');
+
+$routes->get('/pagprincipal', 'Home::main');
