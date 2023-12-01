@@ -85,13 +85,42 @@
         input[type="submit"]:hover, input[type="button"]:hover {
             background-color: #a5d8b9; /* Cambio de color al pasar el mouse */
         }
+
+                /* Estilos para el botón "Atrás" */
+                .back-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        /* Estilos para el botón */
+        .back-button button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px; /* Ajusta el padding para cambiar el tamaño del botón */
+            border-radius: 10px; /* Bordes redondeados */
+            font-weight: bold;
+            font-size: 18px; /* Tamaño del texto */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button button:hover {
+            background-color: #333; /* Cambio de color al pasar el mouse */
+        }
+
     </style>
 </head>
 <body>
     <h1>Paciente</h1>
 
     <h2><?= $validation->listErrors() ?></h2> <!-- no funciona -->
-    
+
+    <a href="http://recetize.test/pagprincipal" class="back-button">
+        <button>Atrás</button>
+    </a>
+
     <div class="button-container">
         <button class="selected">Paciente</button>
         <a href="http://recetize.test/RemedioController/new"><button>Remedio</button></a>
