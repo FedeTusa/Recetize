@@ -2076,16 +2076,16 @@
         },
         {
             "name": "laravel/lumen-framework",
-            "version": "v10.0.1",
+            "version": "v10.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/lumen-framework.git",
-                "reference": "7d9f5c436969d33421a6a6c0b83809c4c6e41afe"
+                "reference": "c3711e06a85fb619a2d92aeda0a60e7b23fe0d53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/lumen-framework/zipball/7d9f5c436969d33421a6a6c0b83809c4c6e41afe",
-                "reference": "7d9f5c436969d33421a6a6c0b83809c4c6e41afe",
+                "url": "https://api.github.com/repos/laravel/lumen-framework/zipball/c3711e06a85fb619a2d92aeda0a60e7b23fe0d53",
+                "reference": "c3711e06a85fb619a2d92aeda0a60e7b23fe0d53",
                 "shasum": ""
             },
             "require": {
@@ -2170,7 +2170,7 @@
                 "issues": "https://github.com/laravel/lumen-framework/issues",
                 "source": "https://github.com/laravel/lumen-framework"
             },
-            "time": "2023-08-29T15:21:10+00:00"
+            "time": "2023-10-24T15:38:39+00:00"
         },
         {
             "name": "laravel/prompts",

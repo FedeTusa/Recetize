@@ -36,10 +36,10 @@ class MedicoController extends BaseController
 
         $responseData = json_decode($response, true);
 
-        if ($responseData) {
-            return view('medico/exito');
-        } else {
+        if (!$responseData) {
             return view('medico/error');
         }
+
+        return redirect()->to('/RecetaController/new');
     }
 }

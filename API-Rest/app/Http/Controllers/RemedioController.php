@@ -30,7 +30,7 @@ class RemedioController extends Controller
         $this->validate($request, [
             'codigo' => 'required|numeric|unique:remedio',           // esta el validador codigo|digits:10 que no se como usarlo
             'droga' => 'required|string|max:100',
-            'medicamento' => 'nullable|string|max:100',
+            'medicamento' => 'nullable|string|max:100'
         ]);
         
         $remedio = Remedio::create([
@@ -47,7 +47,7 @@ class RemedioController extends Controller
         $this->validate($request, [
             'codigo' => 'numeric|unique:remedio',
             'droga' => 'string|max:100',
-            'medicamento' => 'nullable|string|max:100',
+            'medicamento' => 'nullable|string|max:100'
         ]);
 
         $remedio = Remedio::find($id);

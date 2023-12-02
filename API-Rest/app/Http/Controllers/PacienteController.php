@@ -31,10 +31,10 @@ class PacienteController extends Controller
             'dni' => 'required|numeric|unique:paciente', 
             'nombre' => 'required|string|min:3|max:100',
             'apellido' => 'required|string|min:3|max:100',
-            'celular' => 'required|string|min:8|max:10',
+            'celular' => 'required|string',
             'localidad' => 'required|string|min:2|max:50',
             'calle' => 'required|string|min:2|max:50',
-            'altura' => 'required|numeric',
+            'altura' => 'required|numeric'
         ]);
         
         $paciente = Paciente::create([
@@ -59,7 +59,7 @@ class PacienteController extends Controller
             'celular' => 'string|min:8|max:10',
             'localidad' => 'string|min:2|max:50',
             'calle' => 'string|min:2|max:50',
-            'altura' => 'numeric',
+            'altura' => 'numeric'
         ]);
 
         $paciente = Paciente::find($id);

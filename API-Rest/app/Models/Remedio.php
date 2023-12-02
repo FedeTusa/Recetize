@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Receta;
 
 
 class Remedio extends Model
@@ -15,4 +16,9 @@ class Remedio extends Model
     protected $fillable = [
         'codigo', 'droga', 'medicamento'
     ];
+
+    public function receta()
+    {
+        return $this->hasMany(Receta::class);
+    }
 }

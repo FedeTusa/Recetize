@@ -32,7 +32,7 @@ class MedicoController extends Controller
             'nombre' => 'required|string|min:3|max:100',
             'apellido' => 'required|string|min:3|max:100',
             'especialidad' => 'required|string|min:2|max:100',
-            'localidad' => 'required|string|min:2|max:50',
+            'localidad' => 'required|string|min:2|max:50'
         ]);
         
         $medico = Medico::create([
@@ -53,7 +53,7 @@ class MedicoController extends Controller
             'nombre' => 'string|min:3|max:100',
             'apellido' => 'string|min:3|max:100',
             'especialidad' => 'string|min:2|max:100',
-            'localidad' => 'string|min:2|max:50',
+            'localidad' => 'string|min:2|max:50'
         ]);
 
         $medico = Medico::find($id);
