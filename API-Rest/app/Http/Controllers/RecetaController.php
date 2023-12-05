@@ -24,7 +24,7 @@ class RecetaController extends Controller
         $receta = Receta::find($id);
         
         if (!$receta) {
-            return response()->json(['mensaje' => 'receta no encontrado'], 404);
+            return response()->json(['mensaje' => 'receta no encontrada'], 404);
         }
         return response()->json($receta);
     }
@@ -52,6 +52,46 @@ class RecetaController extends Controller
         ]);
 
         return response()->json($receta, 201);
+    }
+
+/*     public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'nroReceta' => 'required|numeric|unique:receta', 
+            'fechaEmision' => 'required',
+            'Remedio_id' => 'required',
+            'Paciente_id' => 'required',
+            'Medico_id' => 'required'
+        ]);
+
+        $receta = Receta::find($id);
+
+        if (!$receta) {
+            return response()->json(['mensaje' => 'receta no encontrada'], 404);
+        }
+
+        if ($request->input('nroReceta')) {$receta->nroReceta = $request->input('nroReceta');}
+        if ($request->input('fechaEmision')) {$receta->fechaEmision = $request->input('fechaEmision');}
+        if ($request->input('Remedio_id')) {$remedio->id = $request->input('Remedio_id');}
+        if ($request->input('Paciente_id')) {$paciente->celular = $request->input('celular');}
+        if ($request->input('Medico_id')) {$paciente->localidad = $request->input('localidad');}
+
+        $receta->save();
+
+        return response()->json($receta);
+    } */
+
+    public function destroy($id)
+    {
+        $receta = Receta::find($id);
+
+        if (!$receta) {
+            return response()->json(['mensaje' => 'receta no encontrada'], 404);
+        }
+
+        $receta = Receta::where('id', $id)->delete();
+
+        return response()->json(['mensaje' => 'receta eliminada con éxito'], 200);
     }
 
 }
