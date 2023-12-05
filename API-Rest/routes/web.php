@@ -45,3 +45,6 @@ $router->get('/recetas', ['uses' => 'RecetaController@showAll']);
 $router->get('/receta/{id}', ['uses' => 'RecetaController@show']);
 
 $router->post('/receta',['uses' => 'RecetaController@store']);
+$router->post('/editarReceta/{id}',['uses' => 'RecetaController@update']);
+
+$router->delete('/receta/{id}',['uses' => 'RecetaController@destroy']);
