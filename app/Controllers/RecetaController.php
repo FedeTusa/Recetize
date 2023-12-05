@@ -21,32 +21,28 @@ class RecetaController extends BaseController
     {
        
 
-        $dni = $this->request->getPost('dni');
-        $nombre = $this->request->getPost('nombre');
-        $apellido = $this->request->getPost('apellido');
-        $celular = $this->request->getPost('celular');
-        $localidad = $this->request->getPost('localidad');
-        $calle = $this->request->getPost('calle');
-        $altura = $this->request->getPost('altura');
+        $nroReceta = $this->request->getPost('nroReceta');
+        $fechaEmision = $this->request->getPost('fechaEmision');
+        $Remedio_id = $this->request->getPost('Remedio_id');
+        $Paciente_id = $this->request->getPost('Paciente_id');
+        $Medico_id = $this->request->getPost('Medico_id');
     
-        $paciente = new RecetaModel();
+        $receta = new RecetaModel();
 
-        $response = $paciente->crearPaciente([
-            'dni' => $dni,
-            'nombre' => $nombre,
-            'apellido' => $apellido,
-            'celular' => $celular,
-            'localidad' => $localidad,
-            'calle' => $calle,
-            'altura' => $altura,
+        $response = $receta->crearReceta([
+            'nroReceta' => $nroReceta,
+            'fechaEmision' => $fechaEmision,
+            'Remedio_id' => $Remedio_id,
+            'Paciente_id' => $Paciente_id,
+            'Medico_id' => $Medico_id,
         ]);
 
         $responseData = json_decode($response, true);
 
         if ($responseData) {
-            return view('remedio/exito');
+            return view('receta/exito');
         } else {
-            return view('remedio/error');
+            return view('receta/error');
         }
 
     }

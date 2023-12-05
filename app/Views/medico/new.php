@@ -88,18 +88,18 @@
     </style>
 </head>
 <body>
-    <h1>Medico</h1>
+    <h1>Médico</h1>
 
     <div class="button-container">
         <a href="http://recetize.test/PacienteController/new"><button>Paciente</button></a>
         <a href="http://recetize.test/RemedioController/new"><button>Remedio</button></a>
-        <button class="selected">Medico</button>
+        <button class="selected">Médico</button>
         <a href="http://recetize.test/RecetaController/new"><button>Receta</button></a>
         
     </div>
 
     <form action="<?= base_url()?>MedicoController" method="post">
-        <label for="matricula">Matricula</label>
+        <label for="matricula">Matrícula</label>
         <input type="number" name="matricula" id="matricula">
 
         <label for="nombre">Nombre</label>

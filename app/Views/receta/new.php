@@ -98,28 +98,28 @@
 
     <div class="button-container">
         <a href="http://recetize.test/PacienteController/new"><button>Paciente</button></a>
-        <a href="http://recetize.test/MedicoController/new"><button>Medico</button></a>
+        <a href="http://recetize.test/MedicoController/new"><button>Médico</button></a>
         <a href="http://recetize.test/RemedioController/new"><button>Remedio</button></a>
         <button class="selected">Receta</button>
     </div>
 
-    <p class="message">Aclaración: el paciente y el médico deben haber sido cargados previamente</p>
+    <p class="message">Aclaración: el paciente, el remedio y el médico deben haber sido cargados previamente</p>
 
     <form action="<?= base_url()?>RecetaController" method="post">
-        <label for="nroReceta">Numero de receta</label>
+        <label for="nroReceta">Número de receta</label>
         <input type="number" name="nroReceta" id="nroReceta">
 
-        <label for="fechaEmision">Fecha de emision</label>
+        <label for="fechaEmision">Fecha de emisión</label>
         <input type="text" name="fechaEmision" id="fechaEmision">
 
-        <label for="Remedio_codigo">Codigo del remedio</label>
-        <input type="text" name="Remedio_codigo" id="Remedio_codigo">
+        <label for="Remedio_id">Id remedio</label>
+        <input type="text" name="Remedio_id" id="Remedio_id">
 
-        <label for="Paciente_dni">DNI del paciente</label>
-        <input type="text" name="Paciente_dni" id="Paciente_dni">
+        <label for="Paciente_id">Id paciente</label>
+        <input type="text" name="Paciente_id" id="Paciente_id">
 
-        <label for="Medico_matricula">Matricula del medico</label>
-        <input type="text" name="Medico_matricula" id="Medico_matricula">
+        <label for="Medico_id">Id médico</label>
+        <input type="text" name="Medico_id" id="Medico_id">
 
         <input type="submit" value="Guardar">
     </form>
