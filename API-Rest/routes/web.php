@@ -40,3 +40,8 @@ $router->post('/medico',['uses' => 'MedicoController@store']);
 $router->post('/editarMedico/{id}',['uses' => 'MedicoController@update']);
 
 $router->delete('/medico/{id}',['uses' => 'MedicoController@destroy']);
+
+$router->get('/recetas', ['uses' => 'RecetaController@showAll']);
+$router->get('/receta/{id}', ['uses' => 'RecetaController@show']);
+
+$router->post('/receta',['uses' => 'RecetaController@store']);

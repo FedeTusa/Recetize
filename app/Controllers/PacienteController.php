@@ -43,13 +43,11 @@ class PacienteController extends BaseController
 
         $responseData = json_decode($response, true);
 
-        if ($responseData) {
-            return view('paciente/exito');
-        } else {
+        if (!$responseData) {
             return view('paciente/error');
         }
 
-
+        return redirect()->to('/RemedioController/new');
 
     }
 }

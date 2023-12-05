@@ -64,13 +64,11 @@ class RemedioController extends BaseController
 
         $responseData = json_decode($response, true);
 
-        if ($responseData) {
-            //$message = $responseData['message'];
-            //echo $message;
-            return view('remedio/exito', [$responseData]);
-        } else {
+        if (!$responseData) {
             return view('remedio/error');
         }
+
+        return redirect()->to('/MedicoController/new');
 
         // $apiUrl = 'http://localhost:8000/remedio';
 

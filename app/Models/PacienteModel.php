@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class PacienteModel extends Model
 {
     protected $table            = 'paciente';
-    protected $primaryKey       = 'dni';
+    protected $primaryKey       = 'id';
     protected $allowedFields    = ['dni', 'nombre', 'apellido', 'celular', 'localidad', 'calle', 'altura'];
 
     private function sendRequest($method, $url, $data = [])
