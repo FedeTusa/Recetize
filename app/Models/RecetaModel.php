@@ -9,7 +9,7 @@ class RecetaModel extends Model
     protected $table            = 'receta';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $allowedFields    = ['nroReceta', 'fechaEmision'];
+    protected $allowedFields    = ['nroReceta', 'fechaEmision', 'Remedio_id', 'Paciente_id', 'Medico_id'];
 
     private function sendRequest($method, $url, $data = [])
     {
@@ -32,7 +32,7 @@ class RecetaModel extends Model
 
     public function crearReceta($data)
     {
-        return $this->sendRequest('POST', 'http://localhost:8000/paciente', $data);
+        return $this->sendRequest('POST', 'http://localhost:8000/receta', $data);
     }
 
 }
