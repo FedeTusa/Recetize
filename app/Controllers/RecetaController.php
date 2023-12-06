@@ -12,21 +12,21 @@ class RecetaController extends BaseController
     public function new()
     {
 
-       $validation = \Config\Services::validation(); 
+        $validation = \Config\Services::validation();
 
-       return view('receta/new',['validation' => $validation]);
+        return view('receta/new', ['validation' => $validation]);
     }
 
     public function create()
     {
-       
+
 
         $nroReceta = $this->request->getPost('nroReceta');
         $fechaEmision = $this->request->getPost('fechaEmision');
         $Remedio_id = $this->request->getPost('Remedio_id');
         $Paciente_id = $this->request->getPost('Paciente_id');
         $Medico_id = $this->request->getPost('Medico_id');
-    
+
         $receta = new RecetaModel();
 
         $response = $receta->crearReceta([
@@ -44,7 +44,18 @@ class RecetaController extends BaseController
         } else {
             return view('receta/error');
         }
+    }
 
+    public function show()
+    {
+        $receta = new RecetaModel();
+
+        $todasLasRecetas = $receta->obtenerRecetas();
+
+        $todasLasRecetas = json_decode($todasLasRecetas, true);
+        dd($todasLasRecetas);
+        if ($todasLasRecetas) {
+            return view('busqueda', $todasLasRecetas);
+        }
     }
 }
-

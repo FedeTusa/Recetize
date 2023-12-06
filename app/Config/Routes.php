@@ -13,3 +13,5 @@ $routes->resource('MedicoController');
 $routes->resource('RecetaController');
 
 $routes->get('/pagprincipal', 'Home::main');
+
+$routes->get('/pagprincipal/busqueda', 'MainController::search');
