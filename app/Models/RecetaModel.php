@@ -35,4 +35,8 @@ class RecetaModel extends Model
         return $this->sendRequest('POST', 'http://localhost:8000/receta', $data);
     }
 
+    public function obtenerRecetas()
+    {
+        return $this->sendRequest('GET', 'http://localhost:8000/recetas');
+    }
 }

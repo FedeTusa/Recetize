@@ -90,7 +90,10 @@
           Cargar
       </div>
 
-        <div class="col-md-4 option">Buscar</div>
+      <div class="col-md-4 option" onclick="window.location.href='http://recetize.test/RecetaController/show'">
+          <!-- <img src="carga.jpg" alt="Cargar" style="width: 80px; height: 80px;"> -->
+          Buscar
+      </div>
         <div class="col-md-4 option">Modificar</div>
       </div>
       <div class="row">
