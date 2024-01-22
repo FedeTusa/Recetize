@@ -69,6 +69,16 @@
             border-radius: 5px;
         }
 
+        input#matricula {
+            width: 30%; /* Ajuste de la longitud del input */
+            color: #aaa;
+        }
+
+        input#matricula::placeholder {
+            color: #aaa;
+            font-size: 20px;
+        }
+
         input[type="submit"], input[type="button"] {
             background-color: #ccc; /* Gris claro para el botón "Remedio" y "Médico" */
             color: #000;
@@ -99,19 +109,19 @@
     </div>
 
     <form action="<?= base_url()?>MedicoController" method="post">
-        <label for="matricula">Matrícula</label>
-        <input type="number" name="matricula" id="matricula">
+        <label for="matricula">Matrícula Provincial*</label>
+        <input type="number" name="matricula" id="matricula" placeholder="XXXXX">
 
-        <label for="nombre">Nombre</label>
+        <label for="nombre">Nombres*</label>
         <input type="text" name="nombre" id="nombre">
 
-        <label for="apellido">Apellido</label>
+        <label for="apellido">Apellidos*</label>
         <input type="text" name="apellido" id="apellido">
 
-        <label for="especialidad">Especialidad</label>
+        <label for="especialidad">Especialidad*</label>
         <input type="text" name="especialidad" id="especialidad">
 
-        <label for="localidad">Localidad</label>
+        <label for="localidad">Localidad*</label>
         <input type="text" name="localidad" id="localidad">
 
         <input type="submit" value="Guardar">
