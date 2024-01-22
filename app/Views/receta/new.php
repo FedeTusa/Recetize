@@ -75,6 +75,21 @@
             border-radius: 5px;
         }
 
+        input#nroReceta {
+            width: 45%; /* Ajuste de la longitud del input */
+            color: #aaa;
+        }
+
+        input#fechaEmision {
+            width: 45%; /* Ajuste de la longitud del input */
+            color: #aaa;
+        }
+
+        input#fechaEmision::placeholder {
+            color: #aaa;
+            font-size: 20px;
+        }
+
         input[type="submit"], input[type="button"] {
             background-color: #ccc; /* Gris claro para el botón "Remedio" y "Médico" */
             color: #000;
@@ -91,34 +106,61 @@
         input[type="submit"]:hover, input[type="button"]:hover {
             background-color: #a5d8b9; /* Cambio de color al pasar el mouse */
         }
+
+        .back-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .back-button button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button button:hover {
+            background-color: #333;
+        }
+        
     </style>
 </head>
 <body>
     <h1>Receta</h1>
 
+    <a href="http://recetize.test/pagprincipal" class="back-button">
+        <button>Atrás</button>
+    </a>
+
     <div class="button-container">
         <a href="http://recetize.test/PacienteController/new"><button>Paciente</button></a>
-        <a href="http://recetize.test/MedicoController/new"><button>Médico</button></a>
         <a href="http://recetize.test/RemedioController/new"><button>Remedio</button></a>
+        <a href="http://recetize.test/MedicoController/new"><button>Médico</button></a>
         <button class="selected">Receta</button>
     </div>
 
     <p class="message">Aclaración: el paciente, el remedio y el médico deben haber sido cargados previamente</p>
 
     <form action="<?= base_url()?>RecetaController" method="post">
-        <label for="nroReceta">Número de receta</label>
+        <label for="nroReceta">Número de receta*</label>
         <input type="number" name="nroReceta" id="nroReceta">
 
-        <label for="fechaEmision">Fecha de emisión</label>
-        <input type="text" name="fechaEmision" id="fechaEmision">
+        <label for="fechaEmision">Fecha de emisión*</label>
+        <input type="text" name="fechaEmision" id="fechaEmision" placeholder="AAAA-MM-DD">
 
-        <label for="Remedio_id">Id remedio</label>
+        <label for="Remedio_id">Id remedio*</label>
         <input type="text" name="Remedio_id" id="Remedio_id">
 
-        <label for="Paciente_id">Id paciente</label>
+        <label for="Paciente_id">Id paciente*</label>
         <input type="text" name="Paciente_id" id="Paciente_id">
 
-        <label for="Medico_id">Id médico</label>
+        <label for="Medico_id">Id médico*</label>
         <input type="text" name="Medico_id" id="Medico_id">
 
         <input type="submit" value="Guardar">

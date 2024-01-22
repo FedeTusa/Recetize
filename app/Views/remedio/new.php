@@ -45,6 +45,11 @@
             background-color: #ccc; /* Gris claro para el botón "Paciente" seleccionado */
         }
 
+        .message {
+            color: red;
+            margin-top: 10px;
+        }
+
         form {
             background-color: #f0f8f0;
             padding: 20px;
@@ -67,6 +72,16 @@
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 5px;
+        }
+
+        input#codigo {
+            width: 45%; /* Ajuste de la longitud del input */
+            color: #aaa;
+        }
+
+        input#codigo::placeholder {
+            color: #aaa;
+            font-size: 20px;
         }
 
         input[type="submit"], input[type="button"] {
@@ -97,11 +112,13 @@
         <a href="http://recetize.test/RecetaController/new"><button>Receta</button></a>
     </div>
 
-    <form action="<?= base_url()?>RemedioController" method="post">
-        <label for="codigo">Código</label>
-        <input type="number" name="codigo" id="codigo">
+    <p class="message">Aclaración: En caso de haber finalizado de cargar los remedios proceda a cargar el médico</p>    
 
-        <label for="droga">Droga</label>
+    <form action="<?= base_url()?>RemedioController" method="post">
+        <label for="codigo">Código*</label>
+        <input type="number" name="codigo" id="codigo" placeholder="X-XXXXXXXXXXXX">
+
+        <label for="droga">Droga*</label>
         <input type="text" name="droga" id="droga">
 
         <label for="medicamento">Medicamento</label>

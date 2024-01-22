@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,7 @@
             flex-direction: column;
             align-items: center;
             background-color: #f0f0f0;
+            position: relative;
         }
 
         h1 {
@@ -29,7 +31,7 @@
         }
 
         .button-container button {
-            background-color: #00cc66; /* Verde claro para el botón "Remedio" */
+            background-color: #00cc66;
             color: #000;
             border: none;
             padding: 10px 20px;
@@ -42,7 +44,7 @@
         }
 
         .button-container button.selected {
-            background-color: #ccc; /* Gris claro para el botón "Paciente" seleccionado */
+            background-color: #ccc;
         }
 
         form {
@@ -69,8 +71,29 @@
             border-radius: 5px;
         }
 
-        input[type="submit"], input[type="button"] {
-            background-color: #ccc; /* Gris claro para el botón "Remedio" y "Médico" */
+        /* Estilo específico para el input de DNI */
+        input#dni {
+            width: 35%; /* Ajuste de la longitud del input */
+            color: #aaa;
+        }
+
+        input#dni::placeholder {
+            color: #aaa;
+            font-size: 20px;
+        }
+
+        input#dni:focus {
+            color: #000;
+        }
+
+        /* Estilo específico para el input de Altura */
+        input#altura {
+            width: 40%;
+        }
+
+        input[type="submit"],
+        input[type="button"] {
+            background-color: #ccc;
             color: #000;
             border: none;
             padding: 10px 20px;
@@ -82,40 +105,49 @@
             width: 100%;
         }
 
-        input[type="submit"]:hover, input[type="button"]:hover {
-            background-color: #a5d8b9; /* Cambio de color al pasar el mouse */
+        input[type="submit"]:hover,
+        input[type="button"]:hover {
+            background-color: #a5d8b9;
         }
 
-                /* Estilos para el botón "Atrás" */
-                .back-button {
+        .back-button {
             position: absolute;
             top: 10px;
             right: 10px;
         }
 
-        /* Estilos para el botón */
         .back-button button {
             background-color: #000;
             color: #fff;
             border: none;
-            padding: 10px 20px; /* Ajusta el padding para cambiar el tamaño del botón */
-            border-radius: 10px; /* Bordes redondeados */
+            padding: 10px 20px;
+            border-radius: 10px;
             font-weight: bold;
-            font-size: 18px; /* Tamaño del texto */
+            font-size: 18px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
         .back-button button:hover {
-            background-color: #333; /* Cambio de color al pasar el mouse */
+            background-color: #333;
+        }
+
+        #logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 100px;
         }
 
     </style>
 </head>
+
 <body>
+    <img src="../logo.png" alt="Logo" id="logo">
+
     <h1>Paciente</h1>
 
-    <h2><?= $validation->listErrors() ?></h2> <!-- no funciona -->
+    <h2><?= $validation->listErrors() ?></h2>
 
     <a href="http://recetize.test/pagprincipal" class="back-button">
         <button>Atrás</button>
@@ -129,31 +161,33 @@
     </div>
 
     <form action="<?= base_url()?>PacienteController" method="post">
-        <label for="dni">DNI</label>
-        <input type="number" name="dni" id="dni">
+        <label for="dni">DNI*</label>
+        <input type="text" name="dni" id="dni" placeholder="XX.XXX.XXX">
 
-        <label for="nombre">Nombre</label>
+        <label for="nombre">Nombres*</label>
         <input type="text" name="nombre" id="nombre">
 
-        <label for="apellido">Apellido</label>
+        <label for="apellido">Apellidos*</label>
         <input type="text" name="apellido" id="apellido">
 
-        <label for="celular">Celular</label>
+        <label for="celular">Celular*</label>
         <input type="text" name="celular" id="celular">
 
-        <label for="localidad">Localidad</label>
+        <label for="localidad">Localidad*</label>
         <input type="text" name="localidad" id="localidad">
 
-        <label for="calle">Calle</label>
+        <label for="calle">Calle*</label>
         <input type="text" name="calle" id="calle">
 
-        <label for="altura">Altura</label>
+        <label for="altura">Altura*</label>
         <input type="text" name="altura" id="altura">
 
         <input type="submit" value="Guardar">
     </form>
 </body>
+
 </html>
+
 
 
 
