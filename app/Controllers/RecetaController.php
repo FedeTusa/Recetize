@@ -53,9 +53,9 @@ class RecetaController extends BaseController
         $todasLasRecetas = $receta->obtenerRecetas();
 
         $todasLasRecetas = json_decode($todasLasRecetas, true);
-        dd($todasLasRecetas);
+        
         if ($todasLasRecetas) {
-            return view('busqueda', $todasLasRecetas);
+            return view('busqueda', ['todasLasRecetas' => $todasLasRecetas]);
         }
     }
 }
