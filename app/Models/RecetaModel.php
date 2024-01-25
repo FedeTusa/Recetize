@@ -24,7 +24,16 @@ class RecetaModel extends Model
 
         $response = curl_exec($ch);
 
+        if (curl_errno($ch)) {
+            echo 'Error en la solicitud cURL: ' . curl_error($ch);
+        }
+
         curl_close($ch);
+        
+/*         if($url == 'http://localhost:8000/recetas') {
+            $nombreRemedio = remedioPorId($response['Remedio_id']);
+            $response['Remedio_id'] = $nombreRemedio['droga'];
+        } */
 
         return $response;
     }
@@ -38,5 +47,10 @@ class RecetaModel extends Model
     public function obtenerRecetas()
     {
         return $this->sendRequest('GET', 'http://localhost:8000/recetas');
+    }
+
+    public function remedioPorId(int $id)
+    {
+       return $this->sendRequest('GET', 'http://localhost:8000/remedio/'.$id);
     }
 }
