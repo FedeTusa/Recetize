@@ -34,4 +34,9 @@ class MedicoModel extends Model
         return $this->sendRequest('POST', 'http://localhost:8000/medico', $data);
     }
 
+    public function medicoPorId(int $id)
+    {
+       return $this->sendRequest('GET', 'http://localhost:8000/medico/'.$id);
+    }
+
 }

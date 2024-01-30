@@ -97,7 +97,7 @@
         <div class="col-md-4 option">Modificar</div>
       </div>
       <div class="row">
-        <div class="col-md-6 option">Consultar</div>
+        <div class="col-md-6 option" onclick="window.location.href='http://recetize.test//pagprincipal/consulta'">Consultar</div>
         <div class="col-md-6 option">Eliminar</div>
       </div>
     </div>

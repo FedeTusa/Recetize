@@ -1,4 +1,3 @@
-<!-- busqueda.php -->
 <?php
 function modificarFecha($fecha) 
 {
@@ -7,6 +6,14 @@ function modificarFecha($fecha)
     return $fechaModificada;
 }
 
+function modificarFormato($formato) {
+    $primeraDivision = explode("T",$formato);
+    $fechaConFormato = modificarFecha($primeraDivision[0]);
+    $horaDividida = explode(".", $primeraDivision[1]);
+    $formatoModificado = $fechaConFormato." Hora:".$horaDividida[0];
+    return $formatoModificado;
+} 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +21,7 @@ function modificarFecha($fecha)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Busqueda de Recetas</title>
+    <title>Consulta de Recetas</title>
     <style>
         body {
             background-color: #f0f8ff;
@@ -74,7 +81,7 @@ function modificarFecha($fecha)
 </head>
 
 <body>
-    <h1>Busqueda de Recetas</h1>
+    <h1>Consulta de Recetas</h1>
 
     <a href="http://recetize.test/pagprincipal" class="back-button">
         <button>Atrás</button>
@@ -89,6 +96,8 @@ function modificarFecha($fecha)
                     <th>Remedio</th>
                     <th>Paciente</th>
                     <th>Medico</th>
+                    <th>Fecha de Creación</th>
+                    <th>Última modificación</th>
                 </tr>
             </thead>
             <tbody>
@@ -99,6 +108,8 @@ function modificarFecha($fecha)
                         <td><?php echo $receta['Remedio_id']; ?></td>
                         <td><?php echo $receta['Paciente_id']; ?></td>
                         <td><?php echo $receta['Medico_id']; ?></td>
+                        <td><?php echo modificarFormato($receta['created_at']); ?></td>
+                        <td><?php echo modificarFormato($receta['updated_at']); ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
