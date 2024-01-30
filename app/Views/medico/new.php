@@ -95,6 +95,15 @@
         input[type="submit"]:hover, input[type="button"]:hover {
             background-color: #a5d8b9; /* Cambio de color al pasar el mouse */
         }
+
+        .menor-longitud {
+            display: inline-block;
+        }
+
+        b {
+            color: #f00;
+        }
+
     </style>
 </head>
 <body>
@@ -109,19 +118,20 @@
     </div>
 
     <form action="<?= base_url()?>MedicoController" method="post">
-        <label for="matricula">Matrícula Provincial*</label>
+        <label for="matricula" class="menor-longitud">Matrícula Provincial</label><b>*</b>
+        <br>
         <input type="number" name="matricula" id="matricula" placeholder="XXXXX">
-
-        <label for="nombre">Nombres*</label>
+        <br>
+        <label for="nombre" class="menor-longitud">Nombres</label><b>*</b>
         <input type="text" name="nombre" id="nombre">
 
-        <label for="apellido">Apellidos*</label>
+        <label for="apellido" class="menor-longitud">Apellidos</label><b>*</b>
         <input type="text" name="apellido" id="apellido">
 
-        <label for="especialidad">Especialidad*</label>
+        <label for="especialidad" class="menor-longitud">Especialidad</label><b>*</b>
         <input type="text" name="especialidad" id="especialidad">
 
-        <label for="localidad">Localidad*</label>
+        <label for="localidad" class="menor-longitud">Localidad</label><b>*</b>
         <input type="text" name="localidad" id="localidad">
 
         <input type="submit" value="Guardar">

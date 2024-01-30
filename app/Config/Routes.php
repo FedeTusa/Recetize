@@ -14,4 +14,6 @@ $routes->resource('RecetaController');
 
 $routes->get('/pagprincipal', 'Home::main');
 
-$routes->get('/pagprincipal/busqueda', 'MainController::search');
+$routes->get('/pagprincipal/busqueda', 'MainController::search'); //no sirve
+
+$routes->get('/pagprincipal/consulta', 'RecetaController::consult');

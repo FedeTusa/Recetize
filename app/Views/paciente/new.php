@@ -88,7 +88,7 @@
 
         /* Estilo específico para el input de Altura */
         input#altura {
-            width: 40%;
+            width: 30%;
         }
 
         input[type="submit"],
@@ -117,8 +117,8 @@
         }
 
         .back-button button {
-            background-color: #000;
-            color: #fff;
+            background-color: #c0e7c8;
+            color: #000;
             border: none;
             padding: 10px 20px;
             border-radius: 10px;
@@ -129,7 +129,7 @@
         }
 
         .back-button button:hover {
-            background-color: #333;
+            background-color: #a5d8b9;
         }
 
         #logo {
@@ -139,11 +139,23 @@
             width: 100px;
         }
 
+        label {
+            display: inline-block;
+        }
+
+        .menor-longitud {
+            display: inline-block;
+        }
+
+        b {
+            color: #f00;
+        }
+
     </style>
 </head>
 
 <body>
-    <img src="../logo.png" alt="Logo" id="logo">
+    <!-- <img src="../logo.png" alt="Logo" id="logo"> -->
 
     <h1>Paciente</h1>
 
@@ -161,25 +173,27 @@
     </div>
 
     <form action="<?= base_url()?>PacienteController" method="post">
-        <label for="dni">DNI*</label>
+        <label for="dni" class="menor-longitud">DNI</label><b>*</b>
+        <br>
         <input type="text" name="dni" id="dni" placeholder="XX.XXX.XXX">
-
-        <label for="nombre">Nombres*</label>
+        <br>
+        <label for="nombre">Nombres</label><b>*</b>
         <input type="text" name="nombre" id="nombre">
 
-        <label for="apellido">Apellidos*</label>
+        <label for="apellido">Apellidos</label><b>*</b>
         <input type="text" name="apellido" id="apellido">
 
-        <label for="celular">Celular*</label>
+        <label for="celular">Celular</label><b>*</b>
         <input type="text" name="celular" id="celular">
 
-        <label for="localidad">Localidad*</label>
+        <label for="localidad">Localidad</label><b>*</b>
         <input type="text" name="localidad" id="localidad">
 
-        <label for="calle">Calle*</label>
+        <label for="calle">Calle</label><b>*</b>
         <input type="text" name="calle" id="calle">
 
-        <label for="altura">Altura*</label>
+        <label for="altura" class="menor-longitud">Altura</label><b>*</b>
+        <br>
         <input type="text" name="altura" id="altura">
 
         <input type="submit" value="Guardar">

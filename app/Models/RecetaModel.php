@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Models\PacienteModel;
+/* include('App\Models\PacienteModel'); */
 
 class RecetaModel extends Model
 {
@@ -29,11 +31,6 @@ class RecetaModel extends Model
         }
 
         curl_close($ch);
-        
-/*         if($url == 'http://localhost:8000/recetas') {
-            $nombreRemedio = remedioPorId($response['Remedio_id']);
-            $response['Remedio_id'] = $nombreRemedio['droga'];
-        } */
 
         return $response;
     }
@@ -47,10 +44,5 @@ class RecetaModel extends Model
     public function obtenerRecetas()
     {
         return $this->sendRequest('GET', 'http://localhost:8000/recetas');
-    }
-
-    public function remedioPorId(int $id)
-    {
-       return $this->sendRequest('GET', 'http://localhost:8000/remedio/'.$id);
     }
 }

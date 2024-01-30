@@ -5,7 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 
 use App\Models\RecetaModel;
-
+use App\Models\PacienteModel;
+use App\Models\MedicoModel;
 
 class RecetaController extends BaseController
 {
@@ -49,13 +50,54 @@ class RecetaController extends BaseController
     public function show()
     {
         $receta = new RecetaModel();
+        $paciente = new PacienteModel();
+        $medico = new MedicoModel();
 
         $todasLasRecetas = $receta->obtenerRecetas();
 
         $todasLasRecetas = json_decode($todasLasRecetas, true);
-        
+
+        foreach ($todasLasRecetas as &$unaReceta) {
+            $idPaciente = (int) $unaReceta['Paciente_id'];
+            $idMedico = (int) $unaReceta['Medico_id'];
+            $nombrePaciente = $paciente->pacientePorId($idPaciente);
+            $nombreMedico = $medico->medicoPorId($idMedico);
+            $nombrePaciente = json_decode($nombrePaciente, true);
+            $nombreMedico = json_decode($nombreMedico, true);
+            $unaReceta['Paciente_id'] = $nombrePaciente['nombre']." ".$nombrePaciente['apellido'];
+            $unaReceta['Medico_id'] = $nombreMedico['nombre']." ".$nombreMedico['apellido'];
+        }
+        unset($unaReceta);
+
         if ($todasLasRecetas) {
             return view('busqueda', ['todasLasRecetas' => $todasLasRecetas]);
+        }
+    }
+
+    public function consult()
+    {
+        $receta = new RecetaModel();
+        $paciente = new PacienteModel();
+        $medico = new MedicoModel();
+
+        $todasLasRecetas = $receta->obtenerRecetas();
+
+        $todasLasRecetas = json_decode($todasLasRecetas, true);
+
+        foreach ($todasLasRecetas as &$unaReceta) {
+            $idPaciente = (int) $unaReceta['Paciente_id'];
+            $idMedico = (int) $unaReceta['Medico_id'];
+            $nombrePaciente = $paciente->pacientePorId($idPaciente);
+            $nombreMedico = $medico->medicoPorId($idMedico);
+            $nombrePaciente = json_decode($nombrePaciente, true);
+            $nombreMedico = json_decode($nombreMedico, true);
+            $unaReceta['Paciente_id'] = $nombrePaciente['nombre']." ".$nombrePaciente['apellido'];
+            $unaReceta['Medico_id'] = $nombreMedico['nombre']." ".$nombreMedico['apellido'];
+        }
+        unset($unaReceta);
+
+        if ($todasLasRecetas) {
+            return view('consulta', ['todasLasRecetas' => $todasLasRecetas]);
         }
     }
 }
