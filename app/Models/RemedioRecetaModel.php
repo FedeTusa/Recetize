@@ -4,12 +4,12 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class RecetaModel extends Model
+class RemedioRecetaModel extends Model
 {
-    protected $table            = 'receta';
+    protected $table            = 'remedioreceta';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $allowedFields    = ['nroReceta', 'fechaEmision'];
+    protected $allowedFields    = ['remedio_id', 'receta_id'];
 
     private function sendRequest($method, $url, $data = [])
     {
@@ -29,9 +29,13 @@ class RecetaModel extends Model
         return $response;
     }
 
-    public function crearReceta($data)
+    public function ultimoRemedioReceta(){
+        return $this->orderBy('id', 'DESC')->first();
+    }
+
+    public function crearRemedioReceta($data)
     {
-        return $this->sendRequest('POST', 'http://localhost:8000/paciente', $data);
+        return $this->sendRequest('POST', 'http://localhost:8000/remedioreceta', $data);
     }
 
 }

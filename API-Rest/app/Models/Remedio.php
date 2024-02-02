@@ -21,4 +21,9 @@ class Remedio extends Model
     {
         return $this->hasMany(Receta::class);
     }
+
+    public function remedioreceta()
+    {
+        return $this->hasMany(RemedioReceta::class);
+    }
 }

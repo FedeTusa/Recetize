@@ -45,3 +45,9 @@ $router->get('/recetas', ['uses' => 'RecetaController@showAll']);
 $router->get('/receta/{id}', ['uses' => 'RecetaController@show']);
 
 $router->post('/receta',['uses' => 'RecetaController@store']);
+
+$router->get('/remedioreceta', ['uses' => 'RemedioRecetaController@showAll']);
+$router->get('/remedioreceta/{id}', ['uses' => 'RemedioRecetaController@show']);
+
+$router->post('/remedioreceta',['uses' => 'RemedioRecetaController@store']);
+$router->post('/actualizarRemedioReceta/{id}',['uses' => 'RemedioRecetaController@update']);

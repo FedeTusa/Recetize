@@ -123,6 +123,37 @@
 
         <input type="submit" value="Guardar">
     </form>
+
+    <!-- <form action="<?= base_url()?>RemedioRecetaController/create" method="post">
+        <label for="remedio_id">Remedio</label>
+        <input type="number" name="remedio_id" id="remedio_id">
+
+        <input type="submit" value="+">
+    </form> -->
+
+    <div class="formulario-receta">
+        <form action="<?= base_url()?>RemedioRecetaController" method="post" class="remedio-form">
+            <div class="input-group">
+                <label for="remedio_id">Remedio</label>
+                <input type="number" name="remedio_id[]" class="remedio-id">
+            </div>
+            <input type="submit" value="+">
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('#formularios-receta').addEventListener('click', function (event) {
+                if (event.target.matches('.remedio-form input[type="submit"]')) {
+                    event.preventDefault();
+                    const newForm = document.querySelector('.formulario-receta').cloneNode(true);
+                    newForm.querySelector('.remedio-id').value = '';
+                    document.querySelector('#formularios-receta').appendChild(newForm);
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
 

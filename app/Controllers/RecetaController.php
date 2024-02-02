@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Controllers\RemedioRecetaController;
 
 use App\Models\RecetaModel;
 
@@ -29,7 +30,8 @@ class RecetaController extends BaseController
         $calle = $this->request->getPost('calle');
         $altura = $this->request->getPost('altura');
     
-        $paciente = new RecetaModel();
+        $receta = new RecetaModel();
+        $remedioreceta = new RemedioRecetaController();
 
         $response = $paciente->crearPaciente([
             'dni' => $dni,
@@ -44,6 +46,9 @@ class RecetaController extends BaseController
         $responseData = json_decode($response, true);
 
         if ($responseData) {
+            if (isset($responseData['id'])) {
+                $this->$remedioreceta->actualizarRemedioReceta($responseData['id']);
+            }
             return view('remedio/exito');
         } else {
             return view('remedio/error');
