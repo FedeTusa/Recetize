@@ -124,18 +124,11 @@
         <input type="submit" value="Guardar">
     </form>
 
-    <!-- <form action="<?= base_url()?>RemedioRecetaController/create" method="post">
-        <label for="remedio_id">Remedio</label>
-        <input type="number" name="remedio_id" id="remedio_id">
-
-        <input type="submit" value="+">
-    </form> -->
-
     <div class="formulario-receta">
-        <form action="<?= base_url()?>RemedioRecetaController" method="post" class="remedio-form">
+        <form action="<?= base_url()?>/RemedioRecetaController" method="post">
             <div class="input-group">
                 <label for="remedio_id">Remedio</label>
-                <input type="number" name="remedio_id[]" class="remedio-id">
+                <input type="number" id="remedio_id" name="remedio_id" required><br><br>
             </div>
             <input type="submit" value="+">
         </form>
