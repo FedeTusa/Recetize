@@ -184,6 +184,30 @@
 
         <input type="submit" value="Guardar">
     </form>
+
+    <div class="formulario-receta">
+        <form action="<?= base_url()?>/RemedioRecetaController" method="post">
+            <div class="input-group">
+                <label for="remedio_id">Remedio</label>
+                <input type="number" id="remedio_id" name="remedio_id" required><br><br>
+            </div>
+            <input type="submit" value="+">
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('#formularios-receta').addEventListener('click', function (event) {
+                if (event.target.matches('.remedio-form input[type="submit"]')) {
+                    event.preventDefault();
+                    const newForm = document.querySelector('.formulario-receta').cloneNode(true);
+                    newForm.querySelector('.remedio-id').value = '';
+                    document.querySelector('#formularios-receta').appendChild(newForm);
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>

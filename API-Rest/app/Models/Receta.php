@@ -31,4 +31,9 @@ class Receta extends Model
         return $this->belongsTo(Paciente::class);
     }
 
+    public function remedioreceta()
+    {
+        return $this->hasMany(RemedioReceta::class);
+    }
+
 }

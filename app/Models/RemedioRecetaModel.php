@@ -3,15 +3,13 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
-use App\Models\PacienteModel;
-/* include('App\Models\PacienteModel'); */
 
-class RecetaModel extends Model
+class RemedioRecetaModel extends Model
 {
-    protected $table            = 'receta';
+    protected $table            = 'remedioreceta';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $allowedFields    = ['nroReceta', 'fechaEmision', 'Remedio_id', 'Paciente_id', 'Medico_id'];
+    protected $allowedFields    = ['remedio_id', 'receta_id'];
 
     private function sendRequest($method, $url, $data = [])
     {
@@ -26,22 +24,18 @@ class RecetaModel extends Model
 
         $response = curl_exec($ch);
 
-        if (curl_errno($ch)) {
-            echo 'Error en la solicitud cURL: ' . curl_error($ch);
-        }
-
         curl_close($ch);
 
         return $response;
     }
 
-    public function crearReceta($data)
-    {
-        return $this->sendRequest('POST', 'http://localhost:8000/receta', $data);
+    public function ultimoRemedioReceta(){
+        return $this->orderBy('id', 'DESC')->first();
     }
 
-    public function obtenerRecetas()
+    public function crearRemedioReceta($data)
     {
-        return $this->sendRequest('GET', 'http://localhost:8000/recetas');
+        return $this->sendRequest('POST', 'http://localhost:8000/remedioreceta', $data);
     }
+
 }
