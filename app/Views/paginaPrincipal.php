@@ -85,12 +85,19 @@
     <div class="options">
       <div class="row">
         <!-- Quitamos el estilo por defecto de Bootstrap y agregamos un evento onclick -->
-        <div class="col-md-4 option" onclick="window.location.href='http://recetize.test/PacienteController/new'">Cargar</div>
-        <div class="col-md-4 option">Buscar</div>
+        <div class="col-md-4 option" onclick="window.location.href='http://recetize.test/PacienteController/new'">
+          <!-- <img src="carga.jpg" alt="Cargar" style="width: 80px; height: 80px;"> -->
+          Cargar
+      </div>
+
+      <div class="col-md-4 option" onclick="window.location.href='http://recetize.test/RecetaController/show'">
+          <!-- <img src="carga.jpg" alt="Cargar" style="width: 80px; height: 80px;"> -->
+          Buscar
+      </div>
         <div class="col-md-4 option">Modificar</div>
       </div>
       <div class="row">
-        <div class="col-md-6 option">Consultar</div>
+        <div class="col-md-6 option" onclick="window.location.href='http://recetize.test//pagprincipal/consulta'">Consultar</div>
         <div class="col-md-6 option">Eliminar</div>
       </div>
     </div>

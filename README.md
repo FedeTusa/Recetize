@@ -7,3 +7,11 @@
 ![JavaScrip](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 # Recetize
 Es una aplicación creada con la finalidad de poder procesar y gestionar recetas medicas que debes ser archivadas por la ley para futuras auditorias
+
+Agregar linea default-storage-engine = InnoDB en my.ini en la seccion mysqld
+![image](https://github.com/FedeTusa/Recetize/assets/80929107/6cb112b7-1a74-4831-b25e-5e3703121238)
+
+![image](https://github.com/FedeTusa/Recetize/assets/80929107/6a6b5b60-2aa0-40de-ab80-967dcdbcdd82)
+
+Revisar para el manejo de uno a muchos para mas de un modelo:
+https://laravel.com/docs/8.x/eloquent-relationships#one-of-many-polymorphic-relations

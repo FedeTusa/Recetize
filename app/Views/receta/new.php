@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,7 +30,8 @@
         }
 
         .button-container button {
-            background-color: #00cc66; /* Verde claro para el botón "Remedio" */
+            background-color: #00cc66;
+            /* Verde claro para el botón "Remedio" */
             color: #000;
             border: none;
             padding: 10px 20px;
@@ -42,7 +44,8 @@
         }
 
         .button-container button.selected {
-            background-color: #ccc; /* Gris claro para el botón "Paciente" seleccionado */
+            background-color: #ccc;
+            /* Gris claro para el botón "Paciente" seleccionado */
         }
 
         /* Agregamos un estilo para el mensaje en rojo */
@@ -75,8 +78,27 @@
             border-radius: 5px;
         }
 
-        input[type="submit"], input[type="button"] {
-            background-color: #ccc; /* Gris claro para el botón "Remedio" y "Médico" */
+        input#nroReceta {
+            width: 45%;
+            /* Ajuste de la longitud del input */
+            color: #aaa;
+        }
+
+        input#fechaEmision {
+            width: 45%;
+            /* Ajuste de la longitud del input */
+            color: #aaa;
+        }
+
+        input#fechaEmision::placeholder {
+            color: #aaa;
+            font-size: 20px;
+        }
+
+        input[type="submit"],
+        input[type="button"] {
+            background-color: #ccc;
+            /* Gris claro para el botón "Remedio" y "Médico" */
             color: #000;
             border: none;
             padding: 10px 20px;
@@ -88,38 +110,77 @@
             width: 100%;
         }
 
-        input[type="submit"]:hover, input[type="button"]:hover {
-            background-color: #a5d8b9; /* Cambio de color al pasar el mouse */
+        input[type="submit"]:hover,
+        input[type="button"]:hover {
+            background-color: #a5d8b9;
+            /* Cambio de color al pasar el mouse */
+        }
+
+        .back-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .back-button button {
+            background-color: #c0e7c8;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button button:hover {
+            background-color: #a5d8b9;
+        }
+
+        .menor-longitud {
+            display: inline-block;
+        }
+
+        b {
+            color: #f00;
         }
     </style>
 </head>
+
 <body>
     <h1>Receta</h1>
 
+    <a href="http://recetize.test/pagprincipal" class="back-button">
+        <button>Atrás</button>
+    </a>
+
     <div class="button-container">
         <a href="http://recetize.test/PacienteController/new"><button>Paciente</button></a>
-        <a href="http://recetize.test/MedicoController/new"><button>Medico</button></a>
         <a href="http://recetize.test/RemedioController/new"><button>Remedio</button></a>
+        <a href="http://recetize.test/MedicoController/new"><button>Médico</button></a>
         <button class="selected">Receta</button>
     </div>
 
-    <p class="message">Aclaración: el paciente y el médico deben haber sido cargados previamente</p>
+    <p class="message">Aclaración: el paciente, el remedio y el médico deben haber sido cargados previamente</p>
 
-    <form action="<?= base_url()?>RecetaController" method="post">
-        <label for="nroReceta">Numero de receta</label>
+    <form action="<?= base_url() ?>RecetaController" method="post">
+        <label for="nroReceta" class="menor-longitud">Número de receta</label><b>*</b>
+        <br>
         <input type="number" name="nroReceta" id="nroReceta">
+        <br>
+        <label for="fechaEmision" class="menor-longitud">Fecha de emisión</label><b>*</b>
+        <br>
+        <input type="text" name="fechaEmision" id="fechaEmision" placeholder="AAAA-MM-DD">
+        <br>
+        <label for="Remedio_id" class="menor-longitud">Id remedio</label><b>*</b>
+        <input type="text" name="Remedio_id" id="Remedio_id">
 
-        <label for="fechaEmision">Fecha de emision</label>
-        <input type="text" name="fechaEmision" id="fechaEmision">
+        <label for="Paciente_id" class="menor-longitud">Id paciente</label><b>*</b>
+        <input type="text" name="Paciente_id" id="Paciente_id">
 
-        <label for="Remedio_codigo">Codigo del remedio</label>
-        <input type="text" name="Remedio_codigo" id="Remedio_codigo">
-
-        <label for="Paciente_dni">DNI del paciente</label>
-        <input type="text" name="Paciente_dni" id="Paciente_dni">
-
-        <label for="Medico_matricula">Matricula del medico</label>
-        <input type="text" name="Medico_matricula" id="Medico_matricula">
+        <label for="Medico_id" class="menor-longitud">Id médico</label><b>*</b>
+        <input type="text" name="Medico_id" id="Medico_id">
 
         <input type="submit" value="Guardar">
     </form>
@@ -148,5 +209,5 @@
     </script>
 
 </body>
-</html>
 
+</html>

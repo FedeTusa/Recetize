@@ -58,7 +58,7 @@
                         </div>
                         <br>
                         <div class="form-group">
-                            <input type="Password" id="registrarse-password" class="form-control" placeholder="Password" required>
+                            <input type="Password" id="registrarse-password" class="form-control" placeholder="Clave" required>
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">Guardar y registrarse</button>
@@ -82,7 +82,7 @@
                         </div>
                         <br>
                         <div class="form-group">
-                            <input type="Password" id="ingresar-password" class="form-control" placeholder="Password" required>
+                            <input type="Password" id="ingresar-password" class="form-control" placeholder="Clave" required>
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">Ingresar</button>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,7 +30,8 @@
         }
 
         .button-container button {
-            background-color: #00cc66; /* Verde claro para el botón "Remedio" */
+            background-color: #00cc66;
+            /* Verde claro para el botón "Remedio" */
             color: #000;
             border: none;
             padding: 10px 20px;
@@ -42,7 +44,13 @@
         }
 
         .button-container button.selected {
-            background-color: #ccc; /* Gris claro para el botón "Paciente" seleccionado */
+            background-color: #ccc;
+            /* Gris claro para el botón "Paciente" seleccionado */
+        }
+
+        .message {
+            color: red;
+            margin-top: 10px;
         }
 
         form {
@@ -69,8 +77,21 @@
             border-radius: 5px;
         }
 
-        input[type="submit"], input[type="button"] {
-            background-color: #ccc; /* Gris claro para el botón "Remedio" y "Médico" */
+        input#codigo {
+            width: 45%;
+            /* Ajuste de la longitud del input */
+            color: #aaa;
+        }
+
+        input#codigo::placeholder {
+            color: #aaa;
+            font-size: 20px;
+        }
+
+        input[type="submit"],
+        input[type="button"] {
+            background-color: #ccc;
+            /* Gris claro para el botón "Remedio" y "Médico" */
             color: #000;
             border: none;
             padding: 10px 20px;
@@ -82,26 +103,40 @@
             width: 100%;
         }
 
-        input[type="submit"]:hover, input[type="button"]:hover {
-            background-color: #a5d8b9; /* Cambio de color al pasar el mouse */
+        input[type="submit"]:hover,
+        input[type="button"]:hover {
+            background-color: #a5d8b9;
         }
+
+        .menor-longitud {
+            display: inline-block;
+        }
+
+        b {
+            color: #f00;
+        }
+
     </style>
 </head>
+
 <body>
     <h1>Remedio</h1>
 
     <div class="button-container">
         <a href="http://recetize.test/PacienteController/new"><button>Paciente</button></a>
         <button class="selected">Remedio</button>
-        <a href="http://recetize.test/MedicoController/new"><button>Medico</button></a>
+        <a href="http://recetize.test/MedicoController/new"><button>Médico</button></a>
         <a href="http://recetize.test/RecetaController/new"><button>Receta</button></a>
     </div>
 
-    <form action="<?= base_url()?>RemedioController" method="post">
-        <label for="codigo">Código</label>
-        <input type="number" name="codigo" id="codigo">
+    <p class="message">Aclaración: En caso de haber finalizado de cargar los remedios proceda a cargar el médico</p>
 
-        <label for="droga">Droga</label>
+    <form action="<?= base_url() ?>RemedioController" method="post">
+        <label for="codigo" class="menor-longitud">Código</label><b>*</b>
+        <br>
+        <input type="number" name="codigo" id="codigo" placeholder="X-XXXXXXXXXXXX">
+        <br>
+        <label for="droga" class="menor-longitud">Droga</label><b>*</b>
         <input type="text" name="droga" id="droga">
 
         <label for="medicamento">Medicamento</label>
@@ -110,6 +145,5 @@
         <input type="submit" value="Guardar">
     </form>
 </body>
+
 </html>
-
-

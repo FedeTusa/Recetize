@@ -34,4 +34,9 @@ class PacienteModel extends Model
         return $this->sendRequest('POST', 'http://localhost:8000/paciente', $data);
     }
 
+    public function pacientePorId(int $id)
+    {
+       return $this->sendRequest('GET', 'http://localhost:8000/paciente/'.$id);
+    }
+
 }

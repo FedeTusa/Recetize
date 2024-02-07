@@ -69,6 +69,16 @@
             border-radius: 5px;
         }
 
+        input#matricula {
+            width: 30%; /* Ajuste de la longitud del input */
+            color: #aaa;
+        }
+
+        input#matricula::placeholder {
+            color: #aaa;
+            font-size: 20px;
+        }
+
         input[type="submit"], input[type="button"] {
             background-color: #ccc; /* Gris claro para el botón "Remedio" y "Médico" */
             color: #000;
@@ -85,33 +95,43 @@
         input[type="submit"]:hover, input[type="button"]:hover {
             background-color: #a5d8b9; /* Cambio de color al pasar el mouse */
         }
+
+        .menor-longitud {
+            display: inline-block;
+        }
+
+        b {
+            color: #f00;
+        }
+
     </style>
 </head>
 <body>
-    <h1>Medico</h1>
+    <h1>Médico</h1>
 
     <div class="button-container">
         <a href="http://recetize.test/PacienteController/new"><button>Paciente</button></a>
         <a href="http://recetize.test/RemedioController/new"><button>Remedio</button></a>
-        <button class="selected">Medico</button>
+        <button class="selected">Médico</button>
         <a href="http://recetize.test/RecetaController/new"><button>Receta</button></a>
         
     </div>
 
     <form action="<?= base_url()?>MedicoController" method="post">
-        <label for="matricula">Matricula</label>
-        <input type="number" name="matricula" id="matricula">
-
-        <label for="nombre">Nombre</label>
+        <label for="matricula" class="menor-longitud">Matrícula Provincial</label><b>*</b>
+        <br>
+        <input type="number" name="matricula" id="matricula" placeholder="XXXXX">
+        <br>
+        <label for="nombre" class="menor-longitud">Nombres</label><b>*</b>
         <input type="text" name="nombre" id="nombre">
 
-        <label for="apellido">Apellido</label>
+        <label for="apellido" class="menor-longitud">Apellidos</label><b>*</b>
         <input type="text" name="apellido" id="apellido">
 
-        <label for="especialidad">Especialidad</label>
+        <label for="especialidad" class="menor-longitud">Especialidad</label><b>*</b>
         <input type="text" name="especialidad" id="especialidad">
 
-        <label for="localidad">Localidad</label>
+        <label for="localidad" class="menor-longitud">Localidad</label><b>*</b>
         <input type="text" name="localidad" id="localidad">
 
         <input type="submit" value="Guardar">
