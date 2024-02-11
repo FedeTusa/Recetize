@@ -186,7 +186,7 @@
     </form>
 
     <div class="formulario-receta">
-        <form action="<?= base_url()?>/RemedioRecetaController" method="post">
+        <form action="<?= base_url()?>/RemedioRecetaController/agregarRemedioTemporal" method="post">
             <div class="input-group">
                 <label for="remedio_id">Remedio</label>
                 <input type="number" id="remedio_id" name="remedio_id" required><br><br>

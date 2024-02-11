@@ -6,45 +6,62 @@ use App\Controllers\BaseController;
 
 use App\Models\RemedioRecetaModel;
 
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
+
+// helper('session');
+
+// if (!session()->isStarted()) {
+//     session()->start();
+// }
+
 
 class RemedioRecetaController extends BaseController
 {
+    /**
+     * @var RemedioRecetaModel instance
+     */
+     // $remediorecetaModel;
+     
+    protected $remediorecetaModel;
 
-    protected $ultimosCreados = [];
+    /**
+     * Initializer 
+     */
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    {
+        parent::initController($request, $response, $logger);
+        
+        $this->remediorecetaModel = model('RemedioRecetaModel');
+        $this->session = \Config\Services::session();
+    }
+
+    public function agregarRemedioTemporal() {
+        $remedio_id = $this->request->getPost('remedio_id');
+
+        $remedios_temporales = $this->session->get('remedios_temporales', []);
+        $remedios_temporales[] = $remedio_id;
+        $this->session->set('remedios_temporales', $remedios_temporales);
+    }
 
     public function create()
     {
         $remedio = $this->request->getPost('remedio_id');
-    
-        $remedioreceta = new RemedioRecetaModel();
-
-        $response = $remedioreceta->crearRemedioReceta([
+        
+        $response = $this->remediorecetaModel->crearRemedioReceta([
             'remedio_id' => $remedio
         ]);
-
+        
         
         $responseData = json_decode($response, true);
         
         if ($responseData) {
-            $this->cargarUltimos();
             return view('remedio/exito');
         } else {
             return view('remedio/error');
         }
 
-    }
-
-    protected function cargarUltimos()
-    {
-        $remedioreceta = new RemedioRecetaModel();
-
-        $ultimoRemedioReceta = $remedioreceta->ultimoRemedioReceta;
-
-        $this->ultimosCreados[] = $ultimoRemedioReceta;
-
-        // Llama a la función recursiva si deseas seguir creando registros
-        // (puedes agregar una condición para determinar cuándo detener la recursión)
-        // Ejemplo: if ($condicion) { $this->create(); }
     }
 
     public function resetUltimo()
