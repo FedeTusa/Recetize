@@ -80,14 +80,12 @@
 
         input#nroReceta {
             width: 45%;
-            /* Ajuste de la longitud del input */
-            color: #aaa;
+            font-size: 15px;
         }
 
         input#fechaEmision {
             width: 45%;
-            /* Ajuste de la longitud del input */
-            color: #aaa;
+            font-size: 15px;
         }
 
         input#fechaEmision::placeholder {
@@ -145,6 +143,46 @@
         b {
             color: #f00;
         }
+
+        .form-container .formulario-receta:first-child {
+        margin-top: 0; 
+    }
+
+        .formulario-receta label,
+        .formulario-receta input[type="number"] {
+            display: block;
+        }
+
+        .formulario-receta input[type="number"] {
+            width: calc(75% - 20px);
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .formulario-receta input[type="button"] {
+            background-color: #ccc;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            width: calc(25% - 20px);
+            vertical-align: top;
+        }
+
+        .formulario-receta input[type="submit"]:hover {
+            background-color: #a5d8b9;
+        }
+
+        .label-paciente {
+            margin-top: 20px;
+        }
+
     </style>
 </head>
 
@@ -164,7 +202,7 @@
 
     <p class="message">Aclaración: el paciente, el remedio y el médico deben haber sido cargados previamente</p>
 
-    <form action="<?= base_url() ?>RecetaController" method="post">
+    <form action="<?= base_url() ?>RecetaController" method="post" class="form-container">
         <label for="nroReceta" class="menor-longitud">Número de receta</label><b>*</b>
         <br>
         <input type="number" name="nroReceta" id="nroReceta">
@@ -173,10 +211,13 @@
         <br>
         <input type="text" name="fechaEmision" id="fechaEmision" placeholder="AAAA-MM-DD">
         <br>
-        <label for="Remedio_id" class="menor-longitud">Id remedio</label><b>*</b>
-        <input type="text" name="Remedio_id" id="Remedio_id">
-
-        <label for="Paciente_id" class="menor-longitud">Id paciente</label><b>*</b>
+        <div class="formulario-receta envio-remedioReceta">
+            <label for="remedio_id_0">Remedio<b>*</b></label>
+            <input type="number" id="remedio_id_0" name="remedio_id" required>
+            <input type="button" value="+" class="remedio-receta">  
+        </div>
+        <br><br>
+        <label for="Paciente_id" class="menor-longitud label-paciente">Id paciente</label><b>*</b>
         <input type="text" name="Paciente_id" id="Paciente_id">
 
         <label for="Medico_id" class="menor-longitud">Id médico</label><b>*</b>
@@ -185,29 +226,62 @@
         <input type="submit" value="Guardar">
     </form>
 
-    <div class="formulario-receta">
-        <form action="<?= base_url()?>/RemedioRecetaController" method="post">
-            <div class="input-group">
-                <label for="remedio_id">Remedio</label>
-                <input type="number" id="remedio_id" name="remedio_id" required><br><br>
-            </div>
-            <input type="submit" value="+">
-        </form>
-    </div>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelector('#formularios-receta').addEventListener('click', function (event) {
-                if (event.target.matches('.remedio-form input[type="submit"]')) {
-                    event.preventDefault();
-                    const newForm = document.querySelector('.formulario-receta').cloneNode(true);
-                    newForm.querySelector('.remedio-id').value = '';
-                    document.querySelector('#formularios-receta').appendChild(newForm);
-                }
-            });
-        });
-    </script>
+    let contadorFormularios = 0;
+    const formulario = document.querySelector(".form-container");
+
+    formulario.addEventListener("click", function(e) {
+        if (e.target && e.target.classList.contains("remedio-receta")) {
+            e.preventDefault();
+            const formRemedio = e.target.parentElement;
+            const boton = e.target;
+            formRemedio.removeChild(boton);
+            const lista = crearNuevoFormulario()
+            const nuevoFormulario = lista[0];
+            const nroFormulario = lista[1];
+            formulario.insertBefore(nuevoFormulario, document.querySelector(".label-paciente"));
+            
+            // Hacer la solicitud POST con Fetch API
+            const intermedia = nroFormulario-1;
+            const idDelInput = "remedio_id_" + intermedia;
+            const remedio_id = document.getElementById(idDelInput).value;
+            let formatoData = new FormData();
+            formatoData.append("remedio_id", remedio_id);
+            const xhr = new XMLHttpRequest();
+                xhr.addEventListener("load", ()=> {
+                    let respuesta;
+                    if (xhr.status == 200) respuesta = xhr.response;
+                    else respuesta = "No pudo realizarse el post"
+                })
+                xhr.open('POST', 'http://recetize.test/RemedioRecetaController', true);
+                xhr.send(formatoData);
+        }
+    });
+
+    function crearNuevoFormulario() {
+        contadorFormularios++;
+        const nuevoFormulario = document.createElement("DIV");
+        nuevoFormulario.classList.add("formulario-receta");
+        nuevoFormulario.classList.add("envio-remedioReceta");
+        nuevoFormulario.innerHTML += '<label for="remedio_id_' + contadorFormularios + '">Remedio<b>*</b></label>';
+        const nuevoInput = document.createElement("INPUT");
+        nuevoInput.type = "number";
+        nuevoInput.setAttribute("id", "remedio_id_" + contadorFormularios);
+        nuevoInput.setAttribute("name", "remedio_id");
+        nuevoInput.required = true;
+        const nuevoBoton = document.createElement("INPUT");
+        nuevoBoton.type =  "button";
+        nuevoBoton.value = "+";
+        nuevoBoton.classList.add("remedio-receta");
+        nuevoFormulario.appendChild(nuevoInput);
+        nuevoFormulario.appendChild(nuevoBoton);
+        
+        return [nuevoFormulario, contadorFormularios];
+    }
+</script>
 
 </body>
 
 </html>
+
+

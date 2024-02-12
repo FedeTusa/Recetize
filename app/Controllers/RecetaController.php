@@ -44,7 +44,7 @@ class RecetaController extends BaseController
             if (isset($responseData['id'])) {
                 $this->$remedioreceta->actualizarRemedioReceta($responseData['id']);
             }
-            return view('remedio/exito');
+            return view('receta/exito');
         } else {
             return view('receta/error');
         }
