@@ -42,7 +42,7 @@ class RecetaController extends BaseController
 
         if ($responseData) {
             if (isset($responseData['id'])) {
-                $this->$remedioreceta->actualizarRemedioReceta($responseData['id']);
+                $this->$remedioreceta->create($responseData['id']);
             }
             return view('remedio/exito');
         } else {
