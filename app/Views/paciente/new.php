@@ -27,7 +27,7 @@
         .button-container {
             display: flex;
             justify-content: flex-start;
-            margin-top: 20px;
+            margin-top: 0;
         }
 
         .button-container button {
