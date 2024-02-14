@@ -6,45 +6,66 @@ use App\Controllers\BaseController;
 
 use App\Models\RemedioRecetaModel;
 
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
+
+// helper('session');
+
+// if (!session()->isStarted()) {
+//     session()->start();
+// }
+
 
 class RemedioRecetaController extends BaseController
 {
+    /**
+     * @var RemedioRecetaModel instance
+     */
+     // $remediorecetaModel;
+     
+    protected $remediorecetaModel;
 
-    protected $ultimosCreados = [];
-
-    public function create()
+    /**
+     * Initializer 
+     */
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
-        $remedio = $this->request->getPost('remedio_id');
-    
-        $remedioreceta = new RemedioRecetaModel();
-
-        $response = $remedioreceta->crearRemedioReceta([
-            'remedio_id' => $remedio
-        ]);
-
+        parent::initController($request, $response, $logger);
         
-        $responseData = json_decode($response, true);
-        
-        if ($responseData) {
-            $this->cargarUltimos();
-            return view('remedio/exito');
-        } else {
-            return view('remedio/error');
-        }
-
+        $this->remediorecetaModel = model('RemedioRecetaModel');
+        $this->session = \Config\Services::session();
     }
 
-    protected function cargarUltimos()
+    public function agregarRemedioTemporal() {
+        $remedio_id = $this->request->getPost('remedio_id');
+
+        $remedios_temporales = $this->session->get('remedios_temporales', []);
+        $remedios_temporales[] = $remedio_id;
+        $this->session->set('remedios_temporales', $remedios_temporales);
+    }
+
+    public function create(int $receta_id)
     {
-        $remedioreceta = new RemedioRecetaModel();
+        // $remedio = $this->request->getPost('remedio_id');
+        $remedios_temporales = $this->session->get('remedios_temporales', []);
+        
+        foreach ($remedios_temporales as $remedio_id) {
+            $this->remediorecetaModel->crearRemedioReceta([
+                'remedio_id' => $remedio_id,
+                'receta_id' => $receta_id
+        ]);
+        }
+        
+        $this->session->remove('remedios_temporales');
+        // $responseData = json_decode($response, true);
+        
+        // if ($responseData) {
+        //     return view('remedio/exito');
+        // } else {
+        //     return view('remedio/error');
+        // }
 
-        $ultimoRemedioReceta = $remedioreceta->ultimoRemedioReceta;
-
-        $this->ultimosCreados[] = $ultimoRemedioReceta;
-
-        // Llama a la función recursiva si deseas seguir creando registros
-        // (puedes agregar una condición para determinar cuándo detener la recursión)
-        // Ejemplo: if ($condicion) { $this->create(); }
     }
 
     public function resetUltimo()

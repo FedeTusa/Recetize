@@ -28,14 +28,21 @@ class RemedioRecetaModel extends Model
 
         return $response;
     }
+    
+    // public function crearRemedioReceta($data)
+    // {
+    //     return $this->sendRequest('POST', 'http://localhost:8000/remedioreceta', $data);
+    // }
 
-    public function ultimoRemedioReceta(){
-        return $this->orderBy('id', 'DESC')->first();
-    }
+    // public function ultimoRemedioReceta(){
+    //     return $this->orderBy('id', 'DESC')->first();
+    // }
 
-    public function crearRemedioReceta($data)
-    {
-        return $this->sendRequest('POST', 'http://localhost:8000/remedioreceta', $data);
-    }
+    // public function cargarUltimos()
+    // {
+    //     $ultimosCreados = session()->get('ultimosCreados');
+
+    //     $ultimosCreados[] = $this->ultimoRemedioReceta();
+    // }
 
 }

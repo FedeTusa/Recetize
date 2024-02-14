@@ -12,6 +12,7 @@ $routes->resource('PacienteController');
 $routes->resource('MedicoController');
 $routes->resource('RecetaController');
 $routes->resource('RemedioRecetaController');
+$routes->post('RemedioRecetaController/agregarRemedioTemporal', 'RemedioRecetaController::agregarRemedioTemporal');
 
 $routes->get('/pagprincipal', 'Home::main');
 
