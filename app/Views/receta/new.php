@@ -236,12 +236,12 @@
             const formRemedio = e.target.parentElement;
             const boton = e.target;
             formRemedio.removeChild(boton);
-            const lista = crearNuevoFormulario()
+            const lista = crearNuevoFormulario();
             const nuevoFormulario = lista[0];
             const nroFormulario = lista[1];
             formulario.insertBefore(nuevoFormulario, document.querySelector(".label-paciente"));
             
-            // Hacer la solicitud POST con Fetch API
+            // Hacer la solicitud POST con AJAX
             const intermedia = nroFormulario-1;
             const idDelInput = "remedio_id_" + intermedia;
             const remedio_id = document.getElementById(idDelInput).value;
@@ -251,10 +251,27 @@
                 xhr.addEventListener("load", ()=> {
                     let respuesta;
                     if (xhr.status == 200) respuesta = xhr.response;
-                    else respuesta = "No pudo realizarse el post"
+                    else respuesta = "No pudo realizarse el post";
+                    console.log(respuesta);
                 })
-                xhr.open('POST', 'http://recetize.test/RemedioRecetaController', true);
+                xhr.open('POST', 'http://recetize.test/RemedioRecetaController/agregarRemedioTemporal', true);
                 xhr.send(formatoData);
+        } else if (e.target && e.target.classList.contains("eliminar-remedioReceta")) {
+            const formGeneral = e.target.parentElement.parentElement;
+            const formRemedio = e.target.parentElement;
+            const formAnterior = formRemedio.previousElementSibling.previousElementSibling.previousElementSibling;
+            formGeneral.removeChild(formRemedio);
+            if (formAnterior.children[1]) {
+                if  (formAnterior.children[1].getAttribute("id") == "remedio_id_0" && formAnterior.children.length < 3) {
+                    const nuevoBoton = document.createElement("INPUT");
+                    nuevoBoton.type =  "button";
+                    nuevoBoton.value = "+";
+                    nuevoBoton.classList.add("remedio-receta");
+                    formAnterior.appendChild(nuevoBoton);
+                }
+
+            }
+              
         }
     });
 
@@ -273,8 +290,15 @@
         nuevoBoton.type =  "button";
         nuevoBoton.value = "+";
         nuevoBoton.classList.add("remedio-receta");
+        const botonEliminar = document.createElement("INPUT");
+        botonEliminar.type =  "button";
+        botonEliminar.value = "-";
+        botonEliminar.classList.add("eliminar-remedioReceta");
+        botonEliminar.style.marginLeft = "10px";
+        botonEliminar.style.backgroundColor = "#F76849";
         nuevoFormulario.appendChild(nuevoInput);
         nuevoFormulario.appendChild(nuevoBoton);
+        nuevoFormulario.appendChild(botonEliminar);
         
         return [nuevoFormulario, contadorFormularios];
     }
