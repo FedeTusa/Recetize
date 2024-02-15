@@ -71,7 +71,6 @@
 
         input#matricula {
             width: 30%; /* Ajuste de la longitud del input */
-            color: #aaa;
         }
 
         input#matricula::placeholder {
