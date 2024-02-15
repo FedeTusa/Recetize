@@ -202,7 +202,7 @@
 
     <p class="message">Aclaración: el paciente, el remedio y el médico deben haber sido cargados previamente</p>
 
-    <form action="<?= base_url() ?>RecetaController" method="post" class="form-container">
+    <form class="form-container">
         <label for="nroReceta" class="menor-longitud">Número de receta</label><b>*</b>
         <br>
         <input type="number" name="nroReceta" id="nroReceta">
@@ -223,7 +223,7 @@
         <label for="Medico_id" class="menor-longitud">Id médico</label><b>*</b>
         <input type="text" name="Medico_id" id="Medico_id">
 
-        <input type="submit" value="Guardar">
+        <input type="submit" value="Guardar" class="guardado">
     </form>
   
     <script>
@@ -240,22 +240,11 @@
             const nuevoFormulario = lista[0];
             const nroFormulario = lista[1];
             formulario.insertBefore(nuevoFormulario, document.querySelector(".label-paciente"));
-            
-            // Hacer la solicitud POST con AJAX
             const intermedia = nroFormulario-1;
             const idDelInput = "remedio_id_" + intermedia;
             const remedio_id = document.getElementById(idDelInput).value;
-            let formatoData = new FormData();
-            formatoData.append("remedio_id", remedio_id);
-            const xhr = new XMLHttpRequest();
-                xhr.addEventListener("load", ()=> {
-                    let respuesta;
-                    if (xhr.status == 200) respuesta = xhr.response;
-                    else respuesta = "No pudo realizarse el post";
-                    console.log(respuesta);
-                })
-                xhr.open('POST', 'http://recetize.test/RemedioRecetaController/agregarRemedioTemporal', true);
-                xhr.send(formatoData);
+            hacerPostRemedio(remedio_id);
+
         } else if (e.target && e.target.classList.contains("eliminar-remedioReceta")) {
             const formGeneral = e.target.parentElement.parentElement;
             const formRemedio = e.target.parentElement;
@@ -272,6 +261,31 @@
 
             }
               
+        } else if (e.target && e.target.classList.contains("guardado")) {
+            e.preventDefault();
+            const idDelInput = "remedio_id_" + contadorFormularios;
+            //console.log(idDelInput);
+            const remedio_id = document.getElementById(idDelInput).value;
+            //console.log(remedio_id);
+            hacerPostRemedio(remedio_id);
+            const nroReceta = document.getElementById("nroReceta").value;
+            const fechaEmision = document.getElementById("fechaEmision").value;
+            const idPaciente = document.getElementById("Paciente_id").value;
+            const idMedico = document.getElementById("Medico_id").value;
+            let formatoData = new FormData();
+            formatoData.append("nroReceta", nroReceta);
+            formatoData.append("fechaEmision", fechaEmision);
+            formatoData.append("Paciente_id", idPaciente);
+            formatoData.append("Medico_id", idMedico);
+            const xhr = new XMLHttpRequest();
+                xhr.addEventListener("load", ()=> {
+                    let respuesta;
+                    if (xhr.status == 200) respuesta = xhr.response;
+                    else respuesta = "No pudo realizarse el post";
+                })
+                xhr.open('POST', 'http://recetize.test/RecetaController', true);
+                xhr.send(formatoData);
+                alert("Receta cargada con exito");
         }
     });
 
@@ -301,6 +315,21 @@
         nuevoFormulario.appendChild(botonEliminar);
         
         return [nuevoFormulario, contadorFormularios];
+    }
+
+    //Hacer la solicitud con post AJAX
+    function hacerPostRemedio(id) {
+        let formatoData = new FormData();
+            formatoData.append("remedio_id", id);
+            const xhr = new XMLHttpRequest();
+                xhr.addEventListener("load", ()=> {
+                    let respuesta;
+                    if (xhr.status == 200) respuesta = xhr.response;
+                    else respuesta = "No pudo realizarse el post";
+                    //console.log(respuesta);
+                })
+                xhr.open('POST', 'http://recetize.test/RemedioRecetaController/agregarRemedioTemporal', true);
+                xhr.send(formatoData);
     }
 </script>
 

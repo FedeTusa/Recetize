@@ -80,7 +80,6 @@
         input#codigo {
             width: 45%;
             /* Ajuste de la longitud del input */
-            color: #aaa;
         }
 
         input#codigo::placeholder {

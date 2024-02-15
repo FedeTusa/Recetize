@@ -82,10 +82,6 @@
             font-size: 20px;
         }
 
-        input#dni:focus {
-            color: #000;
-        }
-
         /* Estilo específico para el input de Altura */
         input#altura {
             width: 30%;

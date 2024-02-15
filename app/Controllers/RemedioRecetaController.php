@@ -62,7 +62,7 @@ class RemedioRecetaController extends BaseController
         $this->session->remove('remedios_temporales');
 
     }
-
+/* 
     public function resetUltimo()
     {
         $this->ultimosCreados = [];
@@ -74,6 +74,6 @@ class RemedioRecetaController extends BaseController
             $aActualizar->receta_id = $receta_id;
             $aActualizar->save();
         }
-    }
+    } */
 
 }
