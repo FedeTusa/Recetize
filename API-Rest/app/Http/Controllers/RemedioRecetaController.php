@@ -35,9 +35,11 @@ class RemedioRecetaController extends Controller
         ]);
         
         $remedio = Remedio::findOrFail($request->remedio_id);
+        $receta = Receta::findOrFail($request->receta_id);
 
         $remedioreceta = RemedioReceta::create([
-            'remedio_id' => $remedio->id
+            'remedio_id' => $remedio->id,
+            'receta_id' => $receta->id
         ]);
 
         return response()->json($remedioreceta, 201);

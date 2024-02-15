@@ -9,8 +9,26 @@ use App\Models\RecetaModel;
 use App\Models\PacienteModel;
 use App\Models\MedicoModel;
 
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
+
 class RecetaController extends BaseController
 {
+    protected $remedioreceta;
+    protected $session;
+
+    /**
+     * Initializer 
+     */
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    {
+        parent::initController($request, $response, $logger);
+
+        $this->remedioreceta = new RemedioRecetaController($request, $response, $logger);
+        $this->session = \Config\Services::session();
+    }
+
     public function new()
     {
 
@@ -27,7 +45,6 @@ class RecetaController extends BaseController
         $Medico_id = $this->request->getPost('Medico_id');
 
         $receta = new RecetaModel();
-        $remedioreceta = new RemedioRecetaController();
 
         $response = $receta->crearReceta([
             'nroReceta' => $nroReceta,
@@ -41,7 +58,7 @@ class RecetaController extends BaseController
         if ($responseData) {
             if (isset($responseData['id'])) {
                 $receta_id = $responseData['id'];
-                $remedioreceta->create($receta_id);
+                $this->remedioreceta->create($receta_id);
             }
             return view('receta/exito');
         } else {

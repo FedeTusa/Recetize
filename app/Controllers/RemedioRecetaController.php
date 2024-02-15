@@ -48,24 +48,18 @@ class RemedioRecetaController extends BaseController
     
     public function create(int $receta_id)
     {
-        dd($this->session);
+        $this->session = \Config\Services::session();
+        $this->remediorecetaModel = model('RemedioRecetaModel');
         $remedios_temporales = $this->session->get('remedios_temporales', []);
         
         foreach ($remedios_temporales as $remedio_id) {
             $this->remediorecetaModel->crearRemedioReceta([
                 'remedio_id' => $remedio_id,
                 'receta_id' => $receta_id
-        ]);
+            ]);
         }
         
         $this->session->remove('remedios_temporales');
-        // $responseData = json_decode($response, true);
-        
-        // if ($responseData) {
-        //     return view('remedio/exito');
-        // } else {
-        //     return view('remedio/error');
-        // }
 
     }
 
