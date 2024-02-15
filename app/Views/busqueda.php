@@ -70,11 +70,91 @@ function modificarFecha($fecha)
         .back-button button:hover {
             background-color: #a5d8b9;
         }
+
+        #search-form {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        #search-form input,
+        #search-form select {
+            padding: 8px;
+            margin: 0 5px;
+        }
+
+        #search-form button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #search-form button:hover {
+            background-color: #45a049;
+        }
+
+        .input-group {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .input-group label {
+            margin-right: 5px;
+            width: 100px;
+            text-align: right;
+        }
+
+        .campo-busqueda {
+            display: inline-block;
+            margin-left: 10px;
+        }
     </style>
 </head>
 
 <body>
     <h1>Busqueda de Recetas</h1>
+
+    <div id="search-form">
+    <form>
+        <!-- Primera fila con tres campos -->
+        <div class="input-group">
+            <div class="campo-busqueda">
+                <label for="nroReceta">Número de Receta:</label>
+                <input type="text" id="nroReceta" name="nroReceta">
+            </div>
+            <div class="campo-busqueda">
+                <label for="fechaEmision">Fecha de Emisión:</label>
+                <input type="date" id="fechaEmision" name="fechaEmision">
+            </div>
+            <div class="campo-busqueda">
+                <label for="Remedio_id">Remedio:</label>
+                <input type="text" id="Remedio_id" name="Remedio_id">
+            </div>
+
+        </div>
+
+        <!-- Segunda fila con dos campos -->
+        <div class="input-group">
+            <div class="campo-busqueda">
+                <label for="Paciente_id">Paciente:</label>
+                <input type="text" id="Paciente_id" name="Paciente_id">
+            </div>
+            <div class="campo-busqueda">
+                <label for="Medico_id">Médico:</label>
+                <input type="text" id="Medico_id" name="Medico_id">
+            </div>
+        </div>
+        <button type="submit">Buscar</button>
+    </form>
+</div>
+
+
 
     <a href="http://recetize.test/pagprincipal" class="back-button">
         <button>Atrás</button>
