@@ -34,19 +34,16 @@ class RecetaController extends Controller
         $this->validate($request, [
             'nroReceta' => 'required|numeric|unique:receta', 
             'fechaEmision' => 'required',
-            'Remedio_id' => 'required',
             'Paciente_id' => 'required',
             'Medico_id' => 'required'
         ]);
         
         $paciente = Paciente::findOrFail($request->Paciente_id);
-        $remedio = Remedio::findOrFail($request->Remedio_id);
         $medico = Medico::findOrFail($request->Medico_id);
 
         $receta = Receta::create([
             'nroReceta' => $request->nroReceta,
             'fechaEmision' => $request->fechaEmision,
-            'Remedio_id' => $remedio->id,
             'Paciente_id' => $paciente->id,
             'Medico_id' => $medico->id
         ]);

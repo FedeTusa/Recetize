@@ -11,7 +11,7 @@ class RecetaModel extends Model
     protected $table            = 'receta';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $allowedFields    = ['nroReceta', 'fechaEmision', 'Remedio_id', 'Paciente_id', 'Medico_id'];
+    protected $allowedFields    = ['nroReceta', 'fechaEmision', 'Paciente_id', 'Medico_id'];
 
     private function sendRequest($method, $url, $data = [])
     {

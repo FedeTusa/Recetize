@@ -23,7 +23,6 @@ class RecetaController extends BaseController
     {
         $nroReceta = $this->request->getPost('nroReceta');
         $fechaEmision = $this->request->getPost('fechaEmision');
-        $Remedio_id = $this->request->getPost('Remedio_id');
         $Paciente_id = $this->request->getPost('Paciente_id');
         $Medico_id = $this->request->getPost('Medico_id');
 
@@ -33,16 +32,16 @@ class RecetaController extends BaseController
         $response = $receta->crearReceta([
             'nroReceta' => $nroReceta,
             'fechaEmision' => $fechaEmision,
-            'Remedio_id' => $Remedio_id,
             'Paciente_id' => $Paciente_id,
             'Medico_id' => $Medico_id,
         ]);
 
         $responseData = json_decode($response, true);
-
+        
         if ($responseData) {
             if (isset($responseData['id'])) {
-                $this->$remedioreceta->create($responseData['id']);
+                $receta_id = $responseData['id'];
+                $remedioreceta->create($receta_id);
             }
             return view('receta/exito');
         } else {

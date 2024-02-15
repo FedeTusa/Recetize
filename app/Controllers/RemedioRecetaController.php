@@ -25,6 +25,7 @@ class RemedioRecetaController extends BaseController
      // $remediorecetaModel;
      
     protected $remediorecetaModel;
+    protected $session;
 
     /**
      * Initializer 
@@ -44,10 +45,10 @@ class RemedioRecetaController extends BaseController
         $remedios_temporales[] = $remedio_id;
         $this->session->set('remedios_temporales', $remedios_temporales);
     }
-
+    
     public function create(int $receta_id)
     {
-        // $remedio = $this->request->getPost('remedio_id');
+        dd($this->session);
         $remedios_temporales = $this->session->get('remedios_temporales', []);
         
         foreach ($remedios_temporales as $remedio_id) {
