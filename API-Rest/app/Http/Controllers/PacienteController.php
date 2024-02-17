@@ -94,4 +94,17 @@ class PacienteController extends Controller
         return response()->json(['mensaje' => 'paciente eliminado con éxito'], 200);
     }
 
+    public function busqueda(Request $request)
+    {
+        $busqueda = $request->input('busqueda');
+
+        $paciente = Paciente::where('dni', 'like', '%' . $busqueda . '%')
+                     ->select('id', 'dni')
+                     ->orderBy('dni')
+                     ->limit(10)
+                     ->get();
+
+        return response()->json($paciente);
+    }
+
 }

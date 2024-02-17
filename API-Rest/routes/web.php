@@ -33,6 +33,8 @@ $router->post('/editarPaciente/{id}',['uses' => 'PacienteController@update']);
 
 $router->delete('/paciente/{id}',['uses' => 'PacienteController@destroy']);
 
+$router->get('/busqueda', 'PacienteController@busqueda');
+
 $router->get('/medicos', ['uses' => 'MedicoController@showAll']); 
 $router->get('/medico/{id}', ['uses' => 'MedicoController@show']);
 
