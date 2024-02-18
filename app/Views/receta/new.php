@@ -347,7 +347,7 @@
         $('#buscarPaciente').autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: 'http://localhost:8000/busqueda',
+                    url: 'http://localhost:8000/busqueda/paciente',
                     dataType: 'json',
                     data: {
                         busqueda: request.term

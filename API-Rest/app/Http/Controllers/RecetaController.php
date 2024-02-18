@@ -91,4 +91,37 @@ class RecetaController extends Controller
         return response()->json(['mensaje' => 'receta eliminada con éxito'], 200);
     }
 
+    public function busqueda(Request $request)
+    {
+        $nroReceta = $request->input('nroReceta') ? $request->input('nroReceta') : null;;
+        $fechaEmision = $request->input('fechaEmision') ? $request->input('fechaEmision') : null;
+        $paciente_id = $request->input('paciente_id') ? $request->input('paciente_id') : null;
+        $medico_id = $request->input('medico_id') ? $request->input('medico_id') : null;
+
+        $recetaQuery = Receta::query();
+
+        if ($nroReceta) {
+            $recetaQuery->where('nroReceta', $nroReceta);
+        }
+
+        if ($fechaEmision) {
+            $recetaQuery->where('fechaEmision', $fechaEmision);
+        }
+        
+        if ($paciente_id) {
+            $recetaQuery->where('paciente_id', $paciente_id);
+        }
+        
+        if ($medico_id) {
+            $recetaQuery->where('medico_id', $medico_id);
+        }
+        
+        $receta = $recetaQuery->select('id')
+                             ->orderBy('id')
+                             ->limit(10)
+                             ->get();
+
+        return response()->json($receta);
+    }
+
 }
