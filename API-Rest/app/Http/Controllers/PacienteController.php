@@ -103,6 +103,8 @@ class PacienteController extends Controller
                      ->orderBy('id')
                      ->limit(10)
                      ->get();
+        header("Access-Control-Allow-Origin: http://recetize.test");
+
 
         return response()->json($paciente);
     }
