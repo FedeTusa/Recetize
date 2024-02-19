@@ -86,4 +86,17 @@ class MedicoController extends Controller
         return response()->json(['mensaje' => 'medico eliminado con éxito'], 200);
     }
 
+    public function busqueda(Request $request)
+    {
+        $busqueda = $request->input('busqueda');
+
+        $medico = Medico::where('matricula', 'like', '%' . $busqueda . '%')
+                     ->select('id', 'matricula')
+                     ->orderBy('id')
+                     ->limit(10)
+                     ->get();
+
+        return response()->json($medico);
+    }
+
 }

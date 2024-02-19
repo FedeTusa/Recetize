@@ -217,8 +217,11 @@
             <input type="button" value="+" class="remedio-receta">  
         </div>
         <br><br>
-        <label for="Paciente_id" class="menor-longitud label-paciente">Id paciente</label><b>*</b>
-        <input type="text" name="Paciente_id" id="Paciente_id">
+        <!-- <label for="Paciente_id" class="menor-longitud label-paciente">Id paciente</label><b>*</b> -->
+        
+        <label for="buscarPaciente" class="menor-longitud label-paciente">Paciente</label>
+        <input type="text" id="buscarPaciente" name="Paciente_id">
+        <!-- <input type="text" name="Paciente_id" id="Paciente_id"> -->
 
         <label for="Medico_id" class="menor-longitud">Id médico</label><b>*</b>
         <input type="text" name="Medico_id" id="Medico_id">
@@ -330,8 +333,41 @@
                 })
                 xhr.open('POST', 'http://recetize.test/RemedioRecetaController/agregarRemedioTemporal', true);
                 xhr.send(formatoData);
-    }
+    }   
 </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        $('#buscarPaciente').autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: 'http://localhost:8000/busqueda/paciente',
+                    dataType: 'json',
+                    data: {
+                        busqueda: request.term
+                    },
+                    success: function(data) {
+                        response($.map(data, function(item) {
+                            return {
+                                label: item.dni,
+                                value: item.id
+                            };
+                        }));
+                    }
+                });
+            },
+            select: function(event, ui) {
+                $('#Paciente_id').val(ui.item.value);
+            }
+        });
+    });
+    </script>
 
 </body>
 
