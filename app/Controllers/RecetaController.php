@@ -76,15 +76,19 @@ class RecetaController extends BaseController
 
         $todasLasRecetas = json_decode($todasLasRecetas, true);
 
-        foreach ($todasLasRecetas as &$unaReceta) {
-            $idPaciente = (int) $unaReceta['Paciente_id'];
-            $idMedico = (int) $unaReceta['Medico_id'];
-            $nombrePaciente = $paciente->pacientePorId($idPaciente);
-            $nombreMedico = $medico->medicoPorId($idMedico);
-            $nombrePaciente = json_decode($nombrePaciente, true);
-            $nombreMedico = json_decode($nombreMedico, true);
-            $unaReceta['Paciente_id'] = $nombrePaciente['nombre']." ".$nombrePaciente['apellido'];
-            $unaReceta['Medico_id'] = $nombreMedico['nombre']." ".$nombreMedico['apellido'];
+        foreach ($todasLasRecetas as $receta => &$unaReceta) {
+            if ($unaReceta['borrado_logico'] == 1) {
+                unset($todasLasRecetas[$receta]);
+            } else {
+                $idPaciente = (int) $unaReceta['Paciente_id'];
+                $idMedico = (int) $unaReceta['Medico_id'];
+                $nombrePaciente = $paciente->pacientePorId($idPaciente);
+                $nombreMedico = $medico->medicoPorId($idMedico);
+                $nombrePaciente = json_decode($nombrePaciente, true);
+                $nombreMedico = json_decode($nombreMedico, true);
+                $unaReceta['Paciente_id'] = $nombrePaciente['nombre']." ".$nombrePaciente['apellido'];
+                $unaReceta['Medico_id'] = $nombreMedico['nombre']." ".$nombreMedico['apellido'];
+            }
         }
         unset($unaReceta);
 
@@ -103,15 +107,19 @@ class RecetaController extends BaseController
 
         $todasLasRecetas = json_decode($todasLasRecetas, true);
 
-        foreach ($todasLasRecetas as &$unaReceta) {
-            $idPaciente = (int) $unaReceta['Paciente_id'];
-            $idMedico = (int) $unaReceta['Medico_id'];
-            $nombrePaciente = $paciente->pacientePorId($idPaciente);
-            $nombreMedico = $medico->medicoPorId($idMedico);
-            $nombrePaciente = json_decode($nombrePaciente, true);
-            $nombreMedico = json_decode($nombreMedico, true);
-            $unaReceta['Paciente_id'] = $nombrePaciente['nombre']." ".$nombrePaciente['apellido'];
-            $unaReceta['Medico_id'] = $nombreMedico['nombre']." ".$nombreMedico['apellido'];
+        foreach ($todasLasRecetas as $receta => &$unaReceta) {
+            if ($unaReceta['borrado_logico'] == 1) {
+                unset($todasLasRecetas[$receta]);
+            } else {
+                $idPaciente = (int) $unaReceta['Paciente_id'];
+                $idMedico = (int) $unaReceta['Medico_id'];
+                $nombrePaciente = $paciente->pacientePorId($idPaciente);
+                $nombreMedico = $medico->medicoPorId($idMedico);
+                $nombrePaciente = json_decode($nombrePaciente, true);
+                $nombreMedico = json_decode($nombreMedico, true);
+                $unaReceta['Paciente_id'] = $nombrePaciente['nombre']." ".$nombrePaciente['apellido'];
+                $unaReceta['Medico_id'] = $nombreMedico['nombre']." ".$nombreMedico['apellido'];
+            }
         }
         unset($unaReceta);
 
@@ -160,13 +168,5 @@ class RecetaController extends BaseController
         ]);
 
         return $this->eliminacion();
-
-        // $responseData = json_decode($response, true);
-        
-        // if ($responseData) {
-        //     return view('receta/exito');
-        // } else {
-        //     return view('receta/error');
-        // }
     }
 }
