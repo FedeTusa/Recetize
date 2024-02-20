@@ -74,7 +74,7 @@ class RemedioRecetaController extends Controller
 
         $remedioreceta = $remediorecetaQuery->leftJoin('remedio', 'remedioreceta.remedio_id', '=', 'remedio.id')
                                              ->where('remedioreceta.receta_id', '=', $busqueda)
-                                             ->select('remedioreceta.id', 'remedio.codigo', 'remedio.medicamento')
+                                             ->select('remedio.*')
                                              ->orderBy('remedioreceta.id')
                                              ->limit(10)
                                              ->get();
