@@ -175,7 +175,12 @@ function modificarFecha($fecha)
                     <tr>
                         <td><?php echo $receta['nroReceta']; ?></td>
                         <td><?php echo modificarFecha($receta['fechaEmision']); ?></td>
-                        <td><?php echo $receta['Remedio_id']; ?></td>
+                        <td><?php 
+                        $remedioreceta = model('App\Models\RemedioRecetaModel');
+                        $remediosdereceta = $remedioreceta->remediosDeReceta($receta['id']);
+                        $remedios = json_decode($remediosdereceta, true);
+                        foreach ($remedios as $remedio) {echo $remedio['medicamento'] . "<br>";}
+                        ?></td>
                         <td><?php echo $receta['Paciente_id']; ?></td>
                         <td><?php echo $receta['Medico_id']; ?></td>
                         <td>

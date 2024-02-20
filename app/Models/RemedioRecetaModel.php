@@ -34,15 +34,9 @@ class RemedioRecetaModel extends Model
         return $this->sendRequest('POST', 'http://localhost:8000/remedioreceta', $data);
     }
 
-    // public function ultimoRemedioReceta(){
-    //     return $this->orderBy('id', 'DESC')->first();
-    // }
-
-    // public function cargarUltimos()
-    // {
-    //     $ultimosCreados = session()->get('ultimosCreados');
-
-    //     $ultimosCreados[] = $this->ultimoRemedioReceta();
-    // }
+    public function remediosDeReceta(int $id_receta)
+    {
+        return $this->sendRequest('GET', 'http://localhost:8000/busqueda/remedioreceta?busqueda=' . $id_receta);
+    }
 
 }
