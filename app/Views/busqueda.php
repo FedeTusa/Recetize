@@ -114,6 +114,10 @@ function modificarFecha($fecha)
             display: inline-block;
             margin-left: 10px;
         }
+
+        .no-encontrado {
+            font-size: 20px;
+        }
     </style>
 </head>
 
@@ -121,38 +125,38 @@ function modificarFecha($fecha)
     <h1>Busqueda de Recetas</h1>
 
     <div id="search-form">
-    <form>
-        <!-- Primera fila con tres campos -->
-        <div class="input-group">
-            <div class="campo-busqueda">
-                <label for="nroReceta">Número de Receta:</label>
-                <input type="text" id="nroReceta" name="nroReceta">
-            </div>
-            <div class="campo-busqueda">
-                <label for="fechaEmision">Fecha de Emisión:</label>
-                <input type="date" id="fechaEmision" name="fechaEmision">
-            </div>
-            <div class="campo-busqueda">
-                <label for="Remedio_id">Remedio:</label>
-                <input type="text" id="Remedio_id" name="Remedio_id">
+        <form class="form-container">
+            <!-- Primera fila con tres campos -->
+            <div class="input-group">
+                <div class="campo-busqueda">
+                    <label for="nroReceta">Número de Receta:</label>
+                    <input type="text" id="nroReceta" name="nroReceta">
+                </div>
+                <div class="campo-busqueda">
+                    <label for="fechaEmision">Fecha de Emisión:</label>
+                    <input type="date" id="fechaEmision" name="fechaEmision">
+                </div>
+                <div class="campo-busqueda">
+                    <label for="Remedio_id">Remedio:</label>
+                    <input type="text" id="Remedio_id" name="Remedio_id">
+                </div>
+
             </div>
 
-        </div>
-
-        <!-- Segunda fila con dos campos -->
-        <div class="input-group">
-            <div class="campo-busqueda">
-                <label for="Paciente_id">Paciente:</label>
-                <input type="text" id="Paciente_id" name="Paciente_id">
+            <!-- Segunda fila con dos campos -->
+            <div class="input-group">
+                <div class="campo-busqueda">
+                    <label for="Paciente_id">Paciente:</label>
+                    <input type="text" id="Paciente_id" name="Paciente_id">
+                </div>
+                <div class="campo-busqueda">
+                    <label for="Medico_id">Médico:</label>
+                    <input type="text" id="Medico_id" name="Medico_id">
+                </div>
             </div>
-            <div class="campo-busqueda">
-                <label for="Medico_id">Médico:</label>
-                <input type="text" id="Medico_id" name="Medico_id">
-            </div>
-        </div>
-        <button type="submit">Buscar</button>
-    </form>
-</div>
+            <button type="submit" class="busqueda">Buscar</button>
+        </form>
+    </div>
 
 
 
@@ -160,32 +164,252 @@ function modificarFecha($fecha)
         <button>Atrás</button>
     </a>
 
-    <?php if (!empty($todasLasRecetas)) : ?>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nro Receta</th>
-                    <th>Fecha Emisión</th>
-                    <th>Remedio</th>
-                    <th>Paciente</th>
-                    <th>Medico</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($todasLasRecetas as $receta) : ?>
+    <div id="muestra-recetas">
+        <?php if (!empty($todasLasRecetas)) : ?>
+            <table>
+                <thead>
                     <tr>
-                        <td><?php echo $receta['nroReceta']; ?></td>
-                        <td><?php echo modificarFecha($receta['fechaEmision']); ?></td>
-                        <td><?php echo $receta['Remedio_id']; ?></td>
-                        <td><?php echo $receta['Paciente_id']; ?></td>
-                        <td><?php echo $receta['Medico_id']; ?></td>
+                        <th>Nro Receta</th>
+                        <th>Fecha Emisión</th>
+                        <th>Remedio</th>
+                        <th>Paciente</th>
+                        <th>Medico</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    <?php else : ?>
-        <p>No se encontraron recetas.</p>
-    <?php endif; ?>
+                </thead>
+                <tbody>
+                    <?php foreach ($todasLasRecetas as $receta) : ?>
+                        <tr>
+                            <td><?php echo $receta['nroReceta']; ?></td>
+                            <td><?php echo modificarFecha($receta['fechaEmision']); ?></td>
+                            <td><?php echo $receta['Remedio_id']; ?></td>
+                            <td><?php echo $receta['Paciente_id']; ?></td>
+                            <td><?php echo $receta['Medico_id']; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else : ?>
+            <p>No se encontraron recetas.</p>
+        <?php endif; ?>
+
+    </div>
+
 </body>
 
 </html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+
+<script>
+        $(document).ready(function() {
+            $('#Paciente_id').autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: 'http://localhost:8000/busqueda/paciente',
+                        dataType: 'json',
+                        data: {
+                            busqueda: request.term
+                        },
+                        success: function(data) {
+                            console.log("Datos recibidos:", data);
+                            response($.map(data, function(item) {
+                                return {
+                                    label: item.dni,
+                                    value: item.id
+                                };
+                            }));
+                        }
+                    });
+                },
+                select: function(event, ui) {
+                    console.log("Item seleccionado:", ui.item);
+                    $('#Paciente_id').val(ui.item.value);
+                    return false;
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $('#Medico_id').autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: 'http://localhost:8000/busqueda/medico',
+                        dataType: 'json',
+                        data: {
+                            busqueda: request.term
+                        },
+                        success: function(data) {
+                            //console.log("Datos recibidos:", data);
+                            response($.map(data, function(item) {
+                                return {
+                                    label: item.matricula,
+                                    value: item.id
+                                };
+                            }));
+                        }
+                    });
+                },
+                select: function(event, ui) {
+                    //console.log("Item seleccionado:", ui.item);
+                    $('#Medico_id').val(ui.item.value);
+                    return false;
+                }
+            });
+        });
+</script>
+
+<script>
+    formulario = document.querySelector(".form-container");
+    divTabla = document.getElementById("muestra-recetas");
+    
+
+    formulario.addEventListener("submit", async function(e) {
+        e.preventDefault();
+        tabla = divTabla.children[0];
+        divTabla.removeChild(tabla);
+
+        const nroReceta = document.getElementById("nroReceta").value;
+        const fechaEmision = document.getElementById("fechaEmision").value;
+        const idPaciente = document.getElementById("Paciente_id").value;
+        const idMedico = document.getElementById("Medico_id").value;
+
+        try {
+            const resultadoBusqueda = await realizarBusqueda(nroReceta, fechaEmision, idPaciente, idMedico);
+            let recetas = JSON.parse(resultadoBusqueda);
+            //console.log(resultadoBusqueda);
+            //recetas = await modificarVisualizacionMedico(recetas);
+            if (recetas.length >= 1) {
+                nuevaTabla = document.createElement("TABLE");
+                header = document.createElement("THEAD");
+                header.innerHTML = `<tr>
+                                        <th>Nro Receta</th>
+                                        <th>Fecha Emisión</th>
+                                        <th>Remedio</th>
+                                        <th>Paciente</th>
+                                        <th>Medico</th>
+                                    </tr>`
+                nuevaTabla.appendChild(header);
+                bodyTabla = document.createElement("TBODY");
+
+                for (let receta of recetas) {
+                    let fechaMod = modificarFecha(receta['fechaEmision']);
+                    let paciente = JSON.parse(await obtenerPaciente(receta));
+                    let nombrePaciente = paciente['nombre'] + " " + paciente['apellido'];
+                    receta['Paciente_id'] = nombrePaciente;
+                    let medico = JSON.parse(await obtenerMedico(receta));
+                    let nombreMedico = medico['nombre'] + " " + medico['apellido'];
+                    receta['Medico_id'] = nombreMedico;
+                    bodyTabla.innerHTML += `<tr>
+                                                <td>${receta['nroReceta']}</td>
+                                                <td>${fechaMod}</td>
+                                                <td>${receta['Remedio_id']}</td>
+                                                <td>${receta['Paciente_id']}</td>
+                                                <td>${receta['Medico_id']}</td>
+                                            </tr>`
+                }
+
+                nuevaTabla.appendChild(bodyTabla);
+                divTabla.appendChild(nuevaTabla);
+            } else {
+                mensaje = document.createElement("P");
+                mensaje.classList.add("no-encontrado");
+                mensaje.innerHTML = "No se encontraron recetas";
+                divTabla.appendChild(mensaje);
+            }
+
+        } catch (error) {
+            console.error('Error en la búsqueda:', error);
+        }
+
+        
+    });
+
+    function modificarFecha(fecha) {
+        let arrayFecha = fecha.split("-");
+        let fechaModificada = arrayFecha[2] + "/" + arrayFecha[1] + "/" + arrayFecha[0];
+
+        return fechaModificada;
+    }
+
+    function realizarBusqueda(nroReceta, fechaEmision, paciente_id, medico_id) {
+        return new Promise((resolve, reject) => {
+            let url = 'http://localhost:8000/busqueda/receta?';
+            if (nroReceta) url += 'nroReceta=' + encodeURIComponent(nroReceta) + '&';
+            if (fechaEmision) url += 'fechaEmision=' + encodeURIComponent(fechaEmision) + '&';
+            if (paciente_id) url += 'paciente_id=' + encodeURIComponent(paciente_id) + '&';
+            if (medico_id) url += 'medico_id=' + encodeURIComponent(medico_id);
+            url = url.replace(/&$/, '');
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    console.log('Solicitud exitosa de obtencion de id');
+                    resolve(xhr.responseText);
+                } else {
+                    console.error('Error en la solicitud');
+                    reject(xhr.status);
+                }
+            };
+            xhr.onerror = function() {
+                console.error('Error en la solicitud');
+                reject(xhr.status);
+            };
+            xhr.send();
+    });
+}
+
+function obtenerPaciente(receta) {
+        return new Promise((resolve, reject) => {
+
+            let url = 'http://localhost:8000/paciente/' + receta['Paciente_id'];
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    console.log('Solicitud exitosa de obtencion de id');
+                    resolve(xhr.responseText);
+                } else {
+                    console.error('Error en la solicitud');
+                    reject(xhr.status);
+                }
+            };
+            xhr.onerror = function() {
+                console.error('Error en la solicitud');
+                reject(xhr.status);
+            };
+            xhr.send();
+    });
+}
+ 
+
+function obtenerMedico(receta) {
+        return new Promise((resolve, reject) => {
+
+            let url = 'http://localhost:8000/medico/' + receta['Medico_id'];
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    console.log('Solicitud exitosa de obtencion de id');
+                    resolve(xhr.responseText);
+                } else {
+                    console.error('Error en la solicitud');
+                    reject(xhr.status);
+                }
+            };
+            xhr.onerror = function() {
+                console.error('Error en la solicitud');
+                reject(xhr.status);
+            };
+            xhr.send();
+    });
+}
+
+</script>
