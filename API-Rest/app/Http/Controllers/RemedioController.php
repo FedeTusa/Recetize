@@ -78,4 +78,19 @@ class RemedioController extends Controller
         return response()->json(['mensaje' => 'remedio eliminado con éxito'], 200);
     }
 
+    public function busqueda(Request $request)
+    {
+        $busqueda = $request->input('busqueda');
+
+        $remedio = Remedio::where('codigo', 'like', '%' . $busqueda . '%')
+                     ->select('id', 'codigo')
+                     ->orderBy('id')
+                     ->limit(10)
+                     ->get();
+                     
+        header("Access-Control-Allow-Origin: http://recetize.test");
+
+        return response()->json($remedio);
+    }
+
 }

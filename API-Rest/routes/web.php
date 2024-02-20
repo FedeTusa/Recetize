@@ -25,6 +25,8 @@ $router->post('/editarRemedio/{id}',['uses' => 'RemedioController@update']);
 
 $router->delete('/remedio/{id}',['uses' => 'RemedioController@destroy']);
 
+$router->get('/busqueda/remedio', 'RemedioController@busqueda');
+
 $router->get('/pacientes', ['uses' => 'PacienteController@showAll']); 
 $router->get('/paciente/{id}', ['uses' => 'PacienteController@show']);
 
@@ -60,5 +62,7 @@ $router->get('/remedioreceta/{id}', ['uses' => 'RemedioRecetaController@show']);
 
 $router->post('/remedioreceta',['uses' => 'RemedioRecetaController@store']);
 $router->post('/actualizarRemedioReceta/{id}',['uses' => 'RemedioRecetaController@update']);
+
+$router->get('/busqueda/remedioreceta', 'RemedioRecetaController@busqueda');
 
 
