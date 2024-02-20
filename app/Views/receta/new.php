@@ -296,6 +296,34 @@
                 }
             });
         });
+
+        $(document).ready(function() {
+            $('#remedio_id_0').autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: 'http://localhost:8000/busqueda/remedio',
+                        dataType: 'json',
+                        data: {
+                            busqueda: request.term
+                        },
+                        success: function(data) {
+                            //console.log("Datos recibidos:", data);
+                            response($.map(data, function(item) {
+                                return {
+                                    label: item.codigo,
+                                    value: item.id
+                                };
+                            }));
+                        }
+                    });
+                },
+                select: function(event, ui) {
+                    //console.log("Item seleccionado:", ui.item);
+                    $('#remedio_id_0').val(ui.item.value);
+                    return false;
+                }
+            });
+        });
     </script>
 
     <script>
@@ -368,6 +396,33 @@
             nuevoFormulario.classList.add("formulario-receta");
             nuevoFormulario.classList.add("envio-remedioReceta");
             nuevoFormulario.innerHTML += '<label for="remedio_id_' + contadorFormularios + '">Remedio<b>*</b></label>';
+            $(document).ready(function() {
+                $('#remedio_id_' + contadorFormularios).autocomplete({
+                    source: function(request, response) {
+                        $.ajax({
+                            url: 'http://localhost:8000/busqueda/remedio',
+                            dataType: 'json',
+                            data: {
+                                busqueda: request.term
+                            },
+                            success: function(data) {
+                                //console.log("Datos recibidos:", data);
+                                response($.map(data, function(item) {
+                                    return {
+                                        label: item.codigo,
+                                        value: item.id
+                                    };
+                                }));
+                            }
+                        });
+                    },
+                    select: function(event, ui) {
+                        //console.log("Item seleccionado:", ui.item);
+                        $('#remedio_id_' + contadorFormularios).val(ui.item.value);
+                        return false;
+                    }
+                });
+            });
             const nuevoInput = document.createElement("INPUT");
             nuevoInput.type = "number";
             nuevoInput.setAttribute("id", "remedio_id_" + contadorFormularios);

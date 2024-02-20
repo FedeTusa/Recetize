@@ -66,4 +66,20 @@ class RemedioRecetaController extends Controller
         return response()->json($remedioreceta);
     }
 
+    public function busqueda(Request $request)
+    {
+        $busqueda = $request->input('busqueda');
+
+        $remediorecetaQuery = RemedioReceta::query();
+
+        $remedioreceta = $remediorecetaQuery->leftJoin('remedio', 'remedioreceta.remedio_id', '=', 'remedio.id')
+                                             ->where('remedioreceta.receta_id', '=', $busqueda)
+                                             ->select('remedioreceta.id', 'remedio.codigo', 'remedio.medicamento')
+                                             ->orderBy('remedioreceta.id')
+                                             ->limit(10)
+                                             ->get();
+
+        return response()->json($remedioreceta);
+    }
+
 }

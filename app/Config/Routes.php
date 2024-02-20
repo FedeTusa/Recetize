@@ -19,3 +19,7 @@ $routes->get('/pagprincipal', 'Home::main');
 $routes->get('/pagprincipal/busqueda', 'MainController::search'); //no sirve
 
 $routes->get('/pagprincipal/consulta', 'RecetaController::consult');
+
+$routes->get('/pagprincipal/eliminacion', 'RecetaController::eliminacion');
+
+$routes->post('/pagprincipal/eliminarReceta/(:num)', 'RecetaController::eliminarReceta/$1');
