@@ -44,4 +44,9 @@ class RecetaModel extends Model
     {
         return $this->sendRequest('GET', 'http://localhost:8000/recetas');
     }
+
+    public function editarReceta($receta_id, $data)
+    {
+        return $this->sendRequest('POST', 'http://localhost:8000/editarReceta/' . $receta_id, $data);
+    }
 }

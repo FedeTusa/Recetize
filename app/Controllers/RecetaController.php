@@ -119,4 +119,54 @@ class RecetaController extends BaseController
             return view('consulta', ['todasLasRecetas' => $todasLasRecetas]);
         }
     }
+
+    public function eliminacion()
+    {
+        $receta = new RecetaModel();
+        $paciente = new PacienteModel();
+        $medico = new MedicoModel();
+
+        $todasLasRecetas = $receta->obtenerRecetas();
+
+        $todasLasRecetas = json_decode($todasLasRecetas, true);
+
+        foreach ($todasLasRecetas as $receta => &$unaReceta) {
+            if ($unaReceta['borrado_logico'] == 1) {
+                unset($todasLasRecetas[$receta]);
+            } else {
+                $idPaciente = (int) $unaReceta['Paciente_id'];
+                $idMedico = (int) $unaReceta['Medico_id'];
+                $nombrePaciente = $paciente->pacientePorId($idPaciente);
+                $nombreMedico = $medico->medicoPorId($idMedico);
+                $nombrePaciente = json_decode($nombrePaciente, true);
+                $nombreMedico = json_decode($nombreMedico, true);
+                $unaReceta['Paciente_id'] = $nombrePaciente['nombre']." ".$nombrePaciente['apellido'];
+                $unaReceta['Medico_id'] = $nombreMedico['nombre']." ".$nombreMedico['apellido'];
+            }
+        }
+        unset($unaReceta);
+
+        if ($todasLasRecetas) {
+            return view('eliminacion', ['todasLasRecetas' => $todasLasRecetas]);
+        }
+    }
+
+    public function eliminarReceta(int $id)
+    {
+        $receta = new RecetaModel();
+
+        $response = $receta->editarReceta($id, [
+            'borrado_logico' => 1
+        ]);
+
+        return $this->eliminacion();
+
+        // $responseData = json_decode($response, true);
+        
+        // if ($responseData) {
+        //     return view('receta/exito');
+        // } else {
+        //     return view('receta/error');
+        // }
+    }
 }

@@ -13,7 +13,7 @@ class Receta extends Model
     protected $table = 'receta';
 
     protected $fillable = [
-        'nroReceta', 'fechaEmision', 'Paciente_id', 'Medico_id'
+        'nroReceta', 'fechaEmision', 'Paciente_id', 'Medico_id', 'borrado_logico'
     ];
 
     public function medico()

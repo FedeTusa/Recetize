@@ -98,7 +98,7 @@
       </div>
       <div class="row">
         <div class="col-md-6 option" onclick="window.location.href='http://recetize.test//pagprincipal/consulta'">Consultar</div>
-        <div class="col-md-6 option">Eliminar</div>
+        <div class="col-md-6 option" onclick="window.location.href='http://recetize.test/pagprincipal/eliminacion'">Eliminar</div>
       </div>
     </div>
   </div>

@@ -51,14 +51,10 @@ class RecetaController extends Controller
         return response()->json($receta, 201);
     }
 
-/*     public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'nroReceta' => 'required|numeric|unique:receta', 
-            'fechaEmision' => 'required',
-            'Remedio_id' => 'required',
-            'Paciente_id' => 'required',
-            'Medico_id' => 'required'
+            'nroReceta' => 'numeric|unique:receta'
         ]);
 
         $receta = Receta::find($id);
@@ -69,14 +65,14 @@ class RecetaController extends Controller
 
         if ($request->input('nroReceta')) {$receta->nroReceta = $request->input('nroReceta');}
         if ($request->input('fechaEmision')) {$receta->fechaEmision = $request->input('fechaEmision');}
-        if ($request->input('Remedio_id')) {$remedio->id = $request->input('Remedio_id');}
-        if ($request->input('Paciente_id')) {$paciente->celular = $request->input('celular');}
-        if ($request->input('Medico_id')) {$paciente->localidad = $request->input('localidad');}
+        if ($request->input('Paciente_id')) {$receta->Paciente_id = $request->input('Paciente_id');}
+        if ($request->input('Medico_id')) {$receta->Medico_id = $request->input('Medico_id');}
+        if ($request->input('borrado_logico')) {$receta->borrado_logico = $request->input('borrado_logico');}
 
         $receta->save();
 
         return response()->json($receta);
-    } */
+    }
 
     public function destroy($id)
     {
