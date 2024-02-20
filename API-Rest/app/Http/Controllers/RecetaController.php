@@ -116,12 +116,16 @@ class RecetaController extends Controller
             $recetaQuery->where('medico_id', $medico_id);
         }
         
-        $receta = $recetaQuery->select('id')
+        $receta = $recetaQuery->select('*')
                              ->orderBy('id')
                              ->limit(10)
                              ->get();
 
+        header("Access-Control-Allow-Origin: http://recetize.test");
+
         return response()->json($receta);
+
+
     }
 
 }

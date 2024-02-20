@@ -78,6 +78,14 @@
             border-radius: 5px;
         }
 
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
         input#nroReceta {
             width: 45%;
             font-size: 15px;
@@ -209,7 +217,7 @@
         <br>
         <label for="fechaEmision" class="menor-longitud">Fecha de emisión</label><b>*</b>
         <br>
-        <input type="text" name="fechaEmision" id="fechaEmision" placeholder="AAAA-MM-DD">
+        <input type="date" name="fechaEmision" id="fechaEmision" placeholder="AAAA-MM-DD">
         <br>
         <div class="formulario-receta envio-remedioReceta">
             <label for="remedio_id_0">Remedio<b>*</b></label>
