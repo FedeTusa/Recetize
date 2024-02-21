@@ -68,7 +68,7 @@ class RemedioController extends BaseController
             return view('remedio/error');
         }
 
-        return redirect()->to('/MedicoController/new');
+        return redirect()->to('/RemedioController/new');
 
         // $apiUrl = 'http://localhost:8000/remedio';
 

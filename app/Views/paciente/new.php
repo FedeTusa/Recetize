@@ -74,7 +74,6 @@
         /* Estilo específico para el input de DNI */
         input#dni {
             width: 35%; /* Ajuste de la longitud del input */
-            color: #aaa;
         }
 
         input#dni::placeholder {
