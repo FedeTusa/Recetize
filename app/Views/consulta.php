@@ -149,11 +149,6 @@ function modificarFormato($formato) {
                     <label for="fechaEmision">Fecha de Emisión:</label>
                     <input type="date" id="fechaEmision" name="fechaEmision">
                 </div>
-                <div class="campo-busqueda">
-                    <label for="Remedio_id">Remedio:</label>
-                    <input type="text" id="Remedio_id" name="Remedio_id">
-                </div>
-
             </div>
 
             <!-- Segunda fila con dos campos -->
@@ -172,12 +167,12 @@ function modificarFormato($formato) {
     </div>
     <div id="muestra-recetas">    
         <?php if (!empty($todasLasRecetas)) : ?>
-            <table id="muestra-recetas">
+            <table>
                 <thead>
                     <tr>
                         <th>Nro Receta</th>
                         <th>Fecha Emisión</th>
-                        <th>Remedio</th>
+                        <th>Remedios</th>
                         <th>Paciente</th>
                         <th>Médico</th>
                         <th>Fecha de Creación</th>
@@ -189,7 +184,12 @@ function modificarFormato($formato) {
                         <tr>
                             <td><?php echo $receta['nroReceta']; ?></td>
                             <td><?php echo modificarFecha($receta['fechaEmision']); ?></td>
-                            <td><?php echo $receta['Remedio_id']; ?></td>
+                            <td><?php 
+                                $remedioreceta = model('App\Models\RemedioRecetaModel');
+                                $remediosdereceta = $remedioreceta->remediosDeReceta($receta['id']);
+                                $remedios = json_decode($remediosdereceta, true);
+                                foreach ($remedios as $remedio) {echo $remedio['droga'] . "<br>";}
+                            ?></td>
                             <td><?php echo $receta['Paciente_id']; ?></td>
                             <td><?php echo $receta['Medico_id']; ?></td>
                             <td><?php echo modificarFormato($receta['created_at']); ?></td>
@@ -291,13 +291,13 @@ function modificarFormato($formato) {
             let recetas = JSON.parse(resultadoBusqueda);
             console.log(resultadoBusqueda);
             //recetas = await modificarVisualizacionMedico(recetas);
-            if (recetas.length >= 1) {
+            if (recetas.length >= 1 && hayRecetasParaMostrar(recetas)) {
                 nuevaTabla = document.createElement("TABLE");
                 header = document.createElement("THEAD");
                 header.innerHTML = `<tr>
                                         <th>Nro Receta</th>
                                         <th>Fecha Emisión</th>
-                                        <th>Remedio</th>
+                                        <th>Remedios</th>
                                         <th>Paciente</th>
                                         <th>Médico</th>
                                         <th>Fecha de Creación</th>
@@ -307,28 +307,36 @@ function modificarFormato($formato) {
                 bodyTabla = document.createElement("TBODY");
 
                 for (let receta of recetas) {
-                    let fechaMod = modificarFecha(receta['fechaEmision']);
-                    receta['created_at'] = modificarFormato(receta['created_at'])
-                    receta['updated_at'] = modificarFormato(receta['updated_at'])
-                    let paciente = JSON.parse(await obtenerPaciente(receta));
-                    let nombrePaciente = paciente['nombre'] + " " + paciente['apellido'];
-                    receta['Paciente_id'] = nombrePaciente;
-                    let medico = JSON.parse(await obtenerMedico(receta));
-                    let nombreMedico = medico['nombre'] + " " + medico['apellido'];
-                    receta['Medico_id'] = nombreMedico;
-                    bodyTabla.innerHTML += `<tr>
-                                                <td>${receta['nroReceta']}</td>
-                                                <td>${fechaMod}</td>
-                                                <td>${receta['Remedio_id']}</td>
-                                                <td>${receta['Paciente_id']}</td>
-                                                <td>${receta['Medico_id']}</td>
-                                                <td>${receta['created_at']}</td>
-                                                <td>${receta['updated_at']}</td>
-                                            </tr>`
-                }
+                    if (!receta["borrado_logico"]) {
+                        let fechaMod = modificarFecha(receta['fechaEmision']);
+                        receta['created_at'] = modificarFormato(receta['created_at'])
+                        receta['updated_at'] = modificarFormato(receta['updated_at'])
+                        let paciente = JSON.parse(await obtenerPaciente(receta));
+                        let nombrePaciente = paciente['nombre'] + " " + paciente['apellido'];
+                        receta['Paciente_id'] = nombrePaciente;
+                        let medico = JSON.parse(await obtenerMedico(receta));
+                        let nombreMedico = medico['nombre'] + " " + medico['apellido'];
+                        receta['Medico_id'] = nombreMedico;
+                        let remedios = JSON.parse(await obtenerRemedios(receta['id']));
+                        let camposTabla = `<tr>
+                                                    <td>${receta['nroReceta']}</td>
+                                                    <td>${fechaMod}</td>
+                                                    <td>`
+                        for (remedio of remedios) {
+                            camposTabla += `${remedio['droga']}<br>`
+                        } 
+                        camposTabla += `</td>`
+                        camposTabla += `<td>${receta['Paciente_id']}</td>
+                                        <td>${receta['Medico_id']}</td>
+                                        <td>${receta['created_at']}</td>
+                                        <td>${receta['updated_at']}</td>
+                                        </tr>`
+                        bodyTabla.innerHTML += camposTabla;
 
-                nuevaTabla.appendChild(bodyTabla);
-                divTabla.appendChild(nuevaTabla);
+                        nuevaTabla.appendChild(bodyTabla);
+                        divTabla.appendChild(nuevaTabla);
+                    }
+                }
             } else {
                 mensaje = document.createElement("P");
                 mensaje.classList.add("no-encontrado");
@@ -341,6 +349,17 @@ function modificarFormato($formato) {
 
         
     });
+
+    function hayRecetasParaMostrar(recetas) {
+        let contador = 0;
+
+        for (receta of recetas) {
+            if (!receta["borrado_logico"]) contador++;
+        }
+
+        if (contador != 0) return true;
+        else return false;
+    }
 
     function modificarFecha(fecha) {
         let arrayFecha = fecha.split("-");
@@ -385,56 +404,80 @@ function modificarFormato($formato) {
                 reject(xhr.status);
             };
             xhr.send();
-    });
-}
+        });
+    }
 
-function obtenerPaciente(receta) {
-        return new Promise((resolve, reject) => {
+    function obtenerPaciente(receta) {
+            return new Promise((resolve, reject) => {
 
-            let url = 'http://localhost:8000/paciente/' + receta['Paciente_id'];
+                let url = 'http://localhost:8000/paciente/' + receta['Paciente_id'];
 
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', url);
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    console.log('Solicitud exitosa de obtencion de id');
-                    resolve(xhr.responseText);
-                } else {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', url);
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        console.log('Solicitud exitosa de obtencion de id');
+                        resolve(xhr.responseText);
+                    } else {
+                        console.error('Error en la solicitud');
+                        reject(xhr.status);
+                    }
+                };
+                xhr.onerror = function() {
                     console.error('Error en la solicitud');
                     reject(xhr.status);
-                }
-            };
-            xhr.onerror = function() {
-                console.error('Error en la solicitud');
-                reject(xhr.status);
-            };
-            xhr.send();
-    });
-}
- 
+                };
+                xhr.send();
+        });
+    }
+    
 
-function obtenerMedico(receta) {
-        return new Promise((resolve, reject) => {
+    function obtenerMedico(receta) {
+            return new Promise((resolve, reject) => {
 
-            let url = 'http://localhost:8000/medico/' + receta['Medico_id'];
+                let url = 'http://localhost:8000/medico/' + receta['Medico_id'];
 
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', url);
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    console.log('Solicitud exitosa de obtencion de id');
-                    resolve(xhr.responseText);
-                } else {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', url);
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        console.log('Solicitud exitosa de obtencion de id');
+                        resolve(xhr.responseText);
+                    } else {
+                        console.error('Error en la solicitud');
+                        reject(xhr.status);
+                    }
+                };
+                xhr.onerror = function() {
                     console.error('Error en la solicitud');
                     reject(xhr.status);
-                }
-            };
-            xhr.onerror = function() {
-                console.error('Error en la solicitud');
-                reject(xhr.status);
-            };
-            xhr.send();
-    });
-}
+                };
+                xhr.send();
+        });
+    }
+
+    function obtenerRemedios(idReceta) {
+            return new Promise((resolve, reject) => {
+
+                let url = 'http://localhost:8000/busqueda/remedioreceta?busqueda=' + idReceta;
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', url);
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        console.log('Solicitud exitosa de obtencion de id');
+                        resolve(xhr.responseText);
+                    } else {
+                        console.error('Error en la solicitud');
+                        reject(xhr.status);
+                    }
+                };
+                xhr.onerror = function() {
+                    console.error('Error en la solicitud');
+                    reject(xhr.status);
+                };
+                xhr.send();
+        });
+    }
 
 </script>
