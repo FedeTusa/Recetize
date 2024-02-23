@@ -213,7 +213,8 @@
         <br>
         <div class="formulario-receta envio-remedioReceta">
             <label for="remedio_id_0">Remedio<b>*</b></label>
-            <input type="number" id="remedio_id_0" name="remedio_id" required>
+            <input type="text" id="remedio_id_0" name="remedio_id" required>
+            <input type="hidden" name="remedio_id" id="remedio_id_hidden_0">
             <input type="button" value="+" class="remedio-receta">  
         </div>
         <br><br>
@@ -312,15 +313,17 @@
                             response($.map(data, function(item) {
                                 return {
                                     label: item.codigo,
-                                    value: item.id
+                                    value: item.id,
+                                    codigo: item.codigo,
+                                    medicamento: item.medicamento
                                 };
                             }));
                         }
                     });
                 },
                 select: function(event, ui) {
-                    //console.log("Item seleccionado:", ui.item);
-                    $('#remedio_id_0').val(ui.item.value);
+                    $('#remedio_id_0').val(ui.item.codigo + ' ' + ui.item.medicamento);
+                    $('#remedio_id_hidden_0').val(ui.item.value);
                     return false;
                 }
             });
@@ -342,8 +345,10 @@
                 const nroFormulario = lista[1];
                 formulario.insertBefore(nuevoFormulario, document.querySelector(".label-paciente"));
                 const intermedia = nroFormulario-1;
-                const idDelInput = "remedio_id_" + intermedia;
+                const idDelInput = "remedio_id_hidden_" + intermedia;
                 const remedio_id = document.getElementById(idDelInput).value;
+                console.log(remedio_id);
+                debugger;
                 hacerPostRemedio(remedio_id);
 
             } else if (e.target && e.target.classList.contains("eliminar-remedioReceta")) {
@@ -352,7 +357,7 @@
                 const formAnterior = formRemedio.previousElementSibling.previousElementSibling.previousElementSibling;
                 formGeneral.removeChild(formRemedio);
                 if (formAnterior.children[1]) {
-                    if  (formAnterior.children[1].getAttribute("id") == "remedio_id_0" && formAnterior.children.length < 3) {
+                    if  (formAnterior.children[1].getAttribute("id") == "remedio_id_hidden_0" && formAnterior.children.length < 3) {
                         const nuevoBoton = document.createElement("INPUT");
                         nuevoBoton.type =  "button";
                         nuevoBoton.value = "+";
@@ -364,7 +369,7 @@
                 
             } else if (e.target && e.target.classList.contains("guardado")) {
                 e.preventDefault();
-                const idDelInput = "remedio_id_" + contadorFormularios;
+                const idDelInput = "remedio_id_hidden" + contadorFormularios;
                 //console.log(idDelInput);
                 const remedio_id = document.getElementById(idDelInput).value;
                 //console.log(remedio_id);
@@ -395,7 +400,7 @@
             const nuevoFormulario = document.createElement("DIV");
             nuevoFormulario.classList.add("formulario-receta");
             nuevoFormulario.classList.add("envio-remedioReceta");
-            nuevoFormulario.innerHTML += '<label for="remedio_id_' + contadorFormularios + '">Remedio<b>*</b></label>';
+            nuevoFormulario.innerHTML += '<label for="remedio_id_hidden' + contadorFormularios + '">Remedio<b>*</b></label>';
             $(document).ready(function() {
                 $('#remedio_id_' + contadorFormularios).autocomplete({
                     source: function(request, response) {
@@ -418,14 +423,15 @@
                     },
                     select: function(event, ui) {
                         //console.log("Item seleccionado:", ui.item);
-                        $('#remedio_id_' + contadorFormularios).val(ui.item.value);
+                        $('#remedio_id_' + contadorFormularios).val(ui.item.codigo + ' ' + ui.item.medicamento);
+                        $('#remedio_id_hidden' + contadorFormularios).val(ui.item.value);
                         return false;
                     }
                 });
             });
             const nuevoInput = document.createElement("INPUT");
             nuevoInput.type = "number";
-            nuevoInput.setAttribute("id", "remedio_id_" + contadorFormularios);
+            nuevoInput.setAttribute("id", "remedio_id_hidden" + contadorFormularios);
             nuevoInput.setAttribute("name", "remedio_id");
             nuevoInput.required = true;
             const nuevoBoton = document.createElement("INPUT");
