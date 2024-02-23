@@ -93,7 +93,7 @@ class MedicoController extends Controller
         $busqueda = $request->input('busqueda');
 
         $medico = Medico::where('matricula', 'like', '%' . $busqueda . '%')
-                     ->select('id', 'matricula')
+                     ->select('id', 'matricula', 'nombre', 'apellido')
                      ->orderBy('id')
                      ->limit(10)
                      ->get();
