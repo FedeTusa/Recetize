@@ -400,6 +400,7 @@
                     xhr.open('POST', 'http://recetize.test/RecetaController', true);
                     xhr.send(formatoData);
                     alert("Receta cargada con exito");
+                    location.reload();
             }
         });
 
