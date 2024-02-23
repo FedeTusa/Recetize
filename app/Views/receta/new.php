@@ -219,9 +219,11 @@
         <br><br>
         <label for="Paciente_id" class="menor-longitud label-paciente">DNI paciente</label><b>*</b>
         <input type="text" name="Paciente_id" id="Paciente_id">
+        <input type="hidden" id="Paciente_id_hidden" name="Paciente_id_hidden">
 
         <label for="Medico_id" class="menor-longitud">Matrícula médico</label><b>*</b>
         <input type="text" name="Medico_id" id="Medico_id">
+        <input type="hidden" id="Medico_id_hidden" name="Medico_id_hidden">
 
         <input type="submit" value="Guardar" class="guardado">
     </form>
@@ -245,9 +247,13 @@
                         success: function(data) {
                             console.log("Datos recibidos:", data);
                             response($.map(data, function(item) {
+                                console.log(item);
                                 return {
                                     label: item.dni,
-                                    value: item.id
+                                    value: item.id,
+                                    dni: item.dni,
+                                    nombre: item.nombre,
+                                    apellido: item.apellido
                                 };
                             }));
                         }
@@ -255,7 +261,8 @@
                 },
                 select: function(event, ui) {
                     console.log("Item seleccionado:", ui.item);
-                    $('#Paciente_id').val(ui.item.value);
+                    $('#Paciente_id').val(ui.item.dni + ', ' + ui.item.nombre + ' ' + ui.item.apellido);
+                    $('#Paciente_id_hidden').val(ui.item.value);
                     return false;
                 }
             });
@@ -271,19 +278,21 @@
                             busqueda: request.term
                         },
                         success: function(data) {
-                            //console.log("Datos recibidos:", data);
                             response($.map(data, function(item) {
                                 return {
                                     label: item.matricula,
-                                    value: item.id
+                                    value: item.id,
+                                    matricula: item.matricula,
+                                    nombre: item.nombre,
+                                    apellido: item.apellido
                                 };
                             }));
                         }
                     });
                 },
                 select: function(event, ui) {
-                    //console.log("Item seleccionado:", ui.item);
-                    $('#Medico_id').val(ui.item.value);
+                    $('#Medico_id').val(ui.item.matricula + ', ' + ui.item.nombre + ' ' + ui.item.apellido);
+                    $('#Medico_id_hidden').val(ui.item.value);
                     return false;
                 }
             });
@@ -362,9 +371,8 @@
                 hacerPostRemedio(remedio_id);
                 const nroReceta = document.getElementById("nroReceta").value;
                 const fechaEmision = document.getElementById("fechaEmision").value;
-                const idPaciente = document.getElementById("Paciente_id").value;
-                //console.log(idPaciente);
-                const idMedico = document.getElementById("Medico_id").value;
+                const idPaciente = document.getElementById("Paciente_id_hidden").value;
+                const idMedico = document.getElementById("Medico_id_hidden").value;
                 let formatoData = new FormData();
                 formatoData.append("nroReceta", nroReceta);
                 formatoData.append("fechaEmision", fechaEmision);

@@ -99,7 +99,7 @@ class PacienteController extends Controller
         $busqueda = $request->input('busqueda');
 
         $paciente = Paciente::where('dni', 'like', '%' . $busqueda . '%')
-                     ->select('id', 'dni')
+                     ->select('id', 'dni', 'nombre', 'apellido')
                      ->orderBy('id')
                      ->limit(10)
                      ->get();
