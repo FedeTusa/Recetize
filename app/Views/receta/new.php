@@ -369,7 +369,7 @@
                 
             } else if (e.target && e.target.classList.contains("guardado")) {
                 e.preventDefault();
-                const idDelInput = "remedio_id_hidden" + contadorFormularios;
+                const idDelInput = "remedio_id_hidden_" + contadorFormularios;
                 //console.log(idDelInput);
                 const remedio_id = document.getElementById(idDelInput).value;
                 //console.log(remedio_id);
@@ -400,7 +400,7 @@
             const nuevoFormulario = document.createElement("DIV");
             nuevoFormulario.classList.add("formulario-receta");
             nuevoFormulario.classList.add("envio-remedioReceta");
-            nuevoFormulario.innerHTML += '<label for="remedio_id_hidden' + contadorFormularios + '">Remedio<b>*</b></label>';
+            nuevoFormulario.innerHTML += '<label for="remedio_id_' + contadorFormularios + '">Remedio<b>*</b></label>';
             $(document).ready(function() {
                 $('#remedio_id_' + contadorFormularios).autocomplete({
                     source: function(request, response) {
@@ -415,7 +415,9 @@
                                 response($.map(data, function(item) {
                                     return {
                                         label: item.codigo,
-                                        value: item.id
+                                        value: item.id,
+                                        codigo: item.codigo,
+                                        medicamento: item.medicamento
                                     };
                                 }));
                             }
@@ -424,14 +426,19 @@
                     select: function(event, ui) {
                         //console.log("Item seleccionado:", ui.item);
                         $('#remedio_id_' + contadorFormularios).val(ui.item.codigo + ' ' + ui.item.medicamento);
-                        $('#remedio_id_hidden' + contadorFormularios).val(ui.item.value);
+                        $('#remedio_id_hidden_' + contadorFormularios).val(ui.item.value);
                         return false;
                     }
                 });
             });
+            const nuevoInput2 = document.createElement("INPUT");
+            nuevoInput2.type = "text";
+            nuevoInput2.setAttribute("id", "remedio_id_" + contadorFormularios);
+            nuevoInput2.setAttribute("name", "remedio_id");
+            nuevoInput2.required = true;
             const nuevoInput = document.createElement("INPUT");
-            nuevoInput.type = "number";
-            nuevoInput.setAttribute("id", "remedio_id_hidden" + contadorFormularios);
+            nuevoInput.type = "hidden";
+            nuevoInput.setAttribute("id", "remedio_id_hidden_" + contadorFormularios);
             nuevoInput.setAttribute("name", "remedio_id");
             nuevoInput.required = true;
             const nuevoBoton = document.createElement("INPUT");
@@ -444,6 +451,7 @@
             botonEliminar.classList.add("eliminar-remedioReceta");
             botonEliminar.style.marginLeft = "10px";
             botonEliminar.style.backgroundColor = "#F76849";
+            nuevoFormulario.appendChild(nuevoInput2);
             nuevoFormulario.appendChild(nuevoInput);
             nuevoFormulario.appendChild(nuevoBoton);
             nuevoFormulario.appendChild(botonEliminar);
