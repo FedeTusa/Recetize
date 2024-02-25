@@ -29,7 +29,7 @@
         }
 
         .button-container button {
-            background-color: #00cc66; /* Verde claro para el botón "Remedio" */
+            background-color: #a5d8b9; 
             color: #000;
             border: none;
             padding: 10px 20px;
@@ -42,7 +42,7 @@
         }
 
         .button-container button.selected {
-            background-color: #ccc; /* Gris claro para el botón "Paciente" seleccionado */
+            background-color: #c0e7c8; 
         }
 
         form {
@@ -62,7 +62,7 @@
 
         input[type="number"],
         input[type="text"] {
-            width: 100%;
+            width: 95%;
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
@@ -70,7 +70,7 @@
         }
 
         input#matricula {
-            width: 30%; /* Ajuste de la longitud del input */
+            width: 30%; 
         }
 
         input#matricula::placeholder {

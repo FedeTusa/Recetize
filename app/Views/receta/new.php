@@ -30,7 +30,7 @@
         }
 
         .button-container button {
-            background-color: #00cc66;
+            background-color: #a5d8b9;
             /* Verde claro para el botón "Remedio" */
             color: #000;
             border: none;
@@ -44,8 +44,7 @@
         }
 
         .button-container button.selected {
-            background-color: #ccc;
-            /* Gris claro para el botón "Paciente" seleccionado */
+            background-color: #c0e7c8;
         }
 
         /* Agregamos un estilo para el mensaje en rojo */
@@ -71,6 +70,14 @@
 
         input[type="number"],
         input[type="text"] {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="date"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
@@ -117,7 +124,7 @@
         .back-button {
             position: absolute;
             top: 10px;
-            right: 10px;
+            left: 10px;
         }
 
         .back-button button {
@@ -183,6 +190,53 @@
             margin-top: 20px;
         }
 
+        /* Estilo para el modal*/
+
+        .modal {
+        display: none; 
+        position: fixed; 
+        z-index: 1; 
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%;
+        overflow: auto; 
+        background-color: rgb(0,0,0); 
+        background-color: rgba(0,0,0,0.4);
+        padding-top: 60px;
+        }
+
+        .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto; 
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        border-radius: 15px; 
+        }
+
+        .button-container {
+        text-align: center;
+        }
+
+        .button-container button {
+        margin: 5px;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 15px;
+        }
+
+        .button-container button:hover {
+        background-color: #a5d8b9;
+        }
+
+        .button-container .cancelar-borrado:hover {
+        background-color: #F08080;
+        }
+
+        /* Fin de los estilos del modal */
+
     </style>
 </head>
 
@@ -209,7 +263,7 @@
         <br>
         <label for="fechaEmision" class="menor-longitud">Fecha de emisión</label><b>*</b>
         <br>
-        <input type="text" name="fechaEmision" id="fechaEmision" placeholder="AAAA-MM-DD">
+        <input type="date" name="fechaEmision" id="fechaEmision" placeholder="AAAA-MM-DD">
         <br>
         <div class="formulario-receta envio-remedioReceta">
             <label for="remedio_id_0">Remedio<b>*</b></label>
@@ -309,20 +363,19 @@
                             busqueda: request.term
                         },
                         success: function(data) {
-                            //console.log("Datos recibidos:", data);
                             response($.map(data, function(item) {
                                 return {
                                     label: item.codigo,
                                     value: item.id,
                                     codigo: item.codigo,
-                                    medicamento: item.medicamento
+                                    droga: item.droga
                                 };
                             }));
                         }
                     });
                 },
                 select: function(event, ui) {
-                    $('#remedio_id_0').val(ui.item.codigo + ' ' + ui.item.medicamento);
+                    $('#remedio_id_0').val(ui.item.codigo + ' ' + ui.item.droga);
                     $('#remedio_id_hidden_0').val(ui.item.value);
                     return false;
                 }
@@ -348,16 +401,21 @@
                 const idDelInput = "remedio_id_hidden_" + intermedia;
                 const remedio_id = document.getElementById(idDelInput).value;
                 console.log(remedio_id);
-                debugger;
                 hacerPostRemedio(remedio_id);
 
             } else if (e.target && e.target.classList.contains("eliminar-remedioReceta")) {
+                //console.log("se activo el boton eliminar");
+                contadorFormularios--;
                 const formGeneral = e.target.parentElement.parentElement;
                 const formRemedio = e.target.parentElement;
                 const formAnterior = formRemedio.previousElementSibling.previousElementSibling.previousElementSibling;
+                //console.log(formAnterior.children);
                 formGeneral.removeChild(formRemedio);
+                //console.log(formGeneral.children);
                 if (formAnterior.children[1]) {
-                    if  (formAnterior.children[1].getAttribute("id") == "remedio_id_hidden_0" && formAnterior.children.length < 3) {
+                    console.log(contadorFormularios);
+                    if  (formAnterior.children[2].getAttribute("id") == "remedio_id_hidden_0" && formAnterior.children.length <= 3) {
+                        console.log("entro al if de id 0");
                         const nuevoBoton = document.createElement("INPUT");
                         nuevoBoton.type =  "button";
                         nuevoBoton.value = "+";
@@ -365,10 +423,11 @@
                         formAnterior.appendChild(nuevoBoton);
                     }
 
-                }
+                } 
                 
             } else if (e.target && e.target.classList.contains("guardado")) {
                 e.preventDefault();
+                console.log(contadorFormularios);
                 const idDelInput = "remedio_id_hidden_" + contadorFormularios;
                 //console.log(idDelInput);
                 const remedio_id = document.getElementById(idDelInput).value;
@@ -392,6 +451,7 @@
                     xhr.open('POST', 'http://recetize.test/RecetaController', true);
                     xhr.send(formatoData);
                     alert("Receta cargada con exito");
+                    location.reload();
             }
         });
 
@@ -417,7 +477,7 @@
                                         label: item.codigo,
                                         value: item.id,
                                         codigo: item.codigo,
-                                        medicamento: item.medicamento
+                                        droga: item.droga
                                     };
                                 }));
                             }
@@ -425,7 +485,7 @@
                     },
                     select: function(event, ui) {
                         //console.log("Item seleccionado:", ui.item);
-                        $('#remedio_id_' + contadorFormularios).val(ui.item.codigo + ' ' + ui.item.medicamento);
+                        $('#remedio_id_' + contadorFormularios).val(ui.item.codigo + ' ' + ui.item.droga);
                         $('#remedio_id_hidden_' + contadorFormularios).val(ui.item.value);
                         return false;
                     }

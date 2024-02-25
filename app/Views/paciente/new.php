@@ -31,7 +31,7 @@
         }
 
         .button-container button {
-            background-color: #00cc66;
+            background-color: #a5d8b9;
             color: #000;
             border: none;
             padding: 10px 20px;
@@ -44,7 +44,7 @@
         }
 
         .button-container button.selected {
-            background-color: #ccc;
+            background-color: #c0e7c8;
         }
 
         form {
@@ -64,7 +64,7 @@
 
         input[type="number"],
         input[type="text"] {
-            width: 100%;
+            width: 95%;
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
@@ -74,7 +74,6 @@
         /* Estilo específico para el input de DNI */
         input#dni {
             width: 35%; /* Ajuste de la longitud del input */
-            color: #aaa;
         }
 
         input#dni::placeholder {
@@ -109,7 +108,7 @@
         .back-button {
             position: absolute;
             top: 10px;
-            right: 10px;
+            left: 10px;
         }
 
         .back-button button {

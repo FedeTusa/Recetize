@@ -17,12 +17,14 @@ class PacienteController extends Controller
 
     public function show($id)
     {
+        header("Access-Control-Allow-Origin: http://recetize.test");
         $paciente = Paciente::find($id);
         
         if (!$paciente) {
             return response()->json(['mensaje' => 'paciente no encontrado'], 404);
         }
         return response()->json($paciente);
+        
     }
 
     public function store(Request $request)

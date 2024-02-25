@@ -17,12 +17,14 @@ class MedicoController extends Controller
 
     public function show($id)
     {
+        header("Access-Control-Allow-Origin: http://recetize.test");
         $medico = Medico::find($id);
         
         if (!$medico) {
             return response()->json(['mensaje' => 'medico no encontrado'], 404);
         }
         return response()->json($medico);
+        
     }
 
     public function store(Request $request)

@@ -68,6 +68,7 @@ class RemedioRecetaController extends Controller
 
     public function busqueda(Request $request)
     {
+        header("Access-Control-Allow-Origin: http://recetize.test");
         $busqueda = $request->input('busqueda');
 
         $remediorecetaQuery = RemedioReceta::query();
