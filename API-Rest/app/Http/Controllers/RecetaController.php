@@ -9,6 +9,7 @@ use App\Models\Remedio;
 use App\Models\Medico;
 use App\Models\Receta;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RecetaController extends Controller
 {
@@ -32,10 +33,23 @@ class RecetaController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nroReceta' => 'required|numeric|unique:receta', 
+            'nroReceta' => [
+                'required',
+                'numeric',
+                'digits:9',
+                Rule::unique('receta')->where(function ($query) use ($request) {
+                    $nroReceta = $request->nroReceta;
+                    $query->where('nroReceta', $nroReceta);
+                    $count = $query->count();
+                    return $count === 0;
+                })
+            ],
             'fechaEmision' => 'required',
             'Paciente_id' => 'required',
             'Medico_id' => 'required'
+        ], [
+            'nroReceta.digits' => 'El formato del número de la receta es incorrecto.',
+            'nroReceta.unique' => 'El número de receta ya existe'
         ]);
         
         $paciente = Paciente::findOrFail($request->Paciente_id);
