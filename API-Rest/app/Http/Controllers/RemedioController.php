@@ -83,7 +83,7 @@ class RemedioController extends Controller
         $busqueda = $request->input('busqueda');
 
         $remedio = Remedio::where('codigo', 'like', '%' . $busqueda . '%')
-                     ->select('id', 'codigo', 'medicamento')
+                     ->select('id', 'codigo', 'droga')
                      ->orderBy('id')
                      ->limit(10)
                      ->get();

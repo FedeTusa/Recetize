@@ -47,9 +47,9 @@ function modificarFormato($formato) {
         }
 
         th {
-            background-color: #4CAF50;
+            background-color: #c0e7c8;
             /* Color verde más oscuro para encabezado de tabla */
-            color: white;
+            color: #000;
         }
 
         #back {
@@ -62,7 +62,7 @@ function modificarFormato($formato) {
         .back-button {
             position: absolute;
             top: 10px;
-            right: 10px;
+            left: 10px;
         }
 
         .back-button button {
@@ -93,8 +93,8 @@ function modificarFormato($formato) {
         }
 
         #search-form button {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #ccc;
+            color: #000;
             border: none;
             padding: 10px 20px;
             border-radius: 10px;
@@ -105,7 +105,7 @@ function modificarFormato($formato) {
         }
 
         #search-form button:hover {
-            background-color: #45a049;
+            background-color: #a5d8b9;
         }
 
         .input-group {
@@ -156,10 +156,12 @@ function modificarFormato($formato) {
                 <div class="campo-busqueda">
                     <label for="Paciente_id">Paciente:</label>
                     <input type="text" id="Paciente_id" name="Paciente_id">
+                    <input type="hidden" id="Paciente_id_hidden" name="Paciente_id_hidden">
                 </div>
                 <div class="campo-busqueda">
                     <label for="Medico_id">Médico:</label>
                     <input type="text" id="Medico_id" name="Medico_id">
+                    <input type="hidden" id="Medico_id_hidden" name="Medico_id_hidden">
                 </div>
             </div>
             <button type="submit">Buscar</button>
@@ -226,9 +228,13 @@ function modificarFormato($formato) {
                         success: function(data) {
                             console.log("Datos recibidos:", data);
                             response($.map(data, function(item) {
+                                console.log(item);
                                 return {
                                     label: item.dni,
-                                    value: item.id
+                                    value: item.id,
+                                    dni: item.dni,
+                                    nombre: item.nombre,
+                                    apellido: item.apellido
                                 };
                             }));
                         }
@@ -236,7 +242,8 @@ function modificarFormato($formato) {
                 },
                 select: function(event, ui) {
                     console.log("Item seleccionado:", ui.item);
-                    $('#Paciente_id').val(ui.item.value);
+                    $('#Paciente_id').val(ui.item.dni + ', ' + ui.item.nombre + ' ' + ui.item.apellido);
+                    $('#Paciente_id_hidden').val(ui.item.value);
                     return false;
                 }
             });
@@ -252,19 +259,21 @@ function modificarFormato($formato) {
                             busqueda: request.term
                         },
                         success: function(data) {
-                            //console.log("Datos recibidos:", data);
                             response($.map(data, function(item) {
                                 return {
                                     label: item.matricula,
-                                    value: item.id
+                                    value: item.id,
+                                    matricula: item.matricula,
+                                    nombre: item.nombre,
+                                    apellido: item.apellido
                                 };
                             }));
                         }
                     });
                 },
                 select: function(event, ui) {
-                    //console.log("Item seleccionado:", ui.item);
-                    $('#Medico_id').val(ui.item.value);
+                    $('#Medico_id').val(ui.item.matricula + ', ' + ui.item.nombre + ' ' + ui.item.apellido);
+                    $('#Medico_id_hidden').val(ui.item.value);
                     return false;
                 }
             });
@@ -283,8 +292,10 @@ function modificarFormato($formato) {
 
         const nroReceta = document.getElementById("nroReceta").value;
         const fechaEmision = document.getElementById("fechaEmision").value;
-        const idPaciente = document.getElementById("Paciente_id").value;
-        const idMedico = document.getElementById("Medico_id").value;
+        const idPaciente = document.getElementById("Paciente_id_hidden").value;
+        document.getElementById("Paciente_id_hidden").value = "";
+        const idMedico = document.getElementById("Medico_id_hidden").value;
+        document.getElementById("Medico_id_hidden").value = "";
 
         try {
             const resultadoBusqueda = await realizarBusqueda(nroReceta, fechaEmision, idPaciente, idMedico);

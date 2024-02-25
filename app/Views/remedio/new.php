@@ -30,7 +30,7 @@
         }
 
         .button-container button {
-            background-color: #00cc66;
+            background-color: #a5d8b9;
             /* Verde claro para el botón "Remedio" */
             color: #000;
             border: none;
@@ -44,7 +44,7 @@
         }
 
         .button-container button.selected {
-            background-color: #ccc;
+            background-color: #c0e7c8;
             /* Gris claro para el botón "Paciente" seleccionado */
         }
 
@@ -70,7 +70,7 @@
 
         input[type="number"],
         input[type="text"] {
-            width: 100%;
+            width: 95%;
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ccc;

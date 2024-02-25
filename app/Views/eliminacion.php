@@ -36,9 +36,9 @@ function modificarFecha($fecha)
         }
 
         th {
-            background-color: #4CAF50;
+            background-color: #c0e7c8;
             /* Color verde más oscuro para encabezado de tabla */
-            color: white;
+            color: #000;
         }
 
         #back {
@@ -51,7 +51,7 @@ function modificarFecha($fecha)
         .back-button {
             position: absolute;
             top: 10px;
-            right: 10px;
+            left: 10px;
         }
 
         .back-button button {
@@ -83,7 +83,7 @@ function modificarFecha($fecha)
         }
 
         #search-form button {
-            background-color: #4CAF50;
+            background-color: #ccc;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -95,7 +95,7 @@ function modificarFecha($fecha)
         }
 
         #search-form button:hover {
-            background-color: #45a049;
+            background-color: #a5d8b9;
         }
 
         .input-group {
@@ -116,7 +116,7 @@ function modificarFecha($fecha)
 
         .delete-button {
             background-color: #F08080;
-            color: #000;
+            color: #fff;
             border: none;
             border-radius: 20%;
             position: relative;
@@ -132,6 +132,55 @@ function modificarFecha($fecha)
         .no-encontrado {
             font-size: 20px;
         }
+
+
+    /* Estilo para el modal*/
+
+    .modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+    }
+
+    .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 15px; 
+    }
+
+    .button-container {
+    text-align: center;
+    }
+
+    .button-container button {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+    }
+
+    .button-container button:hover {
+    background-color: #a5d8b9;
+    }
+
+    .button-container .cancelar-borrado:hover {
+    background-color: #F08080;
+    }
+
+    /* Fin de los estilos del modal */
+
     </style>
 </head>
 
@@ -161,10 +210,12 @@ function modificarFecha($fecha)
             <div class="campo-busqueda">
                 <label for="Paciente_id">Paciente:</label>
                 <input type="text" id="Paciente_id" name="Paciente_id">
+                <input type="hidden" id="Paciente_id_hidden" name="Paciente_id_hidden">
             </div>
             <div class="campo-busqueda">
                 <label for="Medico_id">Médico:</label>
                 <input type="text" id="Medico_id" name="Medico_id">
+                <input type="hidden" id="Medico_id_hidden" name="Medico_id_hidden">
             </div>
         </div>
         <button type="submit">Buscar</button>
@@ -199,7 +250,8 @@ function modificarFecha($fecha)
                             <td><?php echo $receta['Paciente_id']; ?></td>
                             <td><?php echo $receta['Medico_id']; ?></td>
                             <td>
-                                <button class="delete-button" value="<?php echo $receta['id']; ?>">Eliminar</button>
+                            <button class="delete-button" onclick="eliminarReceta(<?php echo $receta['id']; ?>, <?php echo $receta['nroReceta']; ?>)">Eliminar</button>
+
                             </td>                    
                         </tr>
                     <?php endforeach; ?>
@@ -221,7 +273,7 @@ function modificarFecha($fecha)
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 
 <script>
-        $(document).ready(function() {
+       $(document).ready(function() {
             $('#Paciente_id').autocomplete({
                 source: function(request, response) {
                     $.ajax({
@@ -233,9 +285,13 @@ function modificarFecha($fecha)
                         success: function(data) {
                             console.log("Datos recibidos:", data);
                             response($.map(data, function(item) {
+                                console.log(item);
                                 return {
                                     label: item.dni,
-                                    value: item.id
+                                    value: item.id,
+                                    dni: item.dni,
+                                    nombre: item.nombre,
+                                    apellido: item.apellido
                                 };
                             }));
                         }
@@ -243,7 +299,8 @@ function modificarFecha($fecha)
                 },
                 select: function(event, ui) {
                     console.log("Item seleccionado:", ui.item);
-                    $('#Paciente_id').val(ui.item.value);
+                    $('#Paciente_id').val(ui.item.dni + ', ' + ui.item.nombre + ' ' + ui.item.apellido);
+                    $('#Paciente_id_hidden').val(ui.item.value);
                     return false;
                 }
             });
@@ -262,14 +319,18 @@ function modificarFecha($fecha)
                             response($.map(data, function(item) {
                                 return {
                                     label: item.matricula,
-                                    value: item.id
+                                    value: item.id,
+                                    matricula: item.matricula,
+                                    nombre: item.nombre,
+                                    apellido: item.apellido
                                 };
                             }));
                         }
                     });
                 },
                 select: function(event, ui) {
-                    $('#Medico_id').val(ui.item.value);
+                    $('#Medico_id').val(ui.item.matricula + ', ' + ui.item.nombre + ' ' + ui.item.apellido);
+                    $('#Medico_id_hidden').val(ui.item.value);
                     return false;
                 }
             });
@@ -280,28 +341,6 @@ function modificarFecha($fecha)
 
     formulario = document.querySelector(".form-container");
     divTabla = document.getElementById("muestra-recetas");
-    botonesEliminar = document.querySelectorAll(".delete-button");
-
-    botonesEliminar.forEach(function(botonEliminar) {
-        botonEliminar.addEventListener("click", function(e) {
-            let idReceta = botonEliminar.getAttribute("value");
-            let url = "http://recetize.test/pagprincipal/eliminarReceta/" + idReceta;
-
-            const xhr = new XMLHttpRequest();
-            xhr.addEventListener("load", () => {
-                let respuesta;
-                if (xhr.status == 200) {
-                    alert("Receta eliminada con exito");
-                    location.reload();
-                }    
-                else respuesta = console.log("No pudo realizarse el post");
-            })
-            xhr.open('POST', url, true);
-            xhr.send();
-        });
-    });
-
-    
 
     formulario.addEventListener("submit", async function(e) {
         e.preventDefault();
@@ -310,8 +349,10 @@ function modificarFecha($fecha)
 
         const nroReceta = document.getElementById("nroReceta").value;
         const fechaEmision = document.getElementById("fechaEmision").value;
-        const idPaciente = document.getElementById("Paciente_id").value;
-        const idMedico = document.getElementById("Medico_id").value;
+        const idPaciente = document.getElementById("Paciente_id_hidden").value;
+        document.getElementById("Paciente_id_hidden").value = "";
+        const idMedico = document.getElementById("Medico_id_hidden").value;
+        document.getElementById("Medico_id_hidden").value = "";
 
         try {
             const resultadoBusqueda = await realizarBusqueda(nroReceta, fechaEmision, idPaciente, idMedico);
@@ -350,7 +391,7 @@ function modificarFecha($fecha)
                         camposTabla += `</td>`
                         camposTabla += `<td>${receta['Paciente_id']}</td>
                                         <td>${receta['Medico_id']}</td>
-                                        <td><button class="delete-button" onclick=eliminarReceta(${receta["id"]})>Eliminar</button></td>
+                                        <td><button class="delete-button" onclick="eliminarReceta(${receta["id"]}, ${receta['nroReceta']})">Eliminar</button></td>
                                         </tr>`
                         bodyTabla.innerHTML += camposTabla;
                     
@@ -372,20 +413,24 @@ function modificarFecha($fecha)
         
     });
 
-    function eliminarReceta(idReceta) {
-        let url = "http://recetize.test/pagprincipal/eliminarReceta/" + idReceta;
+    function eliminarReceta(idReceta, nroReceta) {
+        confirmarBorrado(nroReceta).then(function(resultado) {
+            if (resultado) {
+                let url = "http://recetize.test/pagprincipal/eliminarReceta/" + idReceta;
 
-        const xhr = new XMLHttpRequest();
-        xhr.addEventListener("load", () => {
-            let respuesta;
-            if (xhr.status == 200) {
-                alert("Receta eliminada con exito");
-                location.reload();
-            } 
-            else respuesta = console.log("No pudo realizarse el post");
-        })
-        xhr.open('POST', url, true);
-        xhr.send();
+                const xhr = new XMLHttpRequest();
+                xhr.addEventListener("load", () => {
+                    let respuesta;
+                    if (xhr.status == 200) {
+                        alert("Receta eliminada con exito");
+                        location.reload();
+                    } 
+                    else respuesta = console.log("No pudo realizarse el post");
+                })
+                xhr.open('POST', url, true);
+                xhr.send();
+            }
+        });   
     }
 
     function hayRecetasParaMostrar(recetas) {
@@ -419,7 +464,6 @@ function modificarFecha($fecha)
             xhr.open('GET', url);
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                    console.log('Solicitud exitosa de obtencion de id');
                     resolve(xhr.responseText);
                 } else {
                     console.error('Error en la solicitud');
@@ -443,7 +487,6 @@ function modificarFecha($fecha)
                 xhr.open('GET', url);
                 xhr.onload = function() {
                     if (xhr.status === 200) {
-                        console.log('Solicitud exitosa de obtencion de id');
                         resolve(xhr.responseText);
                     } else {
                         console.error('Error en la solicitud');
@@ -468,7 +511,6 @@ function modificarFecha($fecha)
                 xhr.open('GET', url);
                 xhr.onload = function() {
                     if (xhr.status === 200) {
-                        console.log('Solicitud exitosa de obtencion de id');
                         resolve(xhr.responseText);
                     } else {
                         console.error('Error en la solicitud');
@@ -492,7 +534,6 @@ function modificarFecha($fecha)
                 xhr.open('GET', url);
                 xhr.onload = function() {
                     if (xhr.status === 200) {
-                        console.log('Solicitud exitosa de obtencion de id');
                         resolve(xhr.responseText);
                     } else {
                         console.error('Error en la solicitud');
@@ -506,4 +547,62 @@ function modificarFecha($fecha)
                 xhr.send();
         });
     }
+
+    function confirmarBorrado(nroReceta) {
+    var existingModal = document.getElementById("deleteConfirmationModal");
+    
+    // Si ya existe un modal, borrarlo
+    if (existingModal) {
+        existingModal.parentNode.removeChild(existingModal);
+    }
+
+    // Crear el modal
+    var modal = document.createElement("div");
+    modal.id = "deleteConfirmationModal";
+    modal.className = "modal";
+    var modalContent = document.createElement("div");
+    modalContent.className = "modal-content";
+    var title = document.createElement("h2");
+    title.textContent = "¿Estás seguro que deseas borrar la receta nro = " + nroReceta + "?";
+    var buttonContainer = document.createElement("div");
+    buttonContainer.className = "button-container";
+    var confirmBtn = document.createElement("button");
+    confirmBtn.id = "confirmDeleteBtn";
+    confirmBtn.textContent = "Aceptar";
+    var cancelBtn = document.createElement("button");
+    cancelBtn.id = "cancelDeleteBtn";
+    cancelBtn.classList.add("cancelar-borrado");
+    cancelBtn.textContent = "Cancelar";
+    buttonContainer.appendChild(confirmBtn);
+    buttonContainer.appendChild(cancelBtn);
+    modalContent.appendChild(title);
+    modalContent.appendChild(buttonContainer);
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
+
+    // Mostrar el modal
+    modal.style.display = "block";
+
+    return new Promise(function(resolve, reject) {
+        // Manejadores de eventos para los botones
+        document.getElementById("confirmDeleteBtn").onclick = function() {
+            modal.style.display = "none";
+            resolve(true); // Resuelve la promesa con true si el usuario confirma
+        };
+
+        document.getElementById("cancelDeleteBtn").onclick = function() {
+            modal.style.display = "none";
+            resolve(false); // Resuelve la promesa con false si el usuario cancela
+        };
+
+        // También cerrar el modal si el usuario hace clic fuera de él
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                resolve(false); // Resuelve la promesa con false si el usuario hace clic fuera del modal
+            }
+        };
+    });
+}
+
 </script>
