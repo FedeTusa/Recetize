@@ -215,11 +215,11 @@
         border-radius: 15px; 
         }
 
-        .button-container {
+        .modal-container {
         text-align: center;
         }
 
-        .button-container button {
+        .modal-container button {
         margin: 5px;
         padding: 10px 20px;
         border: none;
@@ -228,11 +228,11 @@
         background-color: #ccc;
         }
 
-        .button-container button:hover {
+        .modal-container button:hover {
         background-color: #a5d8b9;
         }
 
-        .button-container .cancelar-borrado:hover {
+        .modal-container .cancelar-borrado:hover {
         background-color: #F08080;
         }
 
@@ -426,7 +426,9 @@
                         nuevoBoton.value = "+";
                         nuevoBoton.classList.add("remedio-receta");
                         formAnterior.appendChild(nuevoBoton);
+                        remedios.pop();
                     }
+
 
                 } 
                 
@@ -435,7 +437,7 @@
                 //console.log(contadorFormularios);
                 const idValorRemedio = "remedio_id_" + contadorFormularios;
                 const nombreRemedio = document.getElementById(idValorRemedio).value;
-                remedios.push(nombreRemedio);
+                if (!remedios.includes(nombreRemedio)) remedios.push(nombreRemedio);
                 const nroReceta = document.getElementById("nroReceta").value;
                 const fechaEmision = document.getElementById("fechaEmision").value;
                 const paciente = document.getElementById("Paciente_id").value;
@@ -572,7 +574,7 @@
                                         <li><b>Médico</b> = ${medico}</li>
                                     </ul>    `;
             var buttonContainer = document.createElement("div");
-            buttonContainer.className = "button-container";
+            buttonContainer.className = "modal-container";
             var confirmBtn = document.createElement("button");
             confirmBtn.id = "confirmSafeBtn";
             confirmBtn.textContent = "Aceptar";
