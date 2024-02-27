@@ -549,60 +549,60 @@ function modificarFecha($fecha)
     }
 
     function confirmarBorrado(nroReceta) {
-    var existingModal = document.getElementById("deleteConfirmationModal");
-    
-    // Si ya existe un modal, borrarlo
-    if (existingModal) {
-        existingModal.parentNode.removeChild(existingModal);
-    }
+        var existingModal = document.getElementById("deleteConfirmationModal");
+        
+        // Si ya existe un modal, borrarlo
+        if (existingModal) {
+            existingModal.parentNode.removeChild(existingModal);
+        }
 
-    // Crear el modal
-    var modal = document.createElement("div");
-    modal.id = "deleteConfirmationModal";
-    modal.className = "modal";
-    var modalContent = document.createElement("div");
-    modalContent.className = "modal-content";
-    var title = document.createElement("h2");
-    title.textContent = "¿Estás seguro que deseas borrar la receta nro = " + nroReceta + "?";
-    var buttonContainer = document.createElement("div");
-    buttonContainer.className = "button-container";
-    var confirmBtn = document.createElement("button");
-    confirmBtn.id = "confirmDeleteBtn";
-    confirmBtn.textContent = "Aceptar";
-    var cancelBtn = document.createElement("button");
-    cancelBtn.id = "cancelDeleteBtn";
-    cancelBtn.classList.add("cancelar-borrado");
-    cancelBtn.textContent = "Cancelar";
-    buttonContainer.appendChild(confirmBtn);
-    buttonContainer.appendChild(cancelBtn);
-    modalContent.appendChild(title);
-    modalContent.appendChild(buttonContainer);
-    modal.appendChild(modalContent);
-    document.body.appendChild(modal);
+        // Crear el modal
+        var modal = document.createElement("div");
+        modal.id = "deleteConfirmationModal";
+        modal.className = "modal";
+        var modalContent = document.createElement("div");
+        modalContent.className = "modal-content";
+        var title = document.createElement("h2");
+        title.textContent = "¿Estás seguro que deseas borrar la receta nro = " + nroReceta + "?";
+        var buttonContainer = document.createElement("div");
+        buttonContainer.className = "button-container";
+        var confirmBtn = document.createElement("button");
+        confirmBtn.id = "confirmDeleteBtn";
+        confirmBtn.textContent = "Aceptar";
+        var cancelBtn = document.createElement("button");
+        cancelBtn.id = "cancelDeleteBtn";
+        cancelBtn.classList.add("cancelar-borrado");
+        cancelBtn.textContent = "Cancelar";
+        buttonContainer.appendChild(confirmBtn);
+        buttonContainer.appendChild(cancelBtn);
+        modalContent.appendChild(title);
+        modalContent.appendChild(buttonContainer);
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
 
-    // Mostrar el modal
-    modal.style.display = "block";
+        // Mostrar el modal
+        modal.style.display = "block";
 
-    return new Promise(function(resolve, reject) {
-        // Manejadores de eventos para los botones
-        document.getElementById("confirmDeleteBtn").onclick = function() {
-            modal.style.display = "none";
-            resolve(true); // Resuelve la promesa con true si el usuario confirma
-        };
-
-        document.getElementById("cancelDeleteBtn").onclick = function() {
-            modal.style.display = "none";
-            resolve(false); // Resuelve la promesa con false si el usuario cancela
-        };
-
-        // También cerrar el modal si el usuario hace clic fuera de él
-        window.onclick = function(event) {
-            if (event.target == modal) {
+        return new Promise(function(resolve, reject) {
+            // Manejadores de eventos para los botones
+            document.getElementById("confirmDeleteBtn").onclick = function() {
                 modal.style.display = "none";
-                resolve(false); // Resuelve la promesa con false si el usuario hace clic fuera del modal
-            }
-        };
-    });
-}
+                resolve(true); // Resuelve la promesa con true si el usuario confirma
+            };
+
+            document.getElementById("cancelDeleteBtn").onclick = function() {
+                modal.style.display = "none";
+                resolve(false); // Resuelve la promesa con false si el usuario cancela
+            };
+
+            // También cerrar el modal si el usuario hace clic fuera de él
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                    resolve(false); // Resuelve la promesa con false si el usuario hace clic fuera del modal
+                }
+            };
+        });
+    }
 
 </script>

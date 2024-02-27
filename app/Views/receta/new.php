@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cargar remedio</title>
+    <title>Cargar receta</title>
     <style>
         body {
             margin: 0;
@@ -225,6 +225,7 @@
         border: none;
         cursor: pointer;
         border-radius: 15px;
+        background-color: #ccc;
         }
 
         .button-container button:hover {
@@ -384,6 +385,7 @@
     </script>
 
     <script>
+        let remedios = [];
         let contadorFormularios = 0;
         const formulario = document.querySelector(".form-container");
         //console.log(ui.item.value);
@@ -399,8 +401,11 @@
                 formulario.insertBefore(nuevoFormulario, document.querySelector(".label-paciente"));
                 const intermedia = nroFormulario-1;
                 const idDelInput = "remedio_id_hidden_" + intermedia;
+                const idValorRemedio = "remedio_id_" + intermedia;
                 const remedio_id = document.getElementById(idDelInput).value;
-                console.log(remedio_id);
+                const nombreRemedio = document.getElementById(idValorRemedio).value;
+                remedios.push(nombreRemedio);
+                //console.log(remedio_id);
                 hacerPostRemedio(remedio_id);
 
             } else if (e.target && e.target.classList.contains("eliminar-remedioReceta")) {
@@ -413,9 +418,9 @@
                 formGeneral.removeChild(formRemedio);
                 //console.log(formGeneral.children);
                 if (formAnterior.children[1]) {
-                    console.log(contadorFormularios);
+                    //console.log(contadorFormularios);
                     if  (formAnterior.children[2].getAttribute("id") == "remedio_id_hidden_0" && formAnterior.children.length <= 3) {
-                        console.log("entro al if de id 0");
+                        //console.log("entro al if de id 0");
                         const nuevoBoton = document.createElement("INPUT");
                         nuevoBoton.type =  "button";
                         nuevoBoton.value = "+";
@@ -427,31 +432,40 @@
                 
             } else if (e.target && e.target.classList.contains("guardado")) {
                 e.preventDefault();
-                console.log(contadorFormularios);
-                const idDelInput = "remedio_id_hidden_" + contadorFormularios;
-                //console.log(idDelInput);
-                const remedio_id = document.getElementById(idDelInput).value;
-                //console.log(remedio_id);
-                hacerPostRemedio(remedio_id);
+                //console.log(contadorFormularios);
+                const idValorRemedio = "remedio_id_" + contadorFormularios;
+                const nombreRemedio = document.getElementById(idValorRemedio).value;
+                remedios.push(nombreRemedio);
                 const nroReceta = document.getElementById("nroReceta").value;
                 const fechaEmision = document.getElementById("fechaEmision").value;
-                const idPaciente = document.getElementById("Paciente_id_hidden").value;
-                const idMedico = document.getElementById("Medico_id_hidden").value;
-                let formatoData = new FormData();
-                formatoData.append("nroReceta", nroReceta);
-                formatoData.append("fechaEmision", fechaEmision);
-                formatoData.append("Paciente_id", idPaciente);
-                formatoData.append("Medico_id", idMedico);
-                const xhr = new XMLHttpRequest();
-                    xhr.addEventListener("load", ()=> {
-                        let respuesta;
-                        if (xhr.status == 200) respuesta = xhr.response;
-                        else respuesta = "No pudo realizarse el post";
-                    })
-                    xhr.open('POST', 'http://recetize.test/RecetaController', true);
-                    xhr.send(formatoData);
-                    alert("Receta cargada con exito");
-                    location.reload();
+                const paciente = document.getElementById("Paciente_id").value;
+                const medico = document.getElementById("Medico_id").value;
+                confirmarGuardado(nroReceta,fechaEmision, remedios, paciente, medico).then(function(resultado) {
+                    if (resultado) {
+                        //console.log(idDelInput);
+                        const idDelInput = "remedio_id_hidden_" + contadorFormularios;
+                        const remedio_id = document.getElementById(idDelInput).value;
+                        console.log(nroReceta);
+                        hacerPostRemedio(remedio_id);
+                        const idPaciente = document.getElementById("Paciente_id_hidden").value;
+                        const idMedico = document.getElementById("Medico_id_hidden").value;
+                        let formatoData = new FormData();
+                        formatoData.append("nroReceta", nroReceta);
+                        formatoData.append("fechaEmision", fechaEmision);
+                        formatoData.append("Paciente_id", idPaciente);
+                        formatoData.append("Medico_id", idMedico);
+                        const xhr = new XMLHttpRequest();
+                            xhr.addEventListener("load", ()=> {
+                                let respuesta;
+                                if (xhr.status == 200) respuesta = xhr.response;
+                                else respuesta = "No pudo realizarse el post";
+                            })
+                            xhr.open('POST', 'http://recetize.test/RecetaController', true);
+                            xhr.send(formatoData);
+                            alert("Receta cargada con exito");
+                            location.reload();
+                    }
+                });
             }
         });
 
@@ -532,7 +546,71 @@
                     })
                     xhr.open('POST', 'http://recetize.test/RemedioRecetaController/agregarRemedioTemporal', true);
                     xhr.send(formatoData);
-        }   
+        }
+        
+        function confirmarGuardado(nroReceta,fechaEmision, remedios, paciente, medico) {
+            var existingModal = document.getElementById("safeConfirmationModal");
+            
+            // Si ya existe un modal, borrarlo
+            if (existingModal) {
+                existingModal.parentNode.removeChild(existingModal);
+            }
+
+            // Crear el modal
+            var modal = document.createElement("div");
+            modal.id = "safeConfirmationModal";
+            modal.className = "modal";
+            var modalContent = document.createElement("div");
+            modalContent.className = "modal-content";
+            var title = document.createElement("h2");
+            title.innerHTML = `¿Estás seguro que deseas guardar la receta con los siguientes datos?<br>
+                                    <ul>
+                                        <li><b>Número</b> = ${nroReceta}<br></li>
+                                        <li><b>Fecha</b> = ${fechaEmision}<br></li>
+                                        <li><b>Remedios</b> = ${remedios}<br></li>
+                                        <li><b>Paciente</b> = ${paciente}<br></li>
+                                        <li><b>Médico</b> = ${medico}</li>
+                                    </ul>    `;
+            var buttonContainer = document.createElement("div");
+            buttonContainer.className = "button-container";
+            var confirmBtn = document.createElement("button");
+            confirmBtn.id = "confirmSafeBtn";
+            confirmBtn.textContent = "Aceptar";
+            var cancelBtn = document.createElement("button");
+            cancelBtn.id = "cancelSafeBtn";
+            cancelBtn.classList.add("cancelar-borrado");
+            cancelBtn.textContent = "Cancelar";
+            buttonContainer.appendChild(confirmBtn);
+            buttonContainer.appendChild(cancelBtn);
+            modalContent.appendChild(title);
+            modalContent.appendChild(buttonContainer);
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+
+            // Mostrar el modal
+            modal.style.display = "block";
+
+            return new Promise(function(resolve, reject) {
+                // Manejadores de eventos para los botones
+                document.getElementById("confirmSafeBtn").onclick = function() {
+                    modal.style.display = "none";
+                    resolve(true); // Resuelve la promesa con true si el usuario confirma
+                };
+
+                document.getElementById("cancelSafeBtn").onclick = function() {
+                    modal.style.display = "none";
+                    resolve(false); // Resuelve la promesa con false si el usuario cancela
+                };
+
+                // También cerrar el modal si el usuario hace clic fuera de él
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                        resolve(false); // Resuelve la promesa con false si el usuario hace clic fuera del modal
+                    }
+                };
+            });
+        }
     </script>
 
 </body>

@@ -33,7 +33,8 @@ class RecetaController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nroReceta' => [
+            'nroReceta' => 'required|numeric|unique:receta',
+/*             'nroReceta' => [
                 'required',
                 'numeric',
                 'digits:9',
@@ -43,13 +44,13 @@ class RecetaController extends Controller
                     $count = $query->count();
                     return $count === 0;
                 })
-            ],
+            ], */
             'fechaEmision' => 'required',
             'Paciente_id' => 'required',
             'Medico_id' => 'required'
-        ], [
+/*         ], [
             'nroReceta.digits' => 'El formato del número de la receta es incorrecto.',
-            'nroReceta.unique' => 'El número de receta ya existe'
+            'nroReceta.unique' => 'El número de receta ya existe' */
         ]);
         
         $paciente = Paciente::findOrFail($request->Paciente_id);
