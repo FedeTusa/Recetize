@@ -117,6 +117,8 @@ function modificarFecha($fecha)
         .delete-button {
             background-color: #F08080;
             color: #fff;
+            padding: 10px 15px;
+            font-size: 15px;
             border: none;
             border-radius: 20%;
             position: relative;
@@ -250,7 +252,7 @@ function modificarFecha($fecha)
                             <td><?php echo $receta['Paciente_id']; ?></td>
                             <td><?php echo $receta['Medico_id']; ?></td>
                             <td>
-                            <button class="delete-button" onclick="eliminarReceta(<?php echo $receta['id']; ?>, <?php echo $receta['nroReceta']; ?>)">Eliminar</button>
+                            <button class="delete-button" onclick="eliminarReceta(<?php echo $receta['id']; ?>, <?php echo $receta['nroReceta']; ?>)">X</button>
 
                             </td>                    
                         </tr>
@@ -391,7 +393,7 @@ function modificarFecha($fecha)
                         camposTabla += `</td>`
                         camposTabla += `<td>${receta['Paciente_id']}</td>
                                         <td>${receta['Medico_id']}</td>
-                                        <td><button class="delete-button" onclick="eliminarReceta(${receta["id"]}, ${receta['nroReceta']})">Eliminar</button></td>
+                                        <td><button class="delete-button" onclick="eliminarReceta(${receta["id"]}, ${receta['nroReceta']})">X</button></td>
                                         </tr>`
                         bodyTabla.innerHTML += camposTabla;
                     
