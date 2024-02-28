@@ -476,7 +476,7 @@
             const nuevoFormulario = document.createElement("DIV");
             nuevoFormulario.classList.add("formulario-receta");
             nuevoFormulario.classList.add("envio-remedioReceta");
-            nuevoFormulario.innerHTML += '<label for="remedio_id_' + contadorFormularios + '">Remedio<b>*</b></label>';
+            nuevoFormulario.innerHTML += '<label for="remedio_id_' + contadorFormularios + '">Remedio</label>';
             $(document).ready(function() {
                 $('#remedio_id_' + contadorFormularios).autocomplete({
                     source: function(request, response) {
@@ -538,6 +538,7 @@
         //Hacer la solicitud con post AJAX
         function hacerPostRemedio(id) {
             let formatoData = new FormData();
+                console.log("haciendo post de remedio");
                 formatoData.append("remedio_id", id);
                 const xhr = new XMLHttpRequest();
                     xhr.addEventListener("load", ()=> {
