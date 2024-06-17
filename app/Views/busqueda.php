@@ -35,7 +35,6 @@ function modificarFecha($fecha)
             padding: 8px;
             text-align: left;
         }
-
         th {
             background-color: #c0e7c8;
             /* Color verde más oscuro para encabezado de tabla */
