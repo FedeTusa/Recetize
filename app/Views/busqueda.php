@@ -21,7 +21,6 @@ function modificarFecha($fecha)
             /* Color verde clarito */
             text-align: center;
         }
-
         table {
             margin: auto;
             border-collapse: collapse;
