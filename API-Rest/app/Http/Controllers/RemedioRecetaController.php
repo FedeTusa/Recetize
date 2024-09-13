@@ -18,69 +18,63 @@ class RemedioRecetaController extends Controller
         return response()->json($remedioreceta);
     }
 
-    public function show($id)
-    {
-        $remedioreceta = RemedioReceta::find($id);
-        
-        if (!$remedioreceta) {
-            return response()->json(['mensaje' => 'no existe remedioreceta'], 404);
-        }
-        return response()->json($remedioreceta);
-    }
-
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'remedio_id' => 'required'
-        ]);
+        // dd(1);
+        $receta_id = $request->input('receta_id');
+        $remedio_id = $request->input('remedio_id');
         
-        $remedio = Remedio::findOrFail($request->remedio_id);
-        $receta = Receta::findOrFail($request->receta_id);
+        // Validar los datos
+        if (empty($receta_id) || empty($remedio_id)) {
+            return response()->json(['status' => 'error', 'message' => 'Datos incompletos'], 400);
+        }
 
         $remedioreceta = RemedioReceta::create([
-            'remedio_id' => $remedio->id,
-            'receta_id' => $receta->id
+            'remedio_id' => $request->remedio_id,
+            'receta_id' => $request->receta_id
         ]);
 
         return response()->json($remedioreceta, 201);
     }
-
-    public function update(Request $request, $id)
-    {
-        $this->validate($request, [
-            'remedio_id' => 'numeric', 
-            'receta_id' => 'numeric'
-        ]);
-
-        $remedioreceta = RemedioReceta::find($id);
-
-        if (!$remedioreceta) {
-            return response()->json(['mensaje' => 'no existe remedioreceta con id= ' . $id], 404);
-        }
-
-        if ($request->input('remedio_id')) {$remedioreceta->remedio_id = $request->input('remedio_id');}
-        if ($request->input('receta_id')) {$remedioreceta->receta_id = $request->input('receta_id');}
-
-        $remedioreceta->save();
-
-        return response()->json($remedioreceta);
-    }
-
     public function busqueda(Request $request)
     {
-        header("Access-Control-Allow-Origin: http://recetize.test");
-        $busqueda = $request->input('busqueda');
+        $nroReceta = $request->input('nroReceta');
 
-        $remediorecetaQuery = RemedioReceta::query();
+        // Validar que se proporcionó el nroReceta
+        if (!$nroReceta) {
+            return response()->json(['error' => 'El campo nroReceta es obligatorio'], 400);
+        }
 
-        $remedioreceta = $remediorecetaQuery->leftJoin('remedio', 'remedioreceta.remedio_id', '=', 'remedio.id')
-                                             ->where('remedioreceta.receta_id', '=', $busqueda)
-                                             ->select('remedio.*')
-                                             ->orderBy('remedioreceta.id')
-                                             ->limit(10)
-                                             ->get();
+        // Buscar remedio_id en la tabla remedioreceta basados en receta_id (nroReceta)
+        $remedioIds = RemedioReceta::where('nroReceta','LIKE', $nroReceta)->pluck('remedio_id');
 
-        return response()->json($remedioreceta);
+        if ($remedioIds->isEmpty()) {
+            return response()->json(['error' => 'No se encontraron remedios para el nroReceta proporcionado'], 404);
+        }
+
+        // Obtener los detalles de los remedios basados en los remedio_id obtenidos
+        $remedios = Remedio::whereIn('id', $remedioIds)->get();
+
+        // Devolver los remedios encontrados en formato JSON
+        return response()->json($remedios);
     }
+    public function eliminarPorReceta($recetaId)
+    {
+        // Verificar si el valor es numérico
+        if (!is_numeric($recetaId)) {
+            return response()->json(['error' => 'Valor de receta id no válido'], 400);
+        }
 
+        // Eliminar los registros
+        $deletedRows = Remedioreceta::where('receta_id', $recetaId)->delete();
+
+        // Verificar si se eliminaron registros
+        if ($deletedRows) {
+            return response()->json(['message' => 'Registros eliminados correctamente', 'deleted' => $deletedRows], 200);
+        } else {
+            return response()->json(['message' => 'No se encontraron registros para eliminar'], 404);
+        }
+    }
 }
+
+

@@ -14,7 +14,7 @@ class Medico extends Model
     protected $table = 'medico';
 
     protected $fillable = [
-        'matricula', 'nombre', 'apellido', 'especialidad', 'localidad'
+        'matricula', 'nombre', 'apellido', 'especialidad', 'prefijo', 'celular',  'email', 'provincia', 'localidad', 'cp', 'calle', 'altura'
     ];
 
     public function receta()

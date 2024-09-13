@@ -9,50 +9,77 @@ use App\Models\RemedioModel;
 
 class RemedioController extends BaseController
 {
-    // private $apiUrl;
-    // private $client;
-
-    // public function __construct()
-    // {
-    //     $this->apiUrl = 'http://localhost:8000';
-
-    //     $this->client = \Config\Services::curlrequest();
-    // }
-
-    public function new()
+    public function inicio()
     {
        $validation = \Config\Services::validation();
 
-       return view('remedio/new',['validation' => $validation]);
+       return view('remedio/InicioRemedio',['validation' => $validation]);
     }
+    public function new()
+    {
 
-    // public function create()
-    // {
-    //    $remedio = new RemedioModel();
+       $validation = \Config\Services::validation(); 
 
-    //    if($this->validate('remedio')){
-    //         $remedio->insert(
-    //             [
-    //                 'codigo' => $this->request->getPost('codigo'),
-    //                 'droga' => $this->request->getPost('droga'),
-    //                 'medicamento' => $this->request->getPost('medicamento')
+       return view('remedio/NuevoRemedio/new',['validation' => $validation]);
+    }
+    public function exito()
+    {
 
-    //             ]
-    //         );
-    //         return view('remedio/exito');
-    //     }
-        
-    //    return view('remedio/error'); 
-    // }
+       $validation = \Config\Services::validation(); 
 
-    
+       return view('remedio/NuevoRemedio/exito',['validation' => $validation]);
+    }
+    public function buscar()
+    {
+
+       $validation = \Config\Services::validation(); 
+
+       return view('remedio/BuscarRemedio/busqueda',['validation' => $validation]);
+    }
+     public function modificar()
+    {
+
+       $validation = \Config\Services::validation(); 
+
+       return view('remedio/ModificarRemedio/modificar',['validation' => $validation]);
+    }
+    public function editar()
+    {
+
+       $validation = \Config\Services::validation(); 
+
+       return view('remedio/ModificarRemedio/edit',['validation' => $validation]);
+    }
+    public function eliminar()
+    {
+
+       $validation = \Config\Services::validation(); 
+
+       return view('remedio/EliminarRemedio/eliminacion',['validation' => $validation]);
+    }
 
     public function create()
     {
+        $rules = [
+          'codigo' => 'is_unique[remedio.codigo]',
+        ];
+
+        $rules1 = [
+          'codigo' => 'max_length[13]',
+        ];
+
+        if(!$this->validate($rules)){
+          return redirect()->to('index.php/pagprincipal/remedio/nuevo')->withInput()->with('message', 'codigo duplicado');
+        }
+        if(!$this->validate($rules1)){
+          return redirect()->to('index.php/pagprincipal/remedio/nuevo')->withInput()->with('message', 'codigo con mas de 13 caracteres');
+        }
 
         $codigo = $this->request->getPost('codigo');
         $droga = $this->request->getPost('droga');
         $medicamento = $this->request->getPost('medicamento');
+        $prestacion = $this->request->getPost('prestacion');
+        $farmacodinamia = $this->request->getPost('farmacodinamia');
 
         $remedio = new RemedioModel();
 
@@ -60,6 +87,8 @@ class RemedioController extends BaseController
             'codigo' => $codigo,
             'droga' => $droga,
             'medicamento' => $medicamento,
+            'prestacion' => $prestacion,
+        'farmacodinamia' => $farmacodinamia,
         ]);
 
         $responseData = json_decode($response, true);
@@ -68,49 +97,6 @@ class RemedioController extends BaseController
             return view('remedio/error');
         }
 
-        return redirect()->to('/RemedioController/new');
-
-        // $apiUrl = 'http://localhost:8000/remedio';
-
-
-        // $response = $client->request('POST', $apiUrl, [
-        //     'headers' => [
-        //         'Content-Type' => 'application/json',
-        //     ],
-        //     'json' => $newTask,
-        // ]);
-
-        // $codigo = $this->request->getPost('codigo');
-        // $droga = $this->request->getPost('droga');
-        // $medicamento = $this->request->getPost('medicamento');
-
-        // $data = [
-        //     'codigo' => $codigo,
-        //     'droga' => $droga,
-        //     'medicamento' => $medicamento,
-        // ];
-            
-        // $ch = curl_init($apiUrl);
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // curl_setopt($ch, CURLOPT_POST, true);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        // curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-        // $response = curl_exec($ch);
-        // $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-        // curl_close($ch);
-
-        // if ($httpCode == 201) {
-        //     echo 'Remedio creado con éxito';
-        // } else {
-        //     echo 'Error al crear el remedio';
-        // }
-
-        // if ($response->getStatusCode() === 201) {
-        //     return redirect()->to('/tasks')->with('success', 'Tarea creada exitosamente.');
-        // } else {
-        //     return redirect()->to('/tasks')->with('error', 'Error al crear la tarea.');
-        // }
+        return redirect()->to('/index.php/pagprincipal/remedio/exito');
     }
 }

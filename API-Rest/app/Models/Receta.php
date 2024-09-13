@@ -13,22 +13,24 @@ class Receta extends Model
     protected $table = 'receta';
 
     protected $fillable = [
-        'nroReceta', 'fechaEmision', 'Paciente_id', 'Medico_id', 'borrado_logico'
+        'nroReceta', 'fechaEmision', 'Paciente_id', 'nroafiliado', 'obrasocial', 'Medico_id', 'borrado_logico'
     ];
 
-    public function medico()
+public function remedios()
     {
-        return $this->belongsTo(Medico::class);
+        return $this->hasMany(RemedioReceta::class, 'receta_id');
     }
 
+    // Define la relación con el modelo Paciente
     public function paciente()
     {
-        return $this->belongsTo(Paciente::class);
+        return $this->belongsTo(Paciente::class, 'paciente_id');
     }
 
-    public function remedioreceta()
+    // Define la relación con el modelo Medico
+    public function medico()
     {
-        return $this->hasMany(RemedioReceta::class);
+        return $this->belongsTo(Medico::class, 'medico_id');
     }
-
 }
+

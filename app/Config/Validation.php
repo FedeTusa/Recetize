@@ -7,6 +7,7 @@ use CodeIgniter\Validation\StrictRules\CreditCardRules;
 use CodeIgniter\Validation\StrictRules\FileRules;
 use CodeIgniter\Validation\StrictRules\FormatRules;
 use CodeIgniter\Validation\StrictRules\Rules;
+use App\Validation\ValidationRules;
 
 class Validation extends BaseConfig
 {
@@ -25,6 +26,7 @@ class Validation extends BaseConfig
         FormatRules::class,
         FileRules::class,
         CreditCardRules::class,
+        ValidationRules::class, // Añadir aquí la clase de validación personalizada
     ];
 
     /**
@@ -55,13 +57,6 @@ class Validation extends BaseConfig
         'especialidad' => 'required|min_length[4]|max_length[30]|alpha',
         'localidad' => 'required|min_length[2]|max_length[50]'
     ];
-
-    public $remedio = [
-        'codigo' => 'required|min_length[2]|max_length[50]|is_natural_no_zero',
-        'droga' => 'required|min_length[3]|max_length[50]|alpha',
-        //'medicamento' => 'max_length[50]|alpha'
-    ];
-
     // --------------------------------------------------------------------
     // Rules
     // --------------------------------------------------------------------

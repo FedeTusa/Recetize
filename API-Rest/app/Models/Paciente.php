@@ -13,9 +13,7 @@ class Paciente extends Model
 
     protected $table = 'paciente';
 
-    protected $fillable = [
-        'dni', 'nombre', 'apellido', 'celular', 'localidad', 'calle', 'altura'
-    ];
+    protected $fillable = ['dni', 'nombre', 'apellido', 'obrasocial', 'nroafiliado', 'prefijo', 'celular', 'email', 'provincia', 'localidad', 'cp', 'calle', 'altura'];
 
     public function receta()
     {

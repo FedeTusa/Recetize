@@ -11,7 +11,7 @@ class RecetaModel extends Model
     protected $table            = 'receta';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $allowedFields    = ['nroReceta', 'fechaEmision', 'Paciente_id', 'Medico_id'];
+    protected $allowedFields    = ['nroReceta', 'fechaEmision', 'Paciente_id',  'nroafiliado', 'obrasocial', 'Medico_id'];
 
     private function sendRequest($method, $url, $data = [])
     {
@@ -37,7 +37,7 @@ class RecetaModel extends Model
 
     public function crearReceta($data)
     {
-        return $this->sendRequest('POST', 'http://localhost:8000/receta', $data);
+        return $this->sendRequest('POST', 'http://localhost:8000/api/receta', $data);
     }
 
     public function obtenerRecetas()

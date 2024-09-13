@@ -8,7 +8,7 @@ class PacienteModel extends Model
 {
     protected $table            = 'paciente';
     protected $primaryKey       = 'id';
-    protected $allowedFields    = ['dni', 'nombre', 'apellido', 'celular', 'localidad', 'calle', 'altura'];
+    protected $allowedFields    = ['dni', 'nombre', 'apellido', 'obrasocial', 'nroafiliado', 'prefijo', 'celular', 'email', 'provincia', 'localidad', 'cp', 'calle', 'altura'];
 
     private function sendRequest($method, $url, $data = [])
     {
@@ -31,7 +31,8 @@ class PacienteModel extends Model
 
     public function crearPaciente($data)
     {
-        return $this->sendRequest('POST', 'http://localhost:8000/paciente', $data);
+      
+        return $this->sendRequest('POST', 'http://localhost:8000/api/paciente', $data);
     }
 
     public function pacientePorId(int $id)

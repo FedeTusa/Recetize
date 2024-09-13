@@ -31,7 +31,8 @@ class RemedioRecetaModel extends Model
     
     public function crearRemedioReceta($data)
     {
-        return $this->sendRequest('POST', 'http://localhost:8000/remedioreceta', $data);
+        // dd($data);
+        return $this->sendRequest('POST', 'http://localhost:8000/api/remedioreceta', $data);
     }
 
     public function remediosDeReceta(int $id_receta)

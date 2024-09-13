@@ -4,102 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recetize</title>
-  <!-- Agregar el enlace al archivo de Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <style>
-    body {
-      background-color: #f0f0f0;
-    }
-
-    .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background-color: #f0f0f0;
-      padding: 20px;
-    }
-
-    .recetize {
-      writing-mode: vertical-lr;
-      transform: rotate(180deg);
-      font-size: 110px;
-      font-weight: bold;
-      padding: 20px;
-      border-right: 2px solid #555;
-    }
-
-    .options {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .row {
-      display: flex;
-      gap: 20px;
-    }
-
-    .option {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 250px;
-      height: 250px;
-      background-color: #c0e7c8;
-      border: none;
-      color: #000;
-      font-weight: bold;
-      font-size: 24px;
-      border-radius: 15px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      text-decoration: none; /* Quitamos la subrayado */
-    }
-
-    .option:hover {
-      background-color: #a5d8b9;
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="<?= base_url('css/style.css?v=' . time()) ?>" rel="stylesheet">
 </head>
-<body>
-<div class="container">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">RECETIZE</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" id="salir">Salir</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-  </div>  
-
-  <div class="container">
-    <div class="recetize">Recetize</div>
+<body class="body_inicio">
+  <div class="barra-header"></div>
+  <div class="barra-footer"></div>
+  <div class="container_principal">
+    <div class="indice">
+      <div class="recetize">RECETIZE</div>
+    </div>
     <div class="options">
       <div class="row">
-        <!-- Quitamos el estilo por defecto de Bootstrap y agregamos un evento onclick -->
-        <div class="col-md-4 option" onclick="window.location.href='http://recetize.test/PacienteController/new'">
-          <!-- <img src="carga.jpg" alt="Cargar" style="width: 80px; height: 80px;"> -->
-          Cargar
+        <div class="option" onclick="window.location.href='http://recetize.test/index.php/pagprincipal/paciente'">
+          Paciente</div>
+        <div class="option" onclick="window.location.href='http://recetize.test/index.php/pagprincipal/remedio'">
+          Remedio</div>
+        <div class="option" onclick="window.location.href='http://recetize.test/index.php/pagprincipal/medico'">
+          Medico</div>
+        <div class="option" onclick="window.location.href='http://recetize.test/index.php/pagprincipal/receta'">
+          Receta</div>
+        <div class="option" onclick="window.location.href='http://recetize.test/index.php/pagprincipal/historial'">
+          Historial</div>
+        <div class="option2" id="salir">
+          Salir</div>
       </div>
-
-      <div class="col-md-4 option" onclick="window.location.href='http://recetize.test/RecetaController/show'">
-          <!-- <img src="carga.jpg" alt="Cargar" style="width: 80px; height: 80px;"> -->
-          Buscar
+    </div>
+    <div class="container_inicio_logo">
+      <div class="borde-verde">
+        <img src="<?= base_url('img/logo1.png'); ?>" alt="logo" class="fondo-ini1">
       </div>
-        <div class="col-md-4 option">Modificar</div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 option" onclick="window.location.href='http://recetize.test//pagprincipal/consulta'">Consultar</div>
-        <div class="col-md-6 option" onclick="window.location.href='http://recetize.test/pagprincipal/eliminacion'">Eliminar</div>
-      </div>
+      <img src="<?= base_url('img/logo3.png'); ?>" alt="logo" class="fondo-ini">
     </div>
   </div>
   <!-- Agregar el enlace al archivo de Bootstrap JS (opcional, pero necesario para algunos componentes de Bootstrap) -->
@@ -110,7 +47,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 
-  <script type="module">
+<script type="module">
 
         import {
                     initializeApp
@@ -118,25 +55,21 @@
 
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
-        // Your web app's Firebase configuration
+        //Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyAFyFdKQ6HyrUxmFcxiNQbIi6xjHPFKKNE",
-            authDomain: "recetize.firebaseapp.com",
-            projectId: "recetize",
-            storageBucket: "recetize.appspot.com",
-            messagingSenderId: "725014354320",
-            appId: "1:725014354320:web:8ab09ce96d38044e15fb15"
+            apiKey: "AIzaSyBakDzF3H0gku4gD--uUU2K-30BIpiT1Yo",
+            authDomain: "recetize-8673b.firebaseapp.com",
+            projectId: "recetize-8673b",
+            storageBucket: "recetize-8673b.appspot.com",
+            messagingSenderId: "785480675848",
+            appId: "1:785480675848:web:fa6aaa899d8f66f56917bd"
         };
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
 
         // Initialize Firebase Authentication and get a reference to the service
-        const auth = getAuth(app);
-
-        /* const autentic = auth(); */
-
-        //const auth = firebase.auth(); 
+        const auth = getAuth(app); 
 
     
 
@@ -157,14 +90,14 @@
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                    consolo.log('singin')
+                    console.log('singin')
                 
             } else {
               window.location.href = 'http://recetize.test';
             }
         });
 
-    </script>
+</script>
 </body>
 </html>
 

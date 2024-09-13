@@ -8,7 +8,7 @@ class MedicoModel extends Model
 {
     protected $table            = 'medico';
     protected $primaryKey       = 'id';
-    protected $allowedFields    = ['matricula', 'nombre', 'apellido', 'especialidad', 'localidad'];
+    protected $allowedFields    = ['matricula', 'nombre', 'apellido', 'especialidad', 'prefijo', 'celular',  'email', 'provincia', 'localidad', 'cp', 'calle', 'altura'];
 
     private function sendRequest($method, $url, $data = [])
     {
@@ -31,12 +31,12 @@ class MedicoModel extends Model
 
     public function crearMedico($data)
     {
-        return $this->sendRequest('POST', 'http://localhost:8000/medico', $data);
+        return $this->sendRequest('POST', 'http://localhost:8000/api/medico', $data);
     }
 
     public function medicoPorId(int $id)
     {
-       return $this->sendRequest('GET', 'http://localhost:8000/medico/'.$id);
+       return $this->sendRequest('GET', 'http://recetize.test/index.php/pagprincipal/medico'.$id);
     }
 
 }

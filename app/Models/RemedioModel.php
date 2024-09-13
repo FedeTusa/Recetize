@@ -8,7 +8,7 @@ class RemedioModel extends Model
 {
     protected $table = 'remedio';
     protected $primaryKey = 'id';
-    protected $allowedFields    = ['codigo', 'droga', 'medicamento'];
+    protected $allowedFields    = ['codigo', 'droga', 'medicamento', 'prestacion', 'farmacodinamia'];
 
     private function sendRequest($method, $url, $data = [])
     {
@@ -31,15 +31,10 @@ class RemedioModel extends Model
 
     public function crearRemedio($data)
     {
-        /*        $data = [
-            'codigo' => $data['codigo'],
-            'droga' => $data['droga'],
-            'medicamento' => $data['medicamento'],
-        ];*/
-
-        return $this->sendRequest('POST', 'http://localhost:8000/remedio', $data);
+        return $this->sendRequest('POST', 'http://localhost:8000/api/remedio', $data);
+        
     }
-
+    
 
 
     /*  // Dates 

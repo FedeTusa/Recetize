@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\http\response;
+
+
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 /*
@@ -13,56 +16,67 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
 
-$router->get('/remedios', ['uses' => 'RemedioController@showAll']); 
-$router->get('/remedio/{id}', ['uses' => 'RemedioController@show']);
-
-$router->post('/remedio',['uses' => 'RemedioController@store']);
-$router->post('/editarRemedio/{id}',['uses' => 'RemedioController@update']);
-
-$router->delete('/remedio/{id}',['uses' => 'RemedioController@destroy']);
-
-$router->get('/busqueda/remedio', 'RemedioController@busqueda');
-
-$router->get('/pacientes', ['uses' => 'PacienteController@showAll']); 
-$router->get('/paciente/{id}', ['uses' => 'PacienteController@show']);
-
-$router->post('/paciente',['uses' => 'PacienteController@store']);
-$router->post('/editarPaciente/{id}',['uses' => 'PacienteController@update']);
-
-$router->delete('/paciente/{id}',['uses' => 'PacienteController@destroy']);
-
-$router->get('/busqueda/paciente', 'PacienteController@busqueda');
-
-$router->get('/medicos', ['uses' => 'MedicoController@showAll']); 
-$router->get('/medico/{id}', ['uses' => 'MedicoController@show']);
-
-$router->post('/medico',['uses' => 'MedicoController@store']);
-$router->post('/editarMedico/{id}',['uses' => 'MedicoController@update']);
-
-$router->delete('/medico/{id}',['uses' => 'MedicoController@destroy']);
-
-$router->get('/busqueda/medico', 'MedicoController@busqueda');
-
-$router->get('/recetas', ['uses' => 'RecetaController@showAll']);
-$router->get('/receta/{id}', ['uses' => 'RecetaController@show']);
-
-$router->post('/editarReceta/{id}',['uses' => 'RecetaController@update']);
-$router->post('/receta',['uses' => 'RecetaController@store']);
-
-$router->delete('/receta/{id}',['uses' => 'RecetaController@destroy']);
-
-$router->get('/busqueda/receta', 'RecetaController@busqueda');
-
-$router->get('/remedioreceta', ['uses' => 'RemedioRecetaController@showAll']);
-$router->get('/remedioreceta/{id}', ['uses' => 'RemedioRecetaController@show']);
-
-$router->post('/remedioreceta',['uses' => 'RemedioRecetaController@store']);
-$router->post('/actualizarRemedioReceta/{id}',['uses' => 'RemedioRecetaController@update']);
-
-$router->get('/busqueda/remedioreceta', 'RemedioRecetaController@busqueda');
+$router->post('/api/paciente', 'PacienteController@store');
+$router->get('/api/pacientes', 'PacienteController@showAll');
+$router->get('/api/paciente', 'PacienteController@busqueda');
+$router->get('/api/pacientepag', 'PacienteController@busquedapaginada');
+$router->get('/api/paciente1', 'PacienteController@buscarPaciente');
+$router->get('/api/paciente/{id}', 'PacienteController@show');
+$router->put('/api/paciente/{id}', 'PacienteController@update');
+$router->delete('/api/paciente/{id}','PacienteController@destroy');
 
 
+$router->post('/api/remedio', 'RemedioController@store');
+$router->get('/api/remedios', 'RemedioController@showAll');
+$router->get('/api/remedio', 'RemedioController@busqueda');
+$router->get('/api/remediopag', 'RemedioController@busquedapaginada');
+$router->get('/api/remedio3', 'RemedioController@busquedaedit');
+$router->get('/api/remedio1', 'RemedioController@buscarMedicamento');
+$router->get('/api/remedio2', 'RemedioController@buscarPrestaciones');
+$router->get('/api/remedio/{id}', 'RemedioController@show');
+$router->put('/api/remedio/{id}', 'RemedioController@update');
+$router->delete('/api/remedio/{id}','RemedioController@destroy');
+
+
+$router->post('/api/medico', 'MedicoController@store');
+$router->get('/api/medicos', 'MedicoController@showAll');
+$router->get('/api/medico', 'MedicoController@busqueda');
+$router->get('/api/medicopag', 'MedicoController@busquedapaginada');
+$router->get('/api/medico/{id}', 'MedicoController@show');
+$router->put('/api/medico/{id}', 'MedicoController@update');
+$router->delete('/api/medico/{id}','MedicoController@destroy');
+
+
+
+
+
+// Ruta para búsqueda específica
+$router->get('/api/receta/busqueda', 'RecetaController@busqueda2');
+
+// Rutas generales para recetas
+$router->post('/api/receta', 'RecetaController@store');
+$router->get('/api/recetas', 'RecetaController@showAll');
+$router->get('/api/receta', 'RecetaController@busqueda');
+$router->get('/api/recetapag', 'RecetaController@busquedapaginada');
+$router->put('/api/receta/{id}', 'RecetaController@update');
+$router->get('/api/receta/{id}', 'RecetaController@show');
+$router->delete('/api/receta/{id}', 'RecetaController@destroy');
+$router->get('/api/receta/check/{nroReceta}/{excludeId}', 'RecetaController@checkRecetaExists');
+$router->get('/api/recetafechamin', 'RecetaController@FechaMin');
+
+// Rutas para remediorecetas
+$router->post('/api/remedioreceta', 'RemedioRecetaController@store');
+$router->get('/api/remediorecetas', 'RemedioRecetaController@showAll');
+$router->get('/api/remedioreceta', 'RemedioRecetaController@busqueda');
+$router->delete('/api/remedioreceta/delete/{recetaId}', 'RemedioRecetaController@eliminarPorReceta');
+
+// Rutas para historial
+$router->get('/api/historial', 'HistorialController@showAll');
+$router->post('/api/historial', 'HistorialController@CreateDelete');
+$router->post('/api/historials', 'HistorialController@store');
+$router->get('/api/historialpag', 'HistorialController@busquedapaginada');
+$router->get('/api/historial', 'HistorialController@busqueda');
+$router->get('/api/historialfechamin', 'HistorialController@FechaMin');
+
+$router->get('/api/obrasocial', 'ObraSocialController@busqueda');

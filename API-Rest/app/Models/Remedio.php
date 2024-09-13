@@ -14,7 +14,7 @@ class Remedio extends Model
     protected $table = 'remedio';
 
     protected $fillable = [
-        'codigo', 'droga', 'medicamento'
+        'codigo', 'droga', 'medicamento','prestacion','farmacodinamia'
     ];
 
     public function receta()

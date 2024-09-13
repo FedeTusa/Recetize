@@ -6,31 +6,12 @@
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
 ![JavaScrip](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 # Recetize
-Es una aplicación creada con la finalidad de poder procesar y gestionar recetas medicas que deben ser archivadas por la ley para futuras auditorias. Cuenta con una interfaz que permite al farmacéutico cargar, buscar, modificar y eliminar pacientes, remedios, médicos y recetas.
+Es una aplicación creada con la finalidad de poder procesar y gestionar recetas medicas que debes ser archivadas por la ley para futuras auditorias
 
-<img src="https://github.com/user-attachments/assets/65c8ce6b-c8d2-40fd-bb52-a3c94119acb8" alt="pantalla principal" width="700"/>
+Agregar linea default-storage-engine = InnoDB en my.ini en la seccion mysqld
+![image](https://github.com/FedeTusa/Recetize/assets/80929107/6cb112b7-1a74-4831-b25e-5e3703121238)
 
-## Instalación
-### Entorno de Desarrollo: Laragon
+![image](https://github.com/FedeTusa/Recetize/assets/80929107/6a6b5b60-2aa0-40de-ab80-967dcdbcdd82)
 
-Este proyecto ha sido levantado utilizando **[Laragon](https://laragon.org/)**, un entorno de desarrollo local ligero, rápido y potente. Laragon está diseñado para hacer que trabajar con aplicaciones web sea sencillo y eficiente, con soporte para servidores como Apache, Nginx, bases de datos (MySQL, MariaDB), y lenguajes como PHP, Node.js, Python, entre otros.
-
-#### ¿Qué es Laragon?
-Laragon es una plataforma de desarrollo local que ofrece una instalación rápida y automática de todo lo necesario para desarrollar aplicaciones web sin tener que configurar cada herramienta manualmente. Entre sus principales características destacan:
-- Entorno preconfigurado listo para usar (LAMP/LEMP).
-- Capacidad para manejar múltiples versiones de PHP y otros lenguajes.
-- Integración con bases de datos y servidores.
-- Ligero y rápido, ideal para desarrollo en equipos con pocos recursos.
-- Fácil integración con herramientas como Composer y npm.
-
-Puedes descargar Laragon desde su sitio web oficial: [Laragon Download](https://laragon.org/download/).
-
-### Clonar el proyecto
-El proyecto debe clonarse en la carpeta www de Laragon
-
-### Cómo levantar la API
-Ejecutar los siguientes comandos:
-- cd recetize
-- cd api-rest
-- php -S localhost:8000 -t public
-
+Revisar para el manejo de uno a muchos para mas de un modelo:
+https://laravel.com/docs/8.x/eloquent-relationships#one-of-many-polymorphic-relations
