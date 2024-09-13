@@ -6,7 +6,7 @@
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
 ![JavaScrip](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 # Recetize
-Es una aplicación creada con la finalidad de poder procesar y gestionar recetas medicas que debes ser archivadas por la ley para futuras auditorias. Cuenta con una interfaz que permite al farmacéutico cargar, buscar, modificar y eliminar pacientes, remedios, médicos y recetas.
+Es una aplicación creada con la finalidad de poder procesar y gestionar recetas medicas que deben ser archivadas por la ley para futuras auditorias. Cuenta con una interfaz que permite al farmacéutico cargar, buscar, modificar y eliminar pacientes, remedios, médicos y recetas.
 
 <img src="https://github.com/user-attachments/assets/65c8ce6b-c8d2-40fd-bb52-a3c94119acb8" alt="pantalla principal" width="700"/>
 
